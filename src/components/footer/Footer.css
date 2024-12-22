@@ -1,0 +1,70 @@
+.site-footer {
+  background-color: rgb(0, 0, 0);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  height: 30vh;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.foot-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.foot-image img {
+  height: 70vh;
+  width: 100vw;
+  object-fit: cover;
+}
+
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-logo {
+  flex: 1; /* Left column for the image */
+}
+
+.footer-logo img {
+  width: 350px; /* Adjust size as needed */
+  height: auto;
+  margin-left: 50px;
+}
+
+.footer-content {
+  flex: 2; /* Right side for text content */
+  display: flex;
+  justify-content: space-around;
+}
+
+.contact-info, .contact-details {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.contact-details p:not(:first-child):hover,
+.contact-details a:hover {
+position: relative;
+cursor: pointer;
+}
+
+.contact-details p:not(:first-child)::after{
+content: '';
+position: absolute;
+left: 0;
+bottom: 0;
+width: 0;
+height: 2px;
+background: #ff0000;
+transition: width 0.2s ease-in-out;
+}
+
+.contact-details p:not(:first-child):hover::after{
+width: 40%;
+}

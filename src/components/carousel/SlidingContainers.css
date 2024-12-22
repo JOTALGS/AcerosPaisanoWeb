@@ -1,0 +1,62 @@
+.fatherContainer {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+}
+
+.sliderContainer {
+    display: flex;
+}
+
+.sliderItem {
+    flex-shrink: 0;
+    width: 25%;
+    height: 35vh;
+    padding: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    background-color: rgb(39, 39, 39);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.sliderItem:hover {
+    background-color: rgb(145, 3, 3);
+}
+
+.sliderItem div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.sliderItem h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.sliderItem p {
+    margin-bottom: 1rem;
+    text-align: start;
+}
+
+.sliderItem button {
+    padding: 15px 30px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sliderItem button:hover {
+    background-color: #fff;
+    color: #000;
+}
