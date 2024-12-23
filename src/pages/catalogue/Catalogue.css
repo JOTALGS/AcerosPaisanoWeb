@@ -1,3 +1,151 @@
 .catalogue {
-    width: 100vw;
+  width: 100vw;
+}
+
+.catalogue-container {
+  display: flex;
+  height: fit-content;
+  background-color: #cccccc;
+}
+
+.catalogue-filters {
+  width: 25vw;
+  padding: 20px;
+}
+
+.catalogue-filters h2 {
+  font-size: 6rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.filters-container {
+  padding-top: 100px;
+}
+
+.filters {
+  border-top: 1px solid #a5a4a4;
+  width: 100%;
+  padding: 10px;
+  transition: position 0.3s ease;
+  transition: width 0.3s ease;
+}
+
+.filters label {
+  margin: 10px 0;
+  color: #555;
+}
+
+/* Products Section */
+.catalogue-products {
+  flex-grow: 1;
+  padding: 20px;
+  padding-top: 120px;
+}
+
+.view-toggle {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.view-toggle button {
+  padding: 0px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
+  border: 1px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.view-toggle button:hover {
+  color: white;
+  border: 1px solid transparent;
+  font-weight: bold;
+  transition-delay: 0.3s;
+}
+
+.view-toggle button::after {
+  background-color: #bb0000 !important;
+}
+
+/* Products List */
+.products-list {
+  display: grid;
+  gap: 20px;
+  width: 80%;
+  height: 2000px;
+  padding-bottom: 100px;
+}
+
+.products-list.grid {
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Grid layout */
+}
+
+.products-list.list {
+  grid-template-columns: 1fr; /* Single column for list layout */
+}
+
+/* Product Item */
+.product-item {
+  background-color: transparent; /* Transparent background */
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #afafaf;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.product-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #b9b9b9;
+}
+
+.product-item.list {
+  flex-direction: row; /* Horizontal layout for list view */
+  align-items: center;
+}
+
+.product-item.list img {
+  width: 25%;
+  height: 80%;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin-right: 20px;
+  margin-top: 30px;
+  border-radius: 5px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: flex-start;
+  height: 90%;
+  padding: 0px 20px;
+  margin-top: 20px;
+  max-width: 70%;
+}
+
+.product-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #e40000;
+}
+
+.product-description {
+  font-size: 1.1rem;
+  color: grey;
+  margin: 0px;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: black;
 }

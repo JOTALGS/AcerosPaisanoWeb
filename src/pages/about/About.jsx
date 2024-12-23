@@ -106,7 +106,7 @@ export const About = () => {
       {/* Footer at the bottom of the page */}
       <footer className="footer">
         <div className="footer-content">
-          <p>© {new Date().getFullYear()} Nombre de la Empresa. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Aceros Paisano. Todos los derechos reservados.</p>
         </div>
       </footer>
     </section>

@@ -1,11 +1,13 @@
 .site-footer {
   background-color: rgb(0, 0, 0);
+  color: white;
   padding: 20px;
   display: flex;
   justify-content: center;
   height: 30vh;
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 40px;
 }
 
 .foot-image {
@@ -19,11 +21,22 @@
   object-fit: cover;
 }
 
-
 .footer-container {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 90%;
+  position: relative;
+}
+
+.footer-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 90%;
+  height: 2px;
+  background: linear-gradient(to left, black 5%, #ff0000 100%);
+  pointer-events: none; /* Ensures it doesn't interfere with user interaction */
 }
 
 .footer-logo {
@@ -37,34 +50,20 @@
 }
 
 .footer-content {
-  flex: 2; /* Right side for text content */
+  flex: 2;
   display: flex;
   justify-content: space-around;
 }
 
 .contact-info, .contact-details {
   display: flex;
+  align-items: start;
+  justify-content: center;
   flex-direction: column;
   transition: all 0.3s ease;
 }
 
-.contact-details p:not(:first-child):hover,
 .contact-details a:hover {
-position: relative;
-cursor: pointer;
-}
-
-.contact-details p:not(:first-child)::after{
-content: '';
-position: absolute;
-left: 0;
-bottom: 0;
-width: 0;
-height: 2px;
-background: #ff0000;
-transition: width 0.2s ease-in-out;
-}
-
-.contact-details p:not(:first-child):hover::after{
-width: 40%;
+  cursor: pointer;
+  color: #ff0000;
 }

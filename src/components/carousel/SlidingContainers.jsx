@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './SlidingContainers.css';
+import { Link } from 'react-router-dom';
 
 const SlidingContainers = () => {
   const items = [
@@ -60,9 +61,11 @@ const SlidingContainers = () => {
               <h3>{item.title}</h3>
               <p>{item.description}</p>
             </div>
-            <button>
-              {item.buttonText}
-            </button>
+            <Link to="/catalogue">
+              <button>
+                {item.buttonText}
+              </button>
+            </Link>
           </div>
         ))}
       </div>

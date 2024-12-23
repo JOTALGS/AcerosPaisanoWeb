@@ -109,7 +109,7 @@ export const Home = () => {
                 </span>
               ))}
             </p>
-            <Link to={"/about"}>
+            <Link to={"/about-us"}>
               <ButtonHoverBg label="Sobre Nosotros" buttonStyles={"about-link-button"} />
             </Link>
           </div>

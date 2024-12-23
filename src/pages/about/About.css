@@ -1,3 +1,91 @@
+@font-face {
+    font-family: "PPObjectSans";
+    src: url("./fonts/PPObjectSans-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 .about {
+    background: #000000;
+    color: white;
     width: 100vw;
+    font-family: "PPObjectSans", Arial, sans-serif;
+    padding-bottom: 100px;
+}
+
+.about-sub-section {
+    margin: 40px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-content {
+    text-align: justify;
+    font-size: 28px;
+}
+
+.text-content.left {
+    align-self: flex-start;
+}
+
+.text-content.right {
+    align-self: flex-end;
+}
+
+.subtitle {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-family: "PPObjectSans", Arial, sans-serif;
+}
+
+.highlighted-text {
+    font-size: 24px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.5s;
+    text-transform: uppercase;
+}
+
+.highlighted-text {
+   max-width: 600px;
+   margin-left:auto;
+   margin-right:auto;
+}
+
+.highlighted-text.active {
+    color: rgb(255, 255, 255);
+}
+
+.image-content {
+    display: none;
+}
+
+.navbar {
+    background: #000000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.about-sub-section .highlighted-text.active {
+    color: rgba(255, 255, 255, 1);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.highlighted-text {
+    animation: fadeIn 1s ease-out;
 }
