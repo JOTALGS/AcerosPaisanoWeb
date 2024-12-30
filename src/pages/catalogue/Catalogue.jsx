@@ -14,31 +14,31 @@ export function Catalogue() {
   const products = [
     {
       id: 1,
+      title: 'Malla Electrosoldada (a medida)',
+      description: 'Malla metálica robusta, fabricada a medida para refuerzos en concreto y estructuras específicas.',
+      price: 'Entregas a: Montevideo',
+      image: './images/image4.jpg',
+    },
+    {
+      id: 2,
       title: 'Barras Lisas (superficie uniforme y lisa)',
       description: 'Barras de acero de alta calidad con superficie lisa, ideales para proyectos estructurales y de construcción.',
       price: 'Entregas a: Montevideo',
       image: './images/image1.jpg',
     },
     {
-      id: 2,
+      id: 3,
       title: 'Barras Conformadas (superficie rugosa)',
       description: 'Barras de acero con textura rugosa, diseñadas para un mejor agarre en concreto y estructuras reforzadas.',
       price: 'Entregas a: Montevideo',
       image: './images/image2.jpg',
     },
     {
-      id: 3,
+      id: 4 ,
       title: 'Alambres Galvanizados (rollo ovalado)',
       description: 'Alambres resistentes a la corrosión, perfectos para cercados, amarres y usos industriales.',
       price: 'Entregas a: Montevideo',
       image: './images/image3.jpg',
-    },
-    {
-      id: 4,
-      title: 'Malla Electrosoldada (a medida)',
-      description: 'Malla metálica robusta, fabricada a medida para refuerzos en concreto y estructuras específicas.',
-      price: 'Entregas a: Montevideo',
-      image: './images/image4.jpg',
     },
     {
       id: 5,

@@ -5,6 +5,11 @@
     font-style: normal;
 }
 
+.right{
+  align-self: flex-end;
+  justify-self: end;
+}
+
 .about {
     background: #000000;
     color: white;
@@ -15,6 +20,7 @@
 
 .about-sub-section {
     margin: 40px 100px;
+    width: 90%;
     display: flex;
     flex-direction: column;
 }
@@ -22,6 +28,7 @@
 .text-content {
     text-align: justify;
     font-size: 28px;
+    width: 35%;
 }
 
 .text-content.left {
@@ -40,23 +47,28 @@
     font-family: "PPObjectSans", Arial, sans-serif;
 }
 
-.highlighted-text {
-    font-size: 24px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.4);
-    transition: color 0.5s;
-    text-transform: uppercase;
-}
+.line-wrapper {
+    position: relative;
+    margin: 0.5em 0;
+    overflow: hidden;
+  }
 
-.highlighted-text {
-   max-width: 600px;
-   margin-left:auto;
-   margin-right:auto;
-}
+.line {
+    display: block;
+    color: #969696;
+    margin: 0;
+  }
 
-.highlighted-text.active {
-    color: rgb(255, 255, 255);
-}
+  .line-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+  }
 
 .image-content {
     display: none;

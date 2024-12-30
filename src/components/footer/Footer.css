@@ -3,8 +3,10 @@
   color: white;
   padding: 20px;
   display: flex;
-  justify-content: center;
-  height: 30vh;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 90vh;
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 40px;
@@ -21,14 +23,16 @@
   object-fit: cover;
 }
 
-.footer-container {
+.footer-top-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 90%;
   position: relative;
+  padding-top: 30px;
 }
 
-.footer-container::after {
+.footer-top-container::after {
   content: '';
   position: absolute;
   top: 0;
@@ -40,7 +44,10 @@
 }
 
 .footer-logo {
-  flex: 1; /* Left column for the image */
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  z-index: 0;
 }
 
 .footer-logo img {
@@ -49,21 +56,111 @@
   margin-left: 50px;
 }
 
+.suscribe-sec {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+}
+
+.suscribe-sec input {
+  width: 400px;
+  padding: 15px 10px;
+  font-size: 1rem;
+  background-color: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid #3d3d3d;
+  color: antiquewhite;
+}
+
+.suscribe-sec input:focus {
+  background-color: rgb(0, 0, 0, 0.2);
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid #adadad;
+  outline: none;
+}
+
+.suscribe-sec button {
+  padding: 10px 20px;
+  background-color: transparent;
+  border: 1px solid #3d3d3d;
+  border-radius: 5px;
+  color: antiquewhite;
+  margin: 0px 10px;
+  transition: background-color 1s ease;
+}
+
+.suscribe-sec button:hover {
+  background-color: white;
+  border: 1px solid #3d3d3d;
+  color: black;
+}
+
+.page-links {
+  display: flex;
+  flex-direction: column;
+  transition: color 1s ease;
+}
+
+.page-links a:hover {
+  color: #ff0000;
+}
+
+.footer-middle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  width: 85%;
+  line-height: 5%;
+}
+
+.footer-contact-button {
+  margin-top: 20px;
+  padding: 5px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #ff0000;
+  border: 1px solid transparent;
+  color: white;
+}
+
+.footer-contact-button:hover {
+  background-color: #ffffff;
+  animation-delay: 1s;
+}
+
+
+.footer-bottom-container {
+  width: 90%;
+}
+
+.footer-ubi {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-right: 5%;
+}
+
+
 .footer-content {
-  flex: 2;
   display: flex;
   justify-content: space-around;
 }
 
 .contact-info, .contact-details {
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 5px;
   transition: all 0.3s ease;
 }
 
-.contact-details a:hover {
+.contact-info a:hover {
   cursor: pointer;
   color: #ff0000;
 }

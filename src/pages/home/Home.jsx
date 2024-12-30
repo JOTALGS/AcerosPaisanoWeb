@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
@@ -6,31 +6,45 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
 import { NavBar } from "../../components/navbar/NavBar";
 import SlidingContainers from "../../components/carousel/SlidingContainers";
+import Modal from "../../components/modal/Modal"
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Home = () => {
   const descubrirRef = useRef()
   const imageRef = useRef()
+  const lineWrapperRef = useRef([])
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const lines = gsap.utils.toArray(".about-description span");
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-    gsap.set(lines, { opacity: 0, y: 30 });
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
-    lines.forEach((line, index) => {
-      gsap.to(line, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: line,
-          start: "top 80%",
-          end: "top 50%",
-          toggleActions: "play none none reverse",
-        },
-      });
+  useLayoutEffect(() => {
+    lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
+    
+    // Animate each line wrapper using its ref
+    lineWrapperRef.current.forEach((wrapper) => {
+      if (wrapper) {
+        const overlay = wrapper.querySelector(".line-overlay");
+        
+        gsap.to(overlay, {
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top center",
+            end: "bottom center",
+            scrub: 1,
+          },
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          ease: "none",
+        });
+      }
     });
+
 
     gsap.fromTo(
       descubrirRef.current,
@@ -60,6 +74,33 @@ export const Home = () => {
       }
     );
   }, []);
+
+  const homeText = "Nuestra empresa es líder en la venta de acero en Uruguay. Contamos con una amplia variedad de productos de acero, ofreciendo soluciones para diferentes sectores como la construcción, automotriz, la industria y la fabricación."
+  const splitText = (text, parts) => {
+    const partLength = Math.ceil(text.length / parts);
+    const result = [];
+    let start = 0;
+  
+    for (let i = 0; i < parts; i++) {
+      let end = start + partLength;
+  
+      if (end < text.length) {
+        while (end > start && text[end] !== " ") {
+          end--;
+        }
+      }
+      result.push(text.substring(start, end).trim());
+      start = end + 1;
+    }
+  
+    if (start < text.length) {
+      result[result.length - 1] += " " + text.substring(start).trim();
+    }
+  
+    return result;
+  };
+  
+  const textParts = splitText(homeText, 6);
 
   return (
     <section id="home" className="home">
@@ -102,13 +143,16 @@ export const Home = () => {
 
         <div className="home-bottom-row">
           <div className="about-intro">
-            <p className="about-description">
-              {"Nuestra empresa es líder en la venta de acero en Uruguay. Contamos con una amplia variedad de productos de acero, ofreciendo soluciones para diferentes sectores como la construcción, automotriz, la industria y la fabricación.".split(" ").map((word, index) => (
-                <span key={index} style={{ display: "inline-block" }}>
-                  {word}&nbsp;
-                </span>
-              ))}
-            </p>
+            {textParts.map((part, index) => (
+              <div ref={el => lineWrapperRef.current[index] = el} className="line-wrapper">
+                <p className="line">
+                  {part}
+                </p>
+                <p className="line-overlay">
+                  {part}
+                </p>
+              </div>
+            ))}
             <Link to={"/about-us"}>
               <ButtonHoverBg label="Sobre Nosotros" buttonStyles={"about-link-button"} />
             </Link>
@@ -117,6 +161,26 @@ export const Home = () => {
         
         <div className="home-products-slider">
           <SlidingContainers />
+        </div>
+
+        <div className="interact">
+          <div className="interact-item" 
+              onClick={() => {
+                handleOpenModal();
+                window.scrollTo(0, 500);
+              }}>
+            <p>Industrias</p>
+          </div>
+          <div className="interact-item" onClick={handleOpenModal}>
+            <p>Mallas electrosoldadas</p>
+          </div>
+
+          {/* Render Modal */}
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+            <h2>Modal Content</h2>
+            <p>This is the content inside the modal.</p>
+            <button onClick={handleCloseModal}>Close</button>
+          </Modal>
         </div>
       </div>
     </section>

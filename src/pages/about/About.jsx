@@ -7,35 +7,28 @@ import { NavBar } from "../../components/navbar/NavBar";
 gsap.registerPlugin(ScrollTrigger);
 
 export const About = () => {
-  const textRefs = useRef([]);
-
   useEffect(() => {
-    textRefs.current.forEach((ref) => {
-      if (ref) {
-        gsap.fromTo(
-          ref,
-          {
-            opacity: 0,
-            y: 40,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            color: "#d6d6d6",
-            duration: 4,
-            delay: 1.5,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: ref, 
-              start: "top 80%",
-              end: "top 30%",
-              scrub: true,
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
+    const lineWrappers = document.querySelectorAll(".line-wrapper");
+
+    lineWrappers.forEach((wrapper) => {
+      const overlay = wrapper.querySelector(".line-overlay");
+
+      gsap.to(overlay, {
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+        },
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        ease: "none",
+      });
     });
+
+    // Cleanup function to remove ScrollTrigger instances
+    return () => {
+      ScrollTrigger.getAll().forEach((instance) => instance.kill());
+    };
   }, []);
 
   const content = [
@@ -84,24 +77,26 @@ export const About = () => {
       <NavBar />
       <div className="intro-about"></div>
 
-      {content.map((section, index) => (
-        <div className="about-sub-section" key={index}>
-          <div className={`text-content ${index % 2 === 0 ? "left" : "right"}`}>
-            <div>
-              <h2 className="subtitle">{section.title}</h2>
-              {section.paragraphs.map((para) => (
-                <p
-                  key={globalIndex}
-                  ref={(el) => (textRefs.current[globalIndex++] = el)}
-                  className="highlighted-text"
-                >
-                  {para}
-                </p>
-              ))}
+      <div className="about-sub-section">
+        {content.map((section, index) => (
+            <div className={`text-content ${index % 2 === 0 ? "left" : "right"}`}>
+              <div>
+                <h2 className="subtitle">{section.title}</h2>
+                {section.paragraphs.map((item) => (
+                  <div key={globalIndex} className="line-wrapper">
+                    <p className="line">
+                      {item}
+                    </p>
+                    <p className="line-overlay">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+        ))}
+
+      </div>
 
       {/* Footer at the bottom of the page */}
       <footer className="footer">
