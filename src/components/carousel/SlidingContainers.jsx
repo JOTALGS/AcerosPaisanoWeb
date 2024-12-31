@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 
 const SlidingContainers = () => {
   const items = [
-    { title: "Alambres Galvanizados", description: "Uso agropecuario, cercos y vallado. Duradero y resistente a la corrosión.", buttonText: "Catálogo" },
     { title: "Estribos a medida", description: "Enderezado, Cortado y doblado. Sin desperdicio metálico. Material etiquetado para identificación en obra", buttonText: "Catálogo" },
     { title: "Barras Lisas", description: "Barras de superficie uniforme y lisa. Cortado a medida. Paquetes por cantidad de varillas", buttonText: "Catálogo" },
     { title: "Barras Conformadas", description: "Barras de superfice en espiral para mejorar su adherencia al concreto. Cortado a medida. Paquetes por cantidad de varillas", buttonText: "Catálogo" },
-    { title: "Mallas Electrosoldadas", description: "Mallas estándar y especiales a medida. Empalmes a medida. Diámetros variados. Asesoramiento Personalizado", buttonText: "Catálogo" },
-    { title: "Servicio 6", description: "Descripción del servicio 6", buttonText: "Catálogo" }
+    { title: "Mallas Electrosoldadas", description: "Mallas estándar y especiales a medida. Empalmes a medida. Diámetros variados. Asesoramiento Personalizado", buttonText: "Catálogo" }
   ];
 
   const containerRef = useRef(null);

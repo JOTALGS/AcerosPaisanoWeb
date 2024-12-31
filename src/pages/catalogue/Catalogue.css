@@ -24,7 +24,7 @@
 }
 
 .filters {
-  border-top: 1px solid #a5a4a4;
+  border: 1px solid #a5a4a4;
   width: 100%;
   padding: 10px;
   transition: position 0.3s ease;
@@ -32,9 +32,36 @@
 }
 
 .filters label {
-  margin: 10px 0;
+  margin: 10px 0px;
+  margin-right: 10px;
   color: #555;
 }
+
+.filters-button {
+  padding: 0px 20px;
+  font-size: 2rem;
+  font-weight: bold !important;
+  color: #000000 !important;
+  background-color: #b8b8b8c5;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.filters-button::after {
+  background-color: #55555548 !important;
+}
+
+.filters-button p {
+  font-size: 1rem;
+}
+
+.filters-button:hover {
+  background-color: #ffffff;
+  border: 1px solid #707070 !important;
+  color: #707070 !important;
+  transition-delay: 0.3s; 
+}
+
 
 /* Products Section */
 .catalogue-products {
@@ -48,23 +75,27 @@
   justify-content: flex-end;
   gap: 10px;
   margin-bottom: 20px;
+  margin: 20px;
 }
 
 .view-toggle button {
-  padding: 0px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 10px;
   font-size: 1rem;
-  border: none;
   background-color: transparent;
-  border: 1px solid rgb(0, 0, 0);
-  color: rgb(0, 0, 0);
+  border: 1px solid #757575;
+  color: #585858;
   cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.5s ease;
 }
 
 .view-toggle button:hover {
-  color: white;
+  color: #000000;
+  background-color: #ffffff;
   border: 1px solid transparent;
-  font-weight: bold;
-  transition-delay: 0.3s;
 }
 
 .view-toggle button::after {
@@ -76,7 +107,7 @@
   display: grid;
   gap: 20px;
   width: 80%;
-  height: 2000px;
+  height: 1500px;
   padding-bottom: 100px;
 }
 

@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
 import { NavBar } from "../../components/navbar/NavBar";
 import SlidingContainers from "../../components/carousel/SlidingContainers";
-import Modal from "../../components/modal/Modal"
+import { HomeModal } from "../../components/homeComponents/HomeModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,16 +14,7 @@ export const Home = () => {
   const descubrirRef = useRef()
   const imageRef = useRef()
   const lineWrapperRef = useRef([])
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
+  
   useLayoutEffect(() => {
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
     
@@ -123,7 +114,7 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <img ref={imageRef} src="./images/heroImage.jpg" alt="Hero Image" className="hero-image" />
+          <img ref={imageRef} src="./images/heroImage.png" alt="Hero Image" className="hero-image" />
         </div>
 
         <div className="home-middle-row">
@@ -163,25 +154,7 @@ export const Home = () => {
           <SlidingContainers />
         </div>
 
-        <div className="interact">
-          <div className="interact-item" 
-              onClick={() => {
-                handleOpenModal();
-                window.scrollTo(0, 500);
-              }}>
-            <p>Industrias</p>
-          </div>
-          <div className="interact-item" onClick={handleOpenModal}>
-            <p>Mallas electrosoldadas</p>
-          </div>
-
-          {/* Render Modal */}
-          <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-            <h2>Modal Content</h2>
-            <p>This is the content inside the modal.</p>
-            <button onClick={handleCloseModal}>Close</button>
-          </Modal>
-        </div>
+        <HomeModal />
       </div>
     </section>
   );
