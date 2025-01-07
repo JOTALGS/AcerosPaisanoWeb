@@ -28,7 +28,7 @@ export const Home = () => {
             trigger: wrapper,
             start: "top center",
             end: "bottom center",
-            scrub: 1,
+            scrub: 5,
           },
           clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
           ease: "none",

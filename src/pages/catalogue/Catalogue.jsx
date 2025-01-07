@@ -39,7 +39,7 @@ export function Catalogue() {
       title: 'Hierro Cortado y Doblado (a medida)',
       description: 'Servicio personalizado de corte y doblado de hierro para cumplir con requisitos precisos en obra.',
       price: 'Entregas a: Montevideo',
-      image: './images/image5.jpg',
+      image: './images/image5.png',
     },
   ];
 
@@ -50,7 +50,7 @@ export function Catalogue() {
       start: "top 10%",
       end: "+=138%",
       pin: true,
-      scrub: 3,
+      scrub: 5,
       pinSpacing: true,
       markers: false,
       onEnter: () => {
