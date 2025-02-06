@@ -5,22 +5,21 @@
 
 .interact {
   height: 90vh;
-  width: 98%;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 20px;
   margin: 50px 10px;
 }
 
 .interact-item {
   width: 50%;
   padding: 20px;
-  border-radius: 10px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.5s ease-in-out, all 0.3s ease-in-out;
   
+  cursor: pointer;
   color: rgb(255, 255, 255);
   font-size: 4rem;
   font-weight: bold;
@@ -32,16 +31,10 @@
 
 .interact-item:hover {
   filter: brightness(0.7);
+  background-color: rgb(255, 0, 0);
   font-size: 4.15rem;
 }
 
-.interact-item:nth-child(1) {
-  background-image: url('/images/industrias.png');
-}
-
-.interact-item:nth-child(2) {
-  background-image: url('/images/mallaElectrosoldada.png');
-}
 
 
 .industrias-container {
