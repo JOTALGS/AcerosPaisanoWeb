@@ -66,8 +66,8 @@ export const Home = () => {
     );
   }, []);
 
-  const homeText = "Nuestra empresa es líder en la venta de acero en Uruguay. Contamos con una amplia variedad de productos de acero, ofreciendo soluciones para diferentes sectores como la construcción, automotriz, la industria y la fabricación."
-  const splitText = (text, parts) => {
+  const homeText = `Donde la calidad y la innovación se unen para redefinir la industria metalúrgica. Ofrecemos una amplia gama de productos con una pasión por la excelencia y un compromiso con la perfección.`;
+    const splitText = (text, parts) => {
     const partLength = Math.ceil(text.length / parts);
     const result = [];
     let start = 0;

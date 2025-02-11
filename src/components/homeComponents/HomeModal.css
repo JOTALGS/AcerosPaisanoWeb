@@ -1,32 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+body {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+}
 
 .no-scroll {
   overflow: hidden;
 }
 
 .interact {
-  height: 90vh;
+  height: 100vh;
   width: 100%;
   display: flex;
+  padding-left: 20px;
   flex-direction: row;
   margin: 50px 10px;
 }
 
 .interact-item {
   width: 50%;
-  padding: 20px;
+  padding: 30px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: background-color 0.5s ease-in-out, all 0.3s ease-in-out;
-  
+  transition: background-color .5s ease-in-out;
+  font-family: 'Anton', sans-serif;
   cursor: pointer;
   color: rgb(255, 255, 255);
   font-size: 4rem;
-  font-weight: bold;
+  font-weight: 400;
   display: flex;
-  align-items: end;
-  justify-content: center;
-  text-transform: uppercase;
+  align-items: top;
 }
 
 .interact-item:hover {
@@ -35,19 +40,171 @@
   font-size: 4.15rem;
 }
 
-
-
 .industrias-container {
-  height: 95%;
-  width: 45%;
+  font-family: 'Anton', sans-serif;
+  font-weight: 300;
+  height: 100%;
+  width: 40%;
   display: flex;
   align-self: flex-end;
   justify-self: flex-end;
   text-align: start;
   flex-direction: column;
-  justify-content: start;
-  padding: 10px 50px;
-  font-size: 2rem;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.industrias-container div:hover h2 {
+  color: white;
+}
+
+.industrias-container div:hover .modal-description {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+.images {
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.images img {
+  position: absolute;
+  left: -90%;
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.cyaind-container {
+  position: relative;
+}
+
+.cyaind-container:hover h2 {
+  color: white;
+}
+
+.cya img {
+  top: -100px;
+}
+
+.cyaind-container:hover .cya {
+  opacity: 1;
+  transform: translateX(100px);
+  pointer-events: auto;
+}
+
+.aytind-container {
+  position: relative;
+}
+
+.aytind-container:hover h2 {
+  color: white;
+}
+
+.ayt img {
+  top: -130px;
+}
+
+.aytind-container:hover .ayt {
+  opacity: 1;
+  transform: translateX(100px);
+  pointer-events: auto;
+}
+
+.eind-container {
+  position: relative;
+}
+
+.eind-container:hover h2 {
+  color: white;
+}
+
+.eind img {
+  top: -160px;
+}
+
+.eind-container:hover .eind {
+  opacity: 1;
+  transform: translateX(100px);
+  pointer-events: auto;
+}
+
+.mfind-container {
+  position: relative;
+}
+
+.mfind-container:hover h2 {
+  color: white;
+}
+
+.mfi img {
+  top: -190px;
+}
+
+.mfind-container:hover .mfi {
+  opacity: 1;
+  transform: translateX(100px);
+  pointer-events: auto;
+}
+
+.aind-container {
+  position: relative;
+}
+
+.aind-container:hover h2 {
+  color: white;
+}
+
+.aind img {
+  top: -210px;
+}
+
+.aind-container:hover .aind {
+  opacity: 1;
+  transform: translateX(100px);
+  pointer-events: auto;
+}
+
+.mallas-container {
+  font-family: 'Anton', sans-serif;
+  font-weight: 300;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  align-self: flex-end;
+  justify-self: flex-end;
+  text-align: start;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.mallas-container div:hover h2 {
+  color: white;
+}
+
+.mallas-container div:hover .modal-description {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.modal-description {
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #666;
+  line-height: 1;
 }
 
 .images {
@@ -67,76 +224,15 @@
   border-radius: 10px;
 }
 
-.cyaind-container {
+.mallas-container div {
   position: relative;
-}
-.cyaind-container:hover h2 {
-  color: white;
-}
-.cya img{
-  top: -100px;
-}
-.cyaind-container:hover .cya {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
 }
 
-.aytind-container {
-  position: relative;
-}
-.aytind-container:hover h2 {
+.mallas-container div:hover h2 {
   color: white;
-}
-.ayt img{
-  top: -130px;
-}
-.aytind-container:hover .ayt {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
 }
 
-.eind-container {
-  position: relative;
-}
-.eind-container:hover h2 {
-  color: white;
-}
-.eind img{
-  top: -160px;
-}
-.eind-container:hover .eind {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
-}
-
-.mfind-container {
-  position: relative;
-}
-.mfind-container:hover h2 {
-  color: white;
-}
-.mfi img{
-  top: -190px;
-}
-.mfind-container:hover .mfi {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
-}
-
-.aind-container {
-  position: relative;
-}
-.aind-container:hover h2 {
-  color: white;
-}
-.aind img{
-  top: -210px;
-}
-.aind-container:hover .aind {
+.mallas-container div:hover .images {
   opacity: 1;
   transform: translateX(100px);
   pointer-events: auto;

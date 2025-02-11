@@ -1,40 +1,54 @@
 .catalogue {
   width: 100vw;
+  position: relative;
+  background-color: #000000;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .catalogue-container {
+  margin-top: -50px;
   display: flex;
-  height: fit-content;
-  background-color: #cccccc;
+  height: auto;
+  background-color: #000000;
+  position: relative;
+   z-index: 1;
 }
 
 .catalogue-filters {
-  width: 25vw;
-  padding: 20px;
+  width: 40vw;
+  padding: 0px;
+  position: relative; /* Ensure relative positioning */
+  min-height: 100vh; /* Ensure full height */
 }
 
 .catalogue-filters h2 {
-  font-size: 6rem;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 8rem;
+  margin-bottom: 90px; /* Increased margin-bottom to 80px */
+  color: #ffffff;
+  white-space: nowrap;
+  position: absolute;
+  top: 20px;  /* Position below NavBar */
+  left: 20px;
+  z-index: 1;
 }
 
 .filters-container {
-  padding-top: 100px;
+  padding-top: 150px; /* Increased padding-top to 150px */
+  position: relative; /* Needed for correct positioning */
+  z-index: 2; /* Ensure it's above the title */
 }
 
 .filters {
-  border: 1px solid #a5a4a4;
   width: 100%;
   padding: 10px;
-  transition: position 0.3s ease;
-  transition: width 0.3s ease;
+  transition: width 0.5s ease;
 }
 
 .filters label {
   margin: 10px 0px;
   margin-right: 10px;
-  color: #555;
+  color: #ffffff;
 }
 
 .filters-button {
@@ -42,13 +56,14 @@
   font-size: 2rem;
   font-weight: bold !important;
   color: #000000 !important;
-  background-color: #b8b8b8c5;
+  background-color: #ff0000;
   border: 1px solid transparent;
   border-radius: 3px;
   cursor: pointer;
 }
+
 .filters-button::after {
-  background-color: #55555548 !important;
+  background-color: #ffffff !important;
 }
 
 .filters-button p {
@@ -57,17 +72,16 @@
 
 .filters-button:hover {
   background-color: #ffffff;
-  border: 1px solid #707070 !important;
+  border: 1px solid #ffffff !important;
   color: #707070 !important;
-  transition-delay: 0.3s; 
+  transition-delay: 0.3s;
 }
-
 
 /* Products Section */
 .catalogue-products {
   flex-grow: 1;
   padding: 20px;
-  padding-top: 120px;
+  padding-top: 80px; /* Increased top padding */
 }
 
 .view-toggle {
@@ -84,61 +98,69 @@
   gap: 15px;
   padding: 10px 10px;
   font-size: 1rem;
-  background-color: transparent;
-  border: 1px solid #757575;
-  color: #585858;
+  background-color: #333;
+  border: 1px solid #ffffff;
+  color: #ffffff;
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.5s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .view-toggle button:hover {
   color: #000000;
   background-color: #ffffff;
-  border: 1px solid transparent;
+  border: 1px solid #000000;
+}
+
+.view-toggle button svg {
+  fill: #ffffff;
+}
+
+.view-toggle button:hover svg {
+  fill: #000000;
 }
 
 .view-toggle button::after {
-  background-color: #bb0000 !important;
+  background-color: #ffffff !important;
 }
 
 /* Products List */
 .products-list {
   display: grid;
-  gap: 20px;
+  gap: 30px;
   width: 80%;
-  height: 1500px;
+  height: auto;
   padding-bottom: 100px;
+  margin-left: 10%; /* Empuja hacia la derecha */
 }
 
+
 .products-list.grid {
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .products-list.list {
-  grid-template-columns: 1fr; /* Single column for list layout */
+  grid-template-columns: 1fr;
 }
 
 /* Product Item */
 .product-item {
-  background-color: transparent; /* Transparent background */
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid #afafaf;
-  padding: 10px;
-  width: 100%;
-  height: 100%;
+  background-color: #111;
+  border-bottom: 1px solid #333;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.product-item:hover {
+  background-color: #222;
 }
 
 .product-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border: 1px solid #b9b9b9;
+  border: 1px solid #333;
 }
 
 .product-item.list {
-  flex-direction: row; /* Horizontal layout for list view */
+  flex-direction: row;
   align-items: center;
 }
 
@@ -172,11 +194,57 @@
 
 .product-description {
   font-size: 1.1rem;
-  color: grey;
-  margin: 0px;
+  color: #cccccc;
+  margin: 10px 0;
 }
 
 .product-price {
   font-size: 1rem;
-  color: black;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Product Item */
+.product-item {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #afafaf;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.product-item img {
+  width: 100%;
+  height: 100%; /* Set a fixed height */
+  object-fit: cover;
+  border: 1px solid #fdfdfd;
+}
+
+.product-item.list {
+  flex-direction: row;
+  align-items: center;
+}
+
+.product-item.list img {
+  width: 25%;
+  height: auto; /* Adjust height to maintain aspect ratio */
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin-right: 20px;
+  margin-top: 0;
+  border-radius: 5px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: flex-start;
+  height: 100%;
+  padding: 0px 20px;
+  margin-top: 0;
+  max-width: 70%;
 }

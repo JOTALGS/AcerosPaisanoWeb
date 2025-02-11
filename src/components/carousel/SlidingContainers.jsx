@@ -1,13 +1,29 @@
 import React, { useRef, useEffect } from 'react';
-import './SlidingContainers.css';
 import { Link } from 'react-router-dom';
+import './SlidingContainers.css';
 
 const SlidingContainers = () => {
   const items = [
-    { title: "Estribos a medida", description: "Enderezado, Cortado y doblado. Sin desperdicio metálico. Material etiquetado para identificación en obra", buttonText: "Catálogo" },
-    { title: "Barras Lisas", description: "Barras de superficie uniforme y lisa. Cortado a medida. Paquetes por cantidad de varillas", buttonText: "Catálogo" },
-    { title: "Barras Conformadas", description: "Barras de superfice en espiral para mejorar su adherencia al concreto. Cortado a medida. Paquetes por cantidad de varillas", buttonText: "Catálogo" },
-    { title: "Mallas Electrosoldadas", description: "Mallas estándar y especiales a medida. Empalmes a medida. Diámetros variados. Asesoramiento Personalizado", buttonText: "Catálogo" }
+    {
+      title: "Encuentra tu Sucursal",
+      description: "Red de 8 almacenes regionales y distribuidores de confianza para entregar nuestros productos cuando los necesites.",
+      buttonText: "Encontrar Ahora"
+    },
+    {
+      title: "Gama Premium",
+      description: "Productos de acero de alta calidad diseñados para cumplir con los más altos estándares de la industria.",
+      buttonText: "Explorar Productos"
+    },
+    {
+      title: "Centro de Recursos",
+      description: "Accede a documentación técnica, certificaciones y las últimas novedades del sector.",
+      buttonText: "Acceder"
+    },
+    {
+      title: "Contáctanos",
+      description: "Equipo de expertos disponible para asesorarte en tu próximo proyecto.",
+      buttonText: "Contactar"
+    }
   ];
 
   const containerRef = useRef(null);
@@ -20,13 +36,12 @@ const SlidingContainers = () => {
 
     const animate = () => {
       if (!isPaused) {
-        positionRef.current -= 1;
-        
-        // Reset position when containers have moved one full width
+        positionRef.current -= 2; // Aumentada la velocidad de 1 a 2
+
         if (positionRef.current <= -(container.scrollWidth / 2)) {
           positionRef.current = 0;
         }
-        
+
         container.style.transform = `translateX(${positionRef.current}px)`;
       }
       animationFrameId = requestAnimationFrame(animate);
@@ -39,7 +54,6 @@ const SlidingContainers = () => {
     };
   }, [isPaused]);
 
-  // Duplicate items to create seamless infinite scroll effect
   const allItems = [...items, ...items];
 
   return (
