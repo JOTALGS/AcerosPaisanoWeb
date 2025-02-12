@@ -45,6 +45,7 @@ body {
   font-weight: 300;
   height: 100%;
   width: 40%;
+  margin-top: 50px;
   display: flex;
   align-self: flex-end;
   justify-self: flex-end;
@@ -58,6 +59,12 @@ body {
   letter-spacing: -1px;
 }
 
+.images-container {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+}
+
 .industrias-container div:hover h2 {
   color: white;
 }
@@ -66,111 +73,17 @@ body {
   color: white;
   transition: color 0.3s ease-in-out;
 }
-.images {
-  display: flex;
-  gap: 10px;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.5s ease-in-out;
-}
 
 .images img {
-  position: absolute;
-  left: -90%;
+  position: fixed;
   width: 400px;
   height: 400px;
   object-fit: cover;
   border-radius: 5px;
 }
 
-.cyaind-container {
-  position: relative;
-}
-
-.cyaind-container:hover h2 {
-  color: white;
-}
-
-.cya img {
-  top: -100px;
-}
-
-.cyaind-container:hover .cya {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
-}
-
-.aytind-container {
-  position: relative;
-}
-
-.aytind-container:hover h2 {
-  color: white;
-}
-
-.ayt img {
-  top: -130px;
-}
-
-.aytind-container:hover .ayt {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
-}
-
-.eind-container {
-  position: relative;
-}
-
-.eind-container:hover h2 {
-  color: white;
-}
-
-.eind img {
-  top: -160px;
-}
-
-.eind-container:hover .eind {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
-}
-
-.mfind-container {
-  position: relative;
-}
-
-.mfind-container:hover h2 {
-  color: white;
-}
-
-.mfi img {
-  top: -190px;
-}
-
-.mfind-container:hover .mfi {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
-}
-
-.aind-container {
-  position: relative;
-}
-
-.aind-container:hover h2 {
-  color: white;
-}
-
-.aind img {
-  top: -210px;
-}
-
-.aind-container:hover .aind {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
+.images {
+  opacity: 0;
 }
 
 .mallas-container {
@@ -205,35 +118,4 @@ body {
   font-size: 1.5rem;
   color: #666;
   line-height: 1;
-}
-
-.images {
-  display: flex;
-  gap: 10px;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.5s ease-in-out;
-}
-
-.images img {
-  position: absolute;
-  left: -90%;
-  width: 400px;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.mallas-container div {
-  position: relative;
-}
-
-.mallas-container div:hover h2 {
-  color: white;
-}
-
-.mallas-container div:hover .images {
-  opacity: 1;
-  transform: translateX(100px);
-  pointer-events: auto;
 }

@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { Typography, Box } from "@mui/material";
+import { Footer } from '../../components/footer/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -229,6 +230,7 @@ export function Catalogue() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </section>
     );
 }

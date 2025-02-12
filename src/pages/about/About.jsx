@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
 import { NavBar } from "../../components/navbar/NavBar";
+import { Footer } from "../../components/footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,7 +85,7 @@ export const About = () => {
                 <h2 className="subtitle">{section.title}</h2>
                 {section.paragraphs.map((item) => (
                   <div key={globalIndex} className="line-wrapper">
-                    <p className="line">
+                    <p className="line" style={{ color: "#3a3a3a"}}>
                       {item}
                     </p>
                     <p className="line-overlay">
@@ -97,10 +98,7 @@ export const About = () => {
         ))}
 
       </div>
-
-      {/* Footer at the bottom of the page */}
-      <footer className="footer">
-      </footer>
+      <Footer />
     </section>
   );
 };

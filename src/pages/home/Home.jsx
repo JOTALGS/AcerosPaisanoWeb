@@ -7,6 +7,7 @@ import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
 import { NavBar } from "../../components/navbar/NavBar";
 import SlidingContainers from "../../components/carousel/SlidingContainers";
 import { HomeModal } from "../../components/homeComponents/HomeModal";
+import { Footer } from "../../components/footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -105,7 +106,7 @@ export const Home = () => {
       </div>
 
       {/* Container for the home section */}
-      <div className="home-container">
+      <div className="home-container" style={{ zIndex: 1 }}>
         <div className="top">
           <div className="home-top-row">
             <div className="home-top-grid">
@@ -136,7 +137,7 @@ export const Home = () => {
           <div className="about-intro">
             {textParts.map((part, index) => (
               <div ref={el => lineWrapperRef.current[index] = el} className="line-wrapper">
-                <p className="line">
+                <p className="line" style={{ color: "#3a3a3a"}}>
                   {part}
                 </p>
                 <p className="line-overlay">
@@ -156,6 +157,7 @@ export const Home = () => {
 
         <HomeModal />
       </div>
+      <Footer />
     </section>
   );
 };

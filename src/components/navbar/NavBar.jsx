@@ -15,7 +15,7 @@ export const NavBar = () => {
   };
 
   return (
-    <header className="site__header">
+    <header className="site__header" style={{ zIndex: 0 }}>
       <div className="container_header">
         <div className="logo-container">
           <img src="./faviconBlack.ico" alt="red logo" />

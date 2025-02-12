@@ -73,7 +73,12 @@ const SlidingContainers = () => {
               <h3>{item.title}</h3>
               <p>{item.description}</p>
             </div>
-            <Link to="/catalogue">
+            <Link
+              to="/catalogue"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
               <button>
                 {item.buttonText}
               </button>

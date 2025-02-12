@@ -14,6 +14,7 @@ export const Contact = () => {
     <section id="about" className="about">
       <NavBar />
       <ContactComponent />
+      <Footer />
     </section>
   );
 };

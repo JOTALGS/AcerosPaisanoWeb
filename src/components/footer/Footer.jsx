@@ -68,7 +68,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="footer-middle-container">
+        <div className="footer-middle-container" style={{ zIndex: 0 }}>
           <h3>Ponte en contacto con a nuestro equipo</h3>
           <h3>de administracion y ventas</h3>
           <Link to='/contact'>
