@@ -17,8 +17,11 @@ export const NavBar = () => {
   return (
     <header className="site__header" style={{ zIndex: 0 }}>
       <div className="container_header">
-        <div className="logo-container">
-          <img src="./faviconBlack.ico" alt="red logo" />
+      <div className="navbar-logo">
+            <video autoPlay loop muted playsInline className="w-full h-auto">
+                <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
+                Tu navegador no soporta videos.
+            </video>
         </div>
         <button className="hamburger" aria-label="Toggle navigation" onClick={toggleMenu}>
           &#9776;
@@ -32,7 +35,7 @@ export const NavBar = () => {
               <Link to="/about-us">Sobre Nosotros</Link>
             </li>
             <li>
-              <Link to="/catalogue">Catálogo</Link>
+              <Link to="/catalogue">Productos</Link>
             </li>
             <li>
               <Link to="/contact">Contacto</Link>

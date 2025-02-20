@@ -1,105 +1,110 @@
-import React, { useEffect, useRef } from "react";
-import "./Footer.css";
+import React from "react";
 import { Link } from "react-router-dom";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ButtonHoverBg from "../CustomButton/ButtonHoverBg";
-
-gsap.registerPlugin(ScrollTrigger);
+import "./Footer.css";
 
 export const Footer = () => {
-  const footerRef = useRef()
-  const bottomSecRef = useRef()
-
-
   return (
-    <section>
-      <footer ref={footerRef} className="site-footer">
-        <div className="footer-top-container">
-          {/* Left side image */}
-          <div className="footer-logo">
-            <img src="./images/paisanologoblack.jpg" alt="Paisano logo" />
-          </div>
+    <footer className="site-footer">
+      <div className="footer-grid">
+        <div className="footer-column">
+          <h3>Descubri</h3>
+          <nav className="footer-nav">
+            <Link to="/">Home</Link>
+            <Link to="/catalogue">Productos</Link>
+            <Link to="/distribution">Encuéntranos</Link>
+            <Link to="/about-us">Sobre nosotros</Link>
+            <Link to="/contact">Contáctanos</Link>
+          </nav>
+        </div>
 
-          {/* Right side contact information */}
-          <div className="footer-content">
-            <div className="suscribe-sec">
-              <p>Recibe las ultimas noticias</p>
-              <div>
-                <input type="text" placeholder="email@example.com" />
-                <button>OK</button>
+        <div className="footer-column">
+          <h3>Recursos</h3>
+          <nav className="footer-nav">
+            <Link to="/media-kit">Media Kit</Link>
+            <Link to="/safety-data">Material Safety Data</Link>
+            <Link to="/technical-data">Technical Data</Link>
+            <Link to="/product-images">Search Product Images</Link>
+          </nav>
+        </div>
+
+        <div className="footer-column company-info">
+          <h3>Encontranos</h3>
+          <div className="company-details">
+            <p>Aceros Paisano S.A.</p>
+            <div className="address-tooltip-container">
+              <div className="address-text">
+                <p>Ruta 5 KM 25.500</p>
+                <p>Canelones, Las Piedras</p>
+                <p>Uruguay</p>
+              </div>
+              <div className="map-tooltip">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3274.9391391583386!2d-56.2419389!3d-34.7006919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a1cd0dee1b74d7%3A0x9d3355e7c66adcd2!2sAcerospaisano%20S.A.!5e0!3m2!1sen!2s!4v1708473443787!5m2!1sen!2s"
+                  width="300"
+                  height="200"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <a 
+                  href="https://www.google.com/maps/place/Acerospaisano+S.A./@-34.7006919,-56.2419389,17z"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="map-link"
+                >
+                  Ver en Google Maps
+                </a>
               </div>
             </div>
           </div>
 
-          <div className="page-links">
-            <Link
-              to="/"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              Home
-            </Link>
-            <Link
-              to="/about-us"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              Sobre Nosotros
-            </Link>
-            <Link
-              to="/catalogue"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              Catálogo
-            </Link>
-            <Link
-              to="/contact"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              Contacto
-            </Link>
+          <div className="contact-section">
+            <h3>Contacto</h3>
+            <a href="tel:+59823650000">+598 2365 0000</a>
+            <a href="tel:+59823657189">+598 2365 7189</a>
+            <a href="mailto:ventas@acerospaisano.com.uy">ventas@acerospaisano.com.uy</a>
           </div>
         </div>
 
-        <div className="footer-middle-container" style={{ zIndex: 0 }}>
-          <h3>Ponte en contacto con a nuestro equipo</h3>
-          <h3>de administracion y ventas</h3>
-          <Link to='/contact'>
-            <ButtonHoverBg label={'Contacto'}  buttonStyles={"footer-contact-button"}/>
-          </Link>
+        <div className="footer-column socials">
+          <h3>Redes</h3>
+          <nav className="footer-nav">
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+          </nav>
         </div>
+      </div>
 
-        <div ref={bottomSecRef} className="footer-bottom-container">
-          <div className="footer-ubi">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.1779293687855!2d-56.241938923516535!3d-34.70069187291958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a1cd0dee1b74d7%3A0x9d3355e7c66adcd2!2sAcerospaisano%20S.A.!5e0!3m2!1sen!2suy!4v1734893201753!5m2!1sen!2suy" width="400" height="250" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-          <div className="footer-content">
-            <div className="contact-info">
-              <p><strong>Teléfono:</strong></p>
-              <a href="https://wa.me/59823650000"><p>+598 2365 0000</p></a>
-              <a href="https://wa.me/59823657189"><p>+598 2365 7189</p></a>
-            </div>
-            <div className="contact-info">
-              <h4><strong>E-mail:</strong></h4>
-              <p><a href="mailto:ventas@acerospaisano.com.uy">ventas@acerospaisano.com.uy</a></p>
-            </div>
-            <div className="contact-info">
-              <p><strong>Dirección:</strong> Ruta 5 KM 25.500</p>
-              <p>Canelones, Las Piedras, Uruguay</p>
-            </div>
-          {/* Left side image */}
+      <div className="background-video">
+        <video autoPlay loop muted playsInline>
+          <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
+          Tu navegador no admite videos.
+        </video>
+      </div>
 
-          {/* Right side contact information */}
-          </div>
+      <div className="footer-legal-top">
+        <div className="footer-legal-top-left">
+          <select defaultValue="es">
+            <option value="es">Idioma</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
         </div>
-      </footer>
-    </section>
+        <div className="footer-legal-top-right">
+          <Link to="/terms">Terminos & Condiciones</Link>
+          <Link to="/privacy">Politica de Privaciad</Link>
+        </div>
+      </div>
+
+      <div className="footer-divider"></div>
+
+      <div className="footer-copyright-container">
+        <div className="footer-copyright-left">©2025 Aceros Paisano S.A.</div>
+        <div className="footer-copyright-right">Todos los Derechos Reservados.</div>
+      </div>
+    </footer>
   );
 };
+
+export default Footer;

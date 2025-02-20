@@ -46,7 +46,7 @@ export const HomeModal = () => {
   return (
     <div className="interact" style={{ zIndex: 1000 }}>
       <div className="interact-item" onClick={() => {handleOpenModal("industrias");}}>
-        <p>Industrias</p>
+        <p>Hierro cortado y doblado</p>
       </div>
       <div className="interact-item" onClick={() => {handleOpenModal("mallas");}}>
         <p>Mallas electrosoldadas</p>

@@ -156,3 +156,12 @@ a {
     display: block; /* Show dropdown on click for mobile */
   }
 }
+
+.navbar-logo video {
+  width: 75px; /* Ajusta el ancho del video */
+  height: auto; /* Mantiene la proporción */
+  max-width: 100%; /* Asegura que no se salga del contenedor */
+  border-radius: 10px; /* Bordes redondeados (opcional) */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sutil sombra (opcional) */
+  margin-left: 20px; /* Mantén la alineación */
+}
