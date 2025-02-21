@@ -78,16 +78,16 @@ export const HomeModal = () => {
             </div>
             <div className='images-container'>
               <div className="images cyaind">
-                <img src='./images/constru.png' alt="Construcción y Arquitectura" />
+                <img src='./images/doblado2.jpg' alt="Construcción y Arquitectura" />
               </div>
               <div className="images eind">
-                <img src='./images/energia.png' alt="Industria Energética" />
+                <img src='./images/doblado6.jpg' alt="Industria Energética" />
               </div>
               <div className="images mfind">
-                  <img src='./images/industria.png' alt="Manufactura Industrial" />
+                  <img src='./images/doblado4.jpg' alt="Manufactura Industrial" />
               </div>
               <div className="images aind">
-                <img src='./images/agro.png' alt="Industria Agropecuaria" />
+                <img src='./images/doblado5.jpg' alt="Industria Agropecuaria" />
               </div>
             </div>
           </div>
@@ -119,19 +119,19 @@ export const HomeModal = () => {
             </div>
             <div className='images-container'>
               <div className="images certificada">
-                <img src='./images/constru.png' alt="Construcción y Arquitectura" />
+                <img src='./images/certificado1.jpg' alt="Construcción y Arquitectura" />
               </div>
               <div className="images medidas">
-                <img src='./images/energia.png' alt="Industria Energética" />
+                <img src='./images/mallas3.jpg' alt="Industria Energética" />
               </div>
               <div className="images diametros">
-                  <img src='./images/industria.png' alt="Manufactura Industrial" />
+                  <img src='./images/mallas4.jpg' alt="Manufactura Industrial" />
               </div>
               <div className="images presentacion">
-                <img src='./images/agro.png' alt="Industria Agropecuaria" />
+                <img src='./images/mallas2.jpg' alt="Industria Agropecuaria" />
               </div>
               <div className="images diseno">
-                <img src='./images/agro.png' alt="Industria Agropecuaria" />
+                <img src='./images/mallas6.jpg' alt="Industria Agropecuaria" />
               </div>
             </div>
           </div>
