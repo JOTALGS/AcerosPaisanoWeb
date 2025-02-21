@@ -5,6 +5,7 @@ import "./About.css";
 import { NavBar } from "../../components/navbar/NavBar";
 import { Footer } from "../../components/footer/Footer";
 import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
+import { Box } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,58 +83,53 @@ export const About = () => {
       <div className="about-sub-section">
         {content.slice(0, 3).map((section, index) => (
           <div key={index} className={`text-content ${index % 2 === 0 ? "left" : "right"}`}>
-            <div>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"space-between"}
+              height={"600px"}
+            >
               <h2 className="subtitle">{section.title}</h2>
-              {section.paragraphs.map((item, i) => (
-                <div key={i} className="line-wrapper">
-                  <p className="line" style={{ color: "#3a3a3a" }}>
-                    {item}
-                  </p>
-                  <p className="line-overlay">
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
+              <Box>
+                {section.paragraphs.map((item, i) => (
+                  <div key={i} className="line-wrapper">
+                    <p className="line" style={{ color: "#3a3a3a" }}>
+                      {item}
+                    </p>
+                    <p className="line-overlay">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </Box>
+            </Box>
           </div>
         ))}
-
-        {/* Insert ParallaxBox after the first three */}
-        <ParallaxBox 
-          image="/images/about1.jpg" 
-          title="" 
-          titleColor="text.primary" 
-          titleLeft="2%" 
-          titleBottom="10%" 
-        />
 
         {content.slice(3).map((section, index) => (
           <div key={index + 3} className={`text-content ${(index + 3) % 2 === 0 ? "left" : "right"}`}>
-            <div>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"space-between"}
+              height={"600px"}
+            >
               <h2 className="subtitle">{section.title}</h2>
-              {section.paragraphs.map((item, i) => (
-                <div key={i} className="line-wrapper">
-                  <p className="line" style={{ color: "#3a3a3a" }}>
-                    {item}
-                  </p>
-                  <p className="line-overlay">
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
+              <Box>
+                {section.paragraphs.map((item, i) => (
+                  <div key={i} className="line-wrapper">
+                    <p className="line" style={{ color: "#3a3a3a" }}>
+                      {item}
+                    </p>
+                    <p className="line-overlay">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </Box>
+            </Box>
           </div>
         ))}
-
-        {/* Insert ParallaxBox at the end */}
-        <ParallaxBox 
-          image="/images/about3.jpg" 
-          title="" 
-          titleColor="text.primary" 
-          titleLeft="2%" 
-          titleBottom="10%" 
-        />
-
       </div>
       <Footer />
     </section>

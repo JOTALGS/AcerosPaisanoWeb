@@ -12,9 +12,9 @@ export default function ParallaxBox({ image, title, titleColor, titleLeft = "2%"
   useEffect(() => {
     gsap.fromTo(
       boxRef.current,
-      { backgroundPosition: "50% 150%" },
+      { backgroundPosition: "0% 0%" },
       {
-        backgroundPosition: "50% -50%",
+        backgroundPosition: "0% 100%",
         ease: "none",
         scrollTrigger: {
           trigger: boxRef.current,
@@ -31,10 +31,10 @@ export default function ParallaxBox({ image, title, titleColor, titleLeft = "2%"
       ref={boxRef}
       sx={{
         width: "100vw",
-        height: "80vh",
+        height: "75vh",
         marginTop: "40px",
         marginBottom: "40px",
-        marginLeft: "-100px",
+        marginLeft: "0px",
         backgroundImage: `url(${image})`,
         backgroundSize: "cover",
         backgroundPosition: "50% 50%",

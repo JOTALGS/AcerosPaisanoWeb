@@ -13,7 +13,6 @@ body {
   height: 100vh;
   width: 100%;
   display: flex;
-  padding-left: 20px;
   flex-direction: row;
   margin: 50px 10px;
 }
@@ -36,7 +35,7 @@ body {
 
 .interact-item:hover {
   filter: brightness(0.7);
-  background-color: rgb(255, 0, 0);
+  background-color: #EE2737;
   font-size: 4.15rem;
 }
 
@@ -76,8 +75,10 @@ body {
 
 .images img {
   position: fixed;
-  width: 400px;
-  height: 400px;
+  top: -250px;
+  left: -250px;
+  width: 1000px;
+  height: 1000px;
   object-fit: cover;
   border-radius: 5px;
 }

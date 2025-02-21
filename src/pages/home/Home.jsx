@@ -8,6 +8,7 @@ import { NavBar } from "../../components/navbar/NavBar";
 import SlidingContainers from "../../components/carousel/SlidingContainers";
 import { HomeModal } from "../../components/homeComponents/HomeModal";
 import { Footer } from "../../components/footer/Footer";
+import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -154,6 +155,15 @@ export const Home = () => {
         <div className="home-products-slider">
           <SlidingContainers />
         </div>
+
+        {/* Insert ParallaxBox after the first three */}
+        <ParallaxBox 
+          image="/images/about1.jpg" 
+          title="" 
+          titleColor="text.primary" 
+          titleLeft="2%" 
+          titleBottom="10%" 
+        />
 
         <HomeModal />
       </div>

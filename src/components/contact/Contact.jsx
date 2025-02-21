@@ -57,10 +57,10 @@ const ContactComponent = ({ isPage = false }) => {
     tl.fromTo(formRef.current, { y: "0" }, { y: "180px", duration: 1.5, ease: "power3.out" });
   }, []);
 
-  const redIntensity = "#E40000";
+  const redIntensity = "#EE2737";
 
   return (
-    <Box paddingBottom="60px">
+    <Box paddingBottom="100px">
       <Box position="absolute" zIndex={0}>
         <Typography variant="h2" fontSize="120px" fontFamily={"Outfit"} fontWeight={300} color="#fff">
           Contáctanos
@@ -93,7 +93,7 @@ const ContactComponent = ({ isPage = false }) => {
           <Grid padding="40px" display="flex" flexDirection="column" alignItems="start" spacing={2}>
             <Grid paddingTop="20px" xs={12}>
               <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                TU NOMBRE
+                NOMBRE
               </Typography>
             </Grid>
             <Grid width="90%" padding="10px 0" xs={12}>
@@ -105,12 +105,12 @@ const ContactComponent = ({ isPage = false }) => {
                 onChange={handleChange}
                 sx={{
                   width: "100%",
-                  color: "text.primary",
+                  color: "#991923",
                   input: { color: "#fff", borderRadius: 0 },
                   "& textarea": { color: "#fff", borderRadius: 0 },
                   "&:before": { borderBottom: "1px solid #d3d3d3" },
                   "&:hover:before": { borderBottom: redIntensity },
-                  "&:focus:before": { borderBottom: redIntensity },
+                  "&:after": { borderBottom: "2px solid #991923" },
                 }}
               />
             </Grid>
@@ -129,12 +129,12 @@ const ContactComponent = ({ isPage = false }) => {
                 onChange={handleChange}
                 sx={{
                   width: "100%",
-                  color: "text.primary",
+                  color: "#991923",
                   input: { color: "#fff", borderRadius: 0 },
                   "& textarea": { color: "#fff", borderRadius: 0 },
                   "&:before": { borderBottom: "1px solid #d3d3d3" },
                   "&:hover:before": { borderBottom: redIntensity },
-                  "&:focus:before": { borderBottom: redIntensity },
+                  "&:after": { borderBottom: "2px solid #991923" },
                 }}
               />
             </Grid>
@@ -149,67 +149,50 @@ const ContactComponent = ({ isPage = false }) => {
                 type="text"
                 placeholder="Empresa (Opcional)"
                 name="company"
-                value={formData.name}
+                value={formData.company}
                 onChange={handleChange}
+                disableUnderline={false}
                 sx={{
                   width: "100%",
-                  color: "text.primary",
+                  color: "#991923",
                   input: { color: "#fff", borderRadius: 0 },
                   "& textarea": { color: "#fff", borderRadius: 0 },
                   "&:before": { borderBottom: "1px solid #d3d3d3" },
                   "&:hover:before": { borderBottom: redIntensity },
-                  "&:focus:before": { borderBottom: redIntensity },
+                  "&:after": { borderBottom: "2px solid #991923" },
                 }}
               />
             </Grid>
-
             <Grid paddingTop="20px" xs={12}>
               <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                 PRODUCTOS Y SERVICIOS
               </Typography>
             </Grid>
             <Grid width="90%" padding="10px 0" display="flex" gap={1} xs={12}>
-              {servicesList.map((service) => (
-                <Button
-                  key={service}
-                  variant={formData.services.includes(service) ? "contained" : "outlined"}
-                  onClick={() => handleServiceSelect(service)}
-                  sx={{
-                    m: 0.5,
-                    borderRadius: "5px",
-                    color: "#fff",
-                    borderColor: "#fff",
-                    "&:hover": { bgcolor: redIntensity, color: "#fff" },
-                  }}
-                >
-                  {service}
-                </Button>
-              ))}
+              {servicesList.map((service) => {
+                const isSelected = formData.services.includes(service);
+                return (
+                  <Button
+                    key={service}
+                    variant={isSelected ? "contained" : "outlined"}
+                    onClick={() => handleServiceSelect(service)}
+                    sx={{
+                      m: 0.5,
+                      borderRadius: "5px",
+                      color: "#fff",
+                      borderColor: "#fff",
+                      bgcolor: isSelected ? "#991923" : "transparent", // Set background color when outlined
+                      "&:hover": {
+                        bgcolor: redIntensity,
+                        color: "#fff",
+                      },
+                    }}
+                  >
+                    {service}
+                  </Button>
+                );
+              })}
             </Grid>
-
-            <Grid paddingTop="20px" xs={12}>
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                PRESUPUESTO
-              </Typography>
-            </Grid>
-            <Grid width="90%" padding="10px 0" display="flex" gap={1} xs={12}>
-              {budgetOptions.map((option) => (
-                <Button
-                  key={option}
-                  variant={formData.budget === option ? "contained" : "outlined"}
-                  onClick={() => setFormData({ ...formData, budget: option })}
-                  sx={{
-                    borderRadius: "5px",
-                    color: "#fff",
-                    borderColor: "#fff",
-                    "&:hover": { bgcolor: redIntensity, color: "#fff" },
-                  }}
-                >
-                  {option}
-                </Button>
-              ))}
-            </Grid>
-
             <Grid paddingTop="20px" xs={12}>
               <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                 MENSAJE
@@ -226,12 +209,12 @@ const ContactComponent = ({ isPage = false }) => {
                 rows={4}
                 sx={{
                   width: "100%",
-                  color: "text.primary",
+                  color: "#991923",
                   input: { color: "#fff", borderRadius: 0 },
                   "& textarea": { color: "#fff", borderRadius: 0 },
                   "&:before": { borderBottom: "1px solid #d3d3d3" },
                   "&:hover:before": { borderBottom: redIntensity },
-                  "&:focus:before": { borderBottom: redIntensity },
+                  "&:after": { borderBottom: "2px solid #991923" },
                 }}
               />
             </Grid>
