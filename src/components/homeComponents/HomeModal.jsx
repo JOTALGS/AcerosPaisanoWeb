@@ -59,21 +59,24 @@ export const HomeModal = () => {
           <div>
             <div className='industrias-container'>
               <div className="cyaind-container">
-                <h2>Construcción y Arquitectura</h2>
-                <p className="modal-description">Soluciones innovadoras para el desarrollo de infraestructuras seguras y eficientes.</p>
+                <h2>A medida</h2>
+                <p className="modal-description">Dimensiones precisas según necesidades del proyecto.</p>
               </div>
               <div className="eind-container">
-                <h2>Industria Energética</h2>
-                <p className="modal-description">Materiales de alta resistencia para garantizar la seguridad y eficiencia energética.</p>
+                <h2>Calidad</h2>
+                <p className="modal-description">Procesos de calidad garantizada.</p>
               </div>
               <div className="mfind-container">
-                <h2>Manufactura Industrial</h2>
+                <h2>Cero desperdicio</h2>
                 <p className="modal-description">Componentes diseñados para optimizar procesos productivos.</p>
-
+              </div>
+              <div className="mahorro-container">
+                <h2>Ahorro</h2>
+                <p className="modal-description">Economía de tiempo y mano de obra.</p>
               </div>
               <div className="aind-container">
-                <h2>Industria Agropecuaria</h2>
-                <p className="modal-description">Soluciones estructurales adaptadas a las necesidades del sector agropecuario.</p>
+                <h2>Asistencia tecnica</h2>
+                <p className="modal-description">Asesoramiento y seguimiento de obra por técnicos especializados.</p>
               </div>
             </div>
             <div className='images-container'>
@@ -86,12 +89,16 @@ export const HomeModal = () => {
               <div className="images mfind">
                   <img src='./images/doblado4.jpg' alt="Manufactura Industrial" />
               </div>
+              <div className="images mahorro">
+                <img src='./images/doblado7.jpg' alt="Ahorro" />
+              </div>
               <div className="images aind">
                 <img src='./images/doblado5.jpg' alt="Industria Agropecuaria" />
               </div>
             </div>
           </div>
         )}
+
 
         {modalContent === "mallas" && (
           <div>

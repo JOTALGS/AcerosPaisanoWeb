@@ -5,8 +5,8 @@ import './SlidingContainers.css';
 const SlidingContainers = () => {
   const items = [
     {
-      title: "Encuentra tu Sucursal",
-      description: "Red de 8 almacenes regionales y distribuidores de confianza para entregar nuestros productos cuando los necesites.",
+      title: "Encuéntranos",
+      description: "Garantizamos confianza en la entrega de nuestros productos cuando los necesites.",
       buttonText: "Encontrar Ahora"
     },
     {
@@ -15,7 +15,7 @@ const SlidingContainers = () => {
       buttonText: "Explorar Productos"
     },
     {
-      title: "Centro de Recursos",
+      title: "Recursos",
       description: "Accede a documentación técnica, certificaciones y las últimas novedades del sector.",
       buttonText: "Acceder"
     },

@@ -18,10 +18,7 @@ export const NavBar = () => {
     <header className="site__header" style={{ zIndex: 0 }}>
       <div className="container_header">
         <div className="navbar-logo">
-          <video autoPlay loop muted playsInline className="w-full h-auto">
-              <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
-              Tu navegador no soporta videos.
-          </video>
+        <img src="/images/logo.png" alt="Logo" className="w-full h-auto" />
         </div>
         <button className="hamburger" aria-label="Toggle navigation" onClick={toggleMenu}>
           &#9776;

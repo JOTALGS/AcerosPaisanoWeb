@@ -9,6 +9,9 @@ import SlidingContainers from "../../components/carousel/SlidingContainers";
 import { HomeModal } from "../../components/homeComponents/HomeModal";
 import { Footer } from "../../components/footer/Footer";
 import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
+import ParallaxVideoBox from "../../components/parallaxBox/ParallaxVideoBox";
+import ZoomOutVideo from "../../components/ZoomOutVideo/ZoomOutVideo";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +23,6 @@ export const Home = () => {
   useLayoutEffect(() => {
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
     
-    // Animate each line wrapper using its ref
     lineWrapperRef.current.forEach((wrapper) => {
       if (wrapper) {
         const overlay = wrapper.querySelector(".line-overlay");
@@ -46,8 +48,8 @@ export const Home = () => {
         opacity: 0,
         scrollTrigger: {
           trigger: descubrirRef.current,
-          start: "bottom bottom", // When the bottom of the element hits the bottom of the viewport
-          end: "top top",         // When the top of the element hits the top of the viewport
+          start: "bottom bottom",
+          end: "top top",
           scrub: true,
         },
       }
@@ -60,15 +62,15 @@ export const Home = () => {
         opacity: 0,
         scrollTrigger: {
           trigger: descubrirRef.current,
-          start: "bottom bottom", // When the bottom of the element hits the bottom of the viewport
-          end: "top top",         // When the top of the element hits the top of the viewport
+          start: "bottom bottom",
+          end: "top top",
           scrub: true,
         },
       }
     );
   }, []);
 
-  const homeText = `Donde la calidad y la innovación se unen para redefinir la industria metalúrgica. Ofrecemos una amplia gama de productos con una pasión por la excelencia y un compromiso con la perfección.`;
+  const homeText = `Desde 2011 apoyando a la industria nacional`;
     const splitText = (text, parts) => {
     const partLength = Math.ceil(text.length / parts);
     const result = [];
@@ -98,7 +100,6 @@ export const Home = () => {
   return (
     <section id="home" className="home">
       <NavBar />
-      {/* Initial webpage mask animation */}
       <div className="init-baseline">
         <div className="init-title">
           <img src="./images/titulo.jpg" alt="title" className="img-title" />
@@ -106,23 +107,27 @@ export const Home = () => {
         <div className="baseline-start"></div>
       </div>
 
-      {/* Container for the home section */}
       <div className="home-container" style={{ zIndex: 1 }}>
         <div className="top">
           <div className="home-top-row">
             <div className="home-top-grid">
               <div className="image-column image-left">
-                <img src="./images/paisanologoblack.jpg" alt="Left Image" />
+                <img src="./images/paisanologowhite.png" alt="Left Image" />
               </div>
             </div>
           </div>
-          <img ref={imageRef} src="./images/heroImage.png" alt="Hero Image" className="hero-image" />
+          <div className="Portada-video">
+            <video autoPlay loop muted playsInline>
+              <source src="/videos/14.mp4" type="video/mp4" />
+              Tu navegador no admite videos.
+            </video>
+            </div>
         </div>
 
         <div className="home-middle-row">
           <div className="catalogue-section">
             <p className="catalogue-description">
-              Hablamos de la mejor calidad y precisión. La calidad no es negociable.
+              Desde 2011 apoyando a la industria nacional
             </p>
             <div className="catalogue-button-wrapper">
               <Link to={"/catalogue"}>
@@ -156,7 +161,6 @@ export const Home = () => {
           <SlidingContainers />
         </div>
 
-        {/* Insert ParallaxBox after the first three */}
         <ParallaxBox 
           image="/images/about1.jpg" 
           title="" 
@@ -167,6 +171,15 @@ export const Home = () => {
 
         <HomeModal />
       </div>
+      <div className="Home">
+      <ParallaxVideoBox
+        videoSrc="/videos/19.mp4"
+        title=""
+        titleColor="text.primary"
+        titleLeft="2%"
+        titleBottom="10%"
+        />
+      </div>   
       <Footer />
     </section>
   );

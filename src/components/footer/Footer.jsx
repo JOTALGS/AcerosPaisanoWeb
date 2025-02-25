@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="footer-column">
           <h3>Descubri</h3>
           <nav className="footer-nav">
-            <Link to="/">Home</Link>
+            <Link to="/Home">Inicio</Link>
             <Link to="/catalogue">Productos</Link>
             <Link to="/distribution">Encuéntranos</Link>
             <Link to="/about-us">Sobre nosotros</Link>
@@ -18,17 +18,15 @@ export const Footer = () => {
         </div>
 
         <div className="footer-column">
-          <h3>Recursos</h3>
+          <h3>Contacto</h3>
           <nav className="footer-nav">
-            <Link to="/media-kit">Media Kit</Link>
-            <Link to="/safety-data">Material Safety Data</Link>
-            <Link to="/technical-data">Technical Data</Link>
-            <Link to="/product-images">Search Product Images</Link>
+            <a href="tel:2365 0000">2365 0000</a>
+            <a href="mailto:ventas@acerospaisano.com.uy">ventas@acerospaisano.com.uy</a>
           </nav>
         </div>
 
         <div className="footer-column company-info">
-          <h3>Encontranos</h3>
+          <h3>Encuéntranos</h3>
           <div className="company-details">
             <p>Aceros Paisano S.A.</p>
             <div className="address-tooltip-container">
@@ -58,14 +56,9 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-
-          <div className="contact-section">
-            <h3>Contacto</h3>
-            <a href="tel:+59823650000">+598 2365 0000</a>
-            <a href="tel:+59823657189">+598 2365 7189</a>
-            <a href="mailto:ventas@acerospaisano.com.uy">ventas@acerospaisano.com.uy</a>
           </div>
-        </div>
+
+          
 
         <div className="footer-column socials">
           <h3>Redes</h3>
@@ -86,14 +79,9 @@ export const Footer = () => {
       <div className="footer-legal-top">
         <div className="footer-legal-top-left">
           <select defaultValue="es">
-            <option value="es">Idioma</option>
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
-        </div>
-        <div className="footer-legal-top-right">
-          <Link to="/terms">Terminos & Condiciones</Link>
-          <Link to="/privacy">Politica de Privaciad</Link>
         </div>
       </div>
 

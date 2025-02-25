@@ -7,7 +7,7 @@
 .home {
   position: relative;
   min-height: 100vh;
-  background-size: cover; /* Make the background cover the whole area */
+  background-size: cover;
   z-index: 1;
   animation: changeZIndex 0s ease-in 3s forwards;
   border-top-left-radius: 50px;
@@ -113,6 +113,8 @@
 }
 
 .image-column {
+  position: relative; 
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,21 +122,33 @@
 
 .image-column img {
   width: auto;
-  height: 120px;
+  height: 20vh;
   margin-top: 60px;
 }
 
-.hero-image {
-  position: absolute;
-  top: 0%;
-  right: 0%;
-  mask-image: linear-gradient(75deg, transparent 20%, black 100%);
-  z-index: -1;
 
-  width: 50%;
+.Portada-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 180%;
+  z-index: 0;
+}
+
+.Portada-video video {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
+
+.catalogue-section {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
 
 .image-right {
   transform: translateY(-50px);
@@ -160,7 +174,6 @@
   flex-direction: column;
   justify-content: end;
   text-align: start;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .catalogue-description {
@@ -181,7 +194,7 @@
 }
 
 .catalogue-button p  {
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .catalogue-button:hover {
@@ -202,27 +215,26 @@
   position: relative;
   display: flex;
   align-self: flex-end;
-  align-items: end;
-  justify-content: end;
-  text-align: end;
+  align-items: flex-start;
+  justify-content: left;
+  text-align: left;
   height: 80%;
   margin-top: 150px;
-  margin-right: 7vw;
+  margin-right: 5vw;
   color: white;
   font-size: 5rem;
   z-index: 1000;
 }
 
 .about-intro {
-  font-size: 3.4rem; /* Aumenta el tamaño */
+  font-size: 3.4rem;
   font-family: 'Outfit', sans-serif;
   font-weight: 400;
-  line-height: 1.2; /* Ajusta el espaciado sin cortar la letra */
-  letter-spacing: -2px; /* Hace que las letras estén más compactas */
-  text-align: start;
-  max-width: 80vw; /* Limita el ancho para que no se desborde */
-  overflow-wrap: break-word; /* Evita que el texto se corte fuera del contenedor */
-  word-break: break-word; /* Permite saltos de línea naturales */
+  line-height: 1;
+  letter-spacing: -2px;
+  max-width: 80vw;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .about-description {
@@ -233,24 +245,38 @@
 .about-description span {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.4s ease;
+  transition: all 1s ease;
 }
 
 .about-link-button {
   padding: 0px 30px;
   font-size: 2rem;
-  color: #ffffff !important;
+  color: #ffffff;
   background-color: #EE2737;
   border: 1px solid transparent;
   border-radius: 3px;
   cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .about-link-button p {
-  font-size: 1.35rem;
+  font-size: 1rem;
 }
 
 .about-link-button:hover {
   background-color: #ffffff;
   transition-delay: 0.3s; 
+}
+
+.Home-video {
+  top: 0;
+  left: 0;
+  z-index: 0;
+  position: realtive;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  height: 100vh;
+  padding-top: 5vh;
 }
