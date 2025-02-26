@@ -10,7 +10,9 @@ import { HomeModal } from "../../components/homeComponents/HomeModal";
 import { Footer } from "../../components/footer/Footer";
 import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 import ParallaxVideoBox from "../../components/parallaxBox/ParallaxVideoBox";
-import ZoomOutVideo from "../../components/ZoomOutVideo/ZoomOutVideo";
+import ZoomOutVideo from "../../components/zoomOutVideo/ZoomOutVideo";
+import { HomeModal2 } from "../../components/homeComponents/HomeModal2";
+
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -70,7 +72,8 @@ export const Home = () => {
     );
   }, []);
 
-  const homeText = `Desde 2011 apoyando a la industria nacional`;
+  const homeText = `Desde 2011 apoyando a la 
+                    industria nacional.`;
     const splitText = (text, parts) => {
     const partLength = Math.ceil(text.length / parts);
     const result = [];
@@ -138,7 +141,7 @@ export const Home = () => {
           <div ref={descubrirRef} className={`scroll-indicator`}>Desliza para descubrir</div>
         </div>
 
-
+      {/* 
         <div className="home-bottom-row">
           <div className="about-intro">
             {textParts.map((part, index) => (
@@ -156,7 +159,8 @@ export const Home = () => {
             </Link>
           </div>
         </div>
-        
+        */}
+
         <div className="home-products-slider">
           <SlidingContainers />
         </div>
@@ -172,14 +176,13 @@ export const Home = () => {
         <HomeModal />
       </div>
       <div className="Home">
-      <ParallaxVideoBox
-        videoSrc="/videos/19.mp4"
-        title=""
-        titleColor="text.primary"
-        titleLeft="2%"
-        titleBottom="10%"
+        <ParallaxVideoBox
+          videoSrc="/videos/Electro.mp4"
         />
-      </div>   
+        <HomeModal2 />
+      </div>
+        <ParallaxVideoBox
+          videoSrc="/videos/19.mp4" />  
       <Footer />
     </section>
   );

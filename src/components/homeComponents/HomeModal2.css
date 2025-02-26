@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+body {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.interact {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 50px 10px;
+}
+
+.interact-item {
+  width: 50%;
+  padding: 30px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-color .5s ease-in-out;
+  font-family: 'Anton', sans-serif;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-size: 3.5rem;
+  font-weight: 400;
+  display: flex;
+  align-items: top;
+}
+
+.interact-item:hover {
+  filter: brightness(0.7);
+  background-color: #EE2737;
+  font-size: 3.5rem;
+}
+
+.industrias-container {
+  font-family: 'Anton', sans-serif;
+  font-weight: 300;
+  height: 100%;
+  width: 40%;
+  margin-top: 15vh;
+  display: flex;
+  align-self: flex-end;
+  justify-self: flex-end;
+  text-align: start;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.images-container {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+}
+
+.industrias-container div:hover h2 {
+  color: white;
+}
+
+.industrias-container div:hover .modal-description {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.images img {
+  position: fixed;
+  top: -250px;
+  left: -250px;
+  width: 1000px;
+  height: 1000px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.images {
+  opacity: 0;
+}
+
+.mallas-container {
+  font-family: 'Anton', sans-serif;
+  font-weight: 300;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  align-self: flex-end;
+  justify-self: flex-end;
+  text-align: start;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.mallas-container div:hover h2 {
+  color: white;
+}
+
+.mallas-container div:hover .modal-description {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.modal-description {
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #666;
+  line-height: 1;
+}
