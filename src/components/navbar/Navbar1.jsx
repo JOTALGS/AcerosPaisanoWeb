@@ -58,7 +58,9 @@ export const NavBar = () => {
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Button component={Link} to="/" onClick={() => {window.scrollTo(0, 0);}} color="inherit"><Box component="img" src="/images/logo.png" alt="Logo" sx={{ height: 50 }} /></Button>
+          <Button component={Link} to="/" onClick={() => {window.scrollTo(0, 0);}} color="inherit">
+            <Box component="img" src="/images/logo.png" alt="Logo" sx={{ height: 50 }} />
+          </Button>
           <Box sx={{ display: "flex", justifyContent: "space-between", width: "45%" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", width: "55%" }}>
               <Button component={Link} to="/" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >

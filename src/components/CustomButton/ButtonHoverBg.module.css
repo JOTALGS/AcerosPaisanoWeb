@@ -15,7 +15,7 @@
     transform: translate(-50%, -50%);
     width: 0;
     height: 0;
-    background-color: #000000;
+    background-color: #0000004b; {/* #000000 */}
     transition: all 1.5s ease;
     z-index: 0;
   }
