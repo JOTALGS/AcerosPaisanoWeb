@@ -141,7 +141,7 @@ export const Home = () => {
           <div ref={descubrirRef} className={`scroll-indicator`}>Desliza para descubrir</div>
         </div>
 
-      {/* 
+      {/* WDASDASDASDsDASD
         <div className="home-bottom-row">
           <div className="about-intro">
             {textParts.map((part, index) => (
