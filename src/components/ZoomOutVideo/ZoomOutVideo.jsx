@@ -11,15 +11,15 @@ export default function ZoomOutVideo({ videoSrc }) {
   useEffect(() => {
     gsap.fromTo(
       videoRef.current,
-      { scale: 1.2 }, // Empieza con zoom-in
+      { scale: 1.5 }, // Inicio con un ligero zoom-in
       {
-        scale: 1, // Hace zoom-out al tamaño normal
+        scale: 1, // Zoom-out al tamaño normal
         ease: "none",
         scrollTrigger: {
           trigger: videoRef.current,
-          start: "top top",
+          start: "top center", // Empieza cuando el video está más visible
           end: "bottom top",
-          scrub: 2, // Suaviza la animación con el scroll
+          scrub: 2,
         },
       }
     );
@@ -29,7 +29,7 @@ export default function ZoomOutVideo({ videoSrc }) {
     <Box
       sx={{
         width: "100vw",
-        height: "100vh",
+        height: "75vh",
         overflow: "hidden",
         position: "relative",
       }}
@@ -44,10 +44,7 @@ export default function ZoomOutVideo({ videoSrc }) {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)", // Centra el video
+          willChange: "transform",
         }}
       >
         <source src={videoSrc} type="video/mp4" />

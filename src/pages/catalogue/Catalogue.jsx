@@ -29,7 +29,7 @@ export function Catalogue() {
             title: 'Malla Plegada',
             description: 'Combina las ventajas del cortado y doblado + mallas. Diseños a medida. Alta precisión. Proceso industrializado con plegadora automatizada. Optimiza el uso de hierro en obra. Evita empalmes y atado manual. Evita el armado de estructuras en obra. Refuerzos de borde.',
             price: 'Consultar',
-            image: './images/mallaPlegada.jpg',
+            image: './images/plegada.jpg',
         },
         {
             id: 3,
@@ -43,7 +43,7 @@ export function Catalogue() {
             title: 'Barras Conformadas (superficie rugosa)',
             description: 'Barras de acero con textura rugosa, diseñadas para un mejor agarre en concreto y estructuras reforzadas. Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995',
             price: 'Entregas a todo el Pais',
-            image: './images/barrasConformadas.jpg',
+            image: './images/barras.jpg',
         },
         {
             id: 5,
@@ -64,7 +64,7 @@ export function Catalogue() {
             title: 'Alambres Recocidos',
             description: 'Alambres Recocidos, ISWG 14, ISWG 16, ISWG 18',
             price: 'Entregas a todo el país',
-            image: './images/alambresRecocidos.jpg',
+            image: './images/alambrerecocido.jpg',
         },
     ];
 

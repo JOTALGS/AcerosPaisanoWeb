@@ -68,12 +68,12 @@ export const NavBar = () => {
                 <Typography fontSize={"1.2rem"} color="white">Sobre Nosotros</Typography>
               </Button>
               <Button component={Link} to="/catalogue" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
-                <Typography fontSize={"1.2rem"} color="white">Productos</Typography>
+                <Typography fontSize={"1.2rem"} color="white">Productos y Servicios</Typography>
               </Button>
             </Box>
 
             <Button component={Link} to="/contact" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
-              <Typography fontSize={"1.2rem"} color="white">Contact Us</Typography>
+              <Typography fontSize={"1.2rem"} color="white">Contacto</Typography>
             </Button>
           </Box>
         </Toolbar>

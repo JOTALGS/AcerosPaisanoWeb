@@ -149,7 +149,7 @@ export const HomeModal = () => {
           xmlns="http://www.w3.org/2000/svg" 
           fill="#000000" 
           onClick={handleCloseModal}
-          width="50px"
+          width="5vh"
           style={{
             cursor: "pointer",
             position: "absolute",

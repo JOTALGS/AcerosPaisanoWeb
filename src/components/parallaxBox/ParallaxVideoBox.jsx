@@ -3,21 +3,20 @@ import { Box, Typography } from "@mui/material";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ParallaxVideoBox({ videoSrc, title, titleColor, titleLeft = "2%", titleBottom = "14%" }) {
-  const boxRef = useRef(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     gsap.fromTo(
-      boxRef.current,
-      { y: "0%" },
+      videoRef.current,
+      { y: "-10%" }, // Comienza un poco más arriba
       {
-        y: "50%",
+        y: "10%", // Se desplaza ligeramente hacia abajo
         ease: "none",
         scrollTrigger: {
-          trigger: boxRef.current,
+          trigger: videoRef.current,
           start: "top bottom",
           end: "bottom top",
           scrub: 2.5,
@@ -28,19 +27,17 @@ export default function ParallaxVideoBox({ videoSrc, title, titleColor, titleLef
 
   return (
     <Box
-    ref={boxRef}
-    sx={{
+      sx={{
         width: "100vw",
-        height: "100vh",
+        height: "75vh",
         marginTop: "40px",
         marginBottom: "40px",
-        marginLeft: "0px",
         position: "relative",
         overflow: "hidden",
-        backgroundAttachment: "fixed",
-    }}
+      }}
     >
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
@@ -57,14 +54,6 @@ export default function ParallaxVideoBox({ videoSrc, title, titleColor, titleLef
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
-
-      {title && (
-        <Box position="absolute" left={titleLeft} bottom={titleBottom} zIndex={1}>
-          <Typography variant="h2" fontSize={{ xs: "75px", md: "200px", xl: "200px" }} fontFamily={"Bona Nova SC"} color={titleColor}>
-            {title}
-          </Typography>
-        </Box>
-      )}
     </Box>
   );
 }
