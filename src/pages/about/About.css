@@ -18,6 +18,7 @@
 .about-sub-section {
     margin: 40px 100px;
     width: 90%;
+    margin-top: 8vh;
     display: flex;
     font-family: "PPObjectSans", Arial, sans-serif;
     flex-direction: column;

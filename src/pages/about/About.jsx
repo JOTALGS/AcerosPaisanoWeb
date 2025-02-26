@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
-import { NavBar } from "../../components/navbar/NavBar";
+import { NavBar } from "../../components/navbar/NavBar1";
 import { Footer } from "../../components/footer/Footer";
 import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 import { Box } from "@mui/material";

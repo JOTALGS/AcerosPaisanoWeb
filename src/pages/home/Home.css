@@ -42,7 +42,7 @@
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-100%);
+    transform: translateY(-150%);
   }
 }
 
@@ -75,6 +75,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-top: 8vh;
   height: fit-content;
   min-height: 1400px;
   width: 100%;

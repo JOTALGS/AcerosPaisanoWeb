@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
-import { NavBar } from "../../components/navbar/NavBar";
+import { NavBar } from "../../components/navbar/Navbar1";
 import SlidingContainers from "../../components/carousel/SlidingContainers";
 import { HomeModal } from "../../components/homeComponents/HomeModal";
 import { Footer } from "../../components/footer/Footer";

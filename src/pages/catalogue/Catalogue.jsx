@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Catalogue.css';
-import { NavBar } from "../../components/navbar/NavBar";
+import { NavBar } from "../../components/navbar/NavBar1";
 import ButtonHoverBg from '../../components/CustomButton/ButtonHoverBg';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -94,7 +94,7 @@ export function Catalogue() {
                 y: "0" 
             },
             { 
-                y: "180px",
+                y: "200px",
                 duration: 1.5,
                 ease: "power3.out"
             },
@@ -129,7 +129,7 @@ export function Catalogue() {
     return (
         <section className='catalogue'>
             <NavBar />
-            <Box position="absolute" zIndex={0}>
+            <Box position="absolute" zIndex={0} marginTop={"8vh"}>
                 <Typography 
                     ref={titleRef}
                     variant="h2" 
