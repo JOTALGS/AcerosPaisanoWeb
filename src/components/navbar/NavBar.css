@@ -6,7 +6,7 @@
   height: 7vh; /* Ajustado para ocupar más espacio vertical */
   padding: 1vh 5vh;
   top: 0;
-  z-index: 1000; /* Asegura que esté siempre al frente */
+  z-index: 100; /* Asegura que esté siempre al frente */
   background: transparent;
   transition: background-color 0.3s ease; /* Transición suave para el fondo */
 }

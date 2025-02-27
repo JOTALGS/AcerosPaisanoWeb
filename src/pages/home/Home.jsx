@@ -124,7 +124,7 @@ export const Home = () => {
               <source src="/videos/14.mp4" type="video/mp4" />
               Tu navegador no admite videos.
             </video>
-            </div>
+          </div>
         </div>
 
         <div className="home-middle-row">

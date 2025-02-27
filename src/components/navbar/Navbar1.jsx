@@ -10,6 +10,19 @@ export const NavBar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const [delayedHidden, setDelayedHidden] = useState(hidden);
+
+  useEffect(() => {
+    if (hidden) {
+      const timeout = setTimeout(() => {
+        setDelayedHidden(true);
+      }, 2000); // Delay of 2 seconds
+
+      return () => clearTimeout(timeout); // Cleanup on unmount or change
+    } else {
+      setDelayedHidden(false); // Apply immediately when hidden becomes false
+    }
+  }, [hidden]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -43,7 +56,7 @@ export const NavBar = () => {
   }, [lastScrollY]);
 
   return (
-    <Box sx={{ position: "fixed", right: "auto", zIndex: 1000, width: "100vw", height: "100px" }}>
+    <Box sx={{ position: "fixed", right: "auto", zIndex: delayedHidden ? -1 : 100, width: "100vw", height: "100px" }}>
       <AppBar
         position="fixed"
         sx={{

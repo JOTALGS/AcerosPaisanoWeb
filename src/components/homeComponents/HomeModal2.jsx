@@ -156,6 +156,7 @@ export const HomeModal2 = () => {
             top: "10px",
             right: "10px",
             transition: "fill 0.3s ease-in-out",
+            zIndex: "1000",
           }}
           onMouseEnter={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#ffffff")}
           onMouseLeave={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#9e9e9e")}

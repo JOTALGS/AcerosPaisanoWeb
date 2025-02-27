@@ -4,12 +4,88 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
 import { NavBar } from "../../components/navbar/NavBar1";
 import { Footer } from "../../components/footer/Footer";
-import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 import { Box } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const content = [
+  {
+    title: "Misión",
+    paragraphs: [
+      "Nuestra misión es desarrollar una empresa sustentable, brindando productos metálicos de calidad certificada destinados a los sectores de la construcción, el agro y la industria.",
+      "La sustentabilidad se obtiene a través de mejorar en forma continua el Sistema de Gestión, el Sistema de Seguridad, y el Sistema Ambiental.",
+    ],
+  },
+  {
+    title: "Política de Gestión",
+    paragraphs: [
+      "Nuestro Sistema de Gestión se controla con la obtención y el mantenimiento de la certificación ISO 9001.",
+      "Para mejorar continuamente se aplican los conceptos del Modelo de Mejora Continua del Instituto Nacional de Calidad.",
+    ],
+  },
+  {
+    title: "Política de Calidad",
+    paragraphs: [
+      "Nuestro Sistema de Calidad tiene como prioridades:",
+      "- La obtención y el mantenimiento de la certificación de Calidad de Producto.",
+      "- La venta de productos metálicos que cumplan los requisitos de las normas vigentes aplicables y las necesidades de nuestros clientes.",
+    ],
+  },
+  {
+    title: "Política de Seguridad",
+    paragraphs: [
+      "Nuestro Sistema de Seguridad se controla con la obtención y el mantenimiento de la certificación de la norma OHSAS 18001.",
+      "Nuestra principal política es que cualquier operador debe detener el proceso que no se encuentre dentro de las condiciones estándares de seguridad, hasta no asegurarse de la remoción de la condición insegura.",
+    ],
+  },
+  {
+    title: "Política Ambiental",
+    paragraphs: [
+      "Nuestro Sistema de Protección del Medio Ambiente se controla con la obtención y el mantenimiento de la certificación de la norma ISO 14001.",
+      "Nuestra principal política es realizar inversiones y orientar nuestra operación de acuerdo a los conceptos de Tecnología Limpia.",
+    ],
+  },
+];
+
+const sections = [
+  { content: content[0], video: "/videos/13.mp4", reverse: false },
+  { content: content[1], video: "/videos/8.mp4", reverse: true },
+  { content: content[2], video: "/videos/9.mp4", reverse: false },
+  { content: content[3], video: "/videos/27.mp4", reverse: true },
+  { content: content[4], video: "/videos/1.mp4", reverse: false },
+];
+
+
 export const About = () => {
+  const sectionsRef = useRef([]);
+
+  useEffect(() => {
+    sectionsRef.current.forEach((section, index) => {
+      const tween = gsap.to(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: () => `top bottom-=100`,
+          end: () => `top top+=40`,
+          scrub: true,
+          invalidateOnRefresh: true
+        },
+        ease: "none",
+      });
+  
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 5%",
+        pin: true,
+        pinSpacing: false,
+        id: 'pin',
+        end: 'max',
+        //end: '.cardStacking',
+        invalidateOnRefresh: true,
+      });
+      
+    });
+  }, []);
+
   useEffect(() => {
     const lineWrappers = document.querySelectorAll(".line-wrapper");
 
@@ -19,8 +95,8 @@ export const About = () => {
       gsap.to(overlay, {
         scrollTrigger: {
           trigger: wrapper,
-          start: "top center",
-          end: "bottom center",
+          start: "top 100%",
+          end: "bottom 80%",
           scrub: 5,
         },
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
@@ -28,50 +104,10 @@ export const About = () => {
       });
     });
 
-    // Cleanup function to remove ScrollTrigger instances
     return () => {
       ScrollTrigger.getAll().forEach((instance) => instance.kill());
     };
   }, []);
-
-  const content = [
-    {
-      title: "Misión",
-      paragraphs: [
-        "Nuestra misión es desarrollar una empresa sustentable, brindando productos metálicos de calidad certificada destinados a los sectores de la construcción, el agro y la industria.",
-        "La sustentabilidad se obtiene a través de mejorar en forma continua el Sistema de Gestión, el Sistema de Seguridad, y el Sistema Ambiental.",
-      ],
-    },
-    {
-      title: "Política de Gestión",
-      paragraphs: [
-        "Nuestro Sistema de Gestión se controla con la obtención y el mantenimiento de la certificación ISO 9001.",
-        "Para mejorar continuamente se aplican los conceptos del Modelo de Mejora Continua del Instituto Nacional de Calidad.",
-      ],
-    },
-    {
-      title: "Política de Calidad",
-      paragraphs: [
-        "Nuestro Sistema de Calidad tiene como prioridades:",
-        "- La obtención y el mantenimiento de la certificación de Calidad de Producto.",
-        "- La venta de productos metálicos que cumplan los requisitos de las normas vigentes aplicables y las necesidades de nuestros clientes.",
-      ],
-    },
-    {
-      title: "Política de Seguridad",
-      paragraphs: [
-        "Nuestro Sistema de Seguridad se controla con la obtención y el mantenimiento de la certificación de la norma OHSAS 18001.",
-        "Nuestra principal política es que cualquier operador debe detener el proceso que no se encuentre dentro de las condiciones estándares de seguridad, hasta no asegurarse de la remoción de la condición insegura.",
-      ],
-    },
-    {
-      title: "Política Ambiental",
-      paragraphs: [
-        "Nuestro Sistema de Protección del Medio Ambiente se controla con la obtención y el mantenimiento de la certificación de la norma ISO 14001.",
-        "Nuestra principal política es realizar inversiones y orientar nuestra operación de acuerdo a los conceptos de Tecnología Limpia.",
-      ],
-    },
-  ];
 
   let globalIndex = 0;
 
@@ -80,56 +116,72 @@ export const About = () => {
       <NavBar />
       <div className="intro-about"></div>
 
-      <div className="about-sub-section">
-        {content.slice(0, 3).map((section, index) => (
-          <div key={index} className={`text-content ${index % 2 === 0 ? "left" : "right"}`}>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"space-between"}
-              height={"600px"}
-            >
-              <h2 className="subtitle">{section.title}</h2>
-              <Box>
-                {section.paragraphs.map((item, i) => (
-                  <div key={i} className="line-wrapper">
-                    <p className="line" style={{ color: "#3a3a3a" }}>
-                      {item}
-                    </p>
-                    <p className="line-overlay">
-                      {item}
-                    </p>
-                  </div>
-                ))}
-              </Box>
-            </Box>
-          </div>
-        ))}
+      <Box height={"600px"}>
+        
+      </Box>
 
-        {content.slice(3).map((section, index) => (
-          <div key={index + 3} className={`text-content ${(index + 3) % 2 === 0 ? "left" : "right"}`}>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"space-between"}
-              height={"600px"}
-            >
-              <h2 className="subtitle">{section.title}</h2>
-              <Box>
-                {section.paragraphs.map((item, i) => (
-                  <div key={i} className="line-wrapper">
-                    <p className="line" style={{ color: "#3a3a3a" }}>
-                      {item}
-                    </p>
-                    <p className="line-overlay">
-                      {item}
-                    </p>
-                  </div>
-                ))}
+      <div className="about-sub-section">
+
+      {sections.map((section, index) => (
+        <Box
+          key={index}
+          ref={(el) => (sectionsRef.current[index] = el)}
+          display="flex"
+          sx={{ backgroundColor: "black" }}
+        >
+          {!section.reverse && (
+            <Box width={"50%"} fontSize={"25px"}>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"space-between"}
+                height={"600px"}
+                padding={"80px"}
+              >
+                <h2 className="subtitle">{section.content.title}</h2>
+                <Box>
+                  {section.content.paragraphs.map((item, i) => (
+                    <div key={i} className="line-wrapper">
+                      <p className="line" style={{ color: "#3a3a3a" }}>{item}</p>
+                      <p className="line-overlay">{item}</p>
+                    </div>
+                  ))}
+                </Box>
               </Box>
             </Box>
-          </div>
-        ))}
+          )}
+
+          <Box width="50%" height="760px" sx={{ overflow: "hidden" }}>
+            <video autoPlay loop muted playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+              <source src={section.video} type="video/mp4" />
+              Tu navegador no admite videos.
+            </video>
+          </Box>
+
+          {section.reverse && (
+            <Box width={"50%"} fontSize={"25px"}>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"space-between"}
+                height={"600px"}
+                padding={"80px"}
+              >
+                <h2 className="subtitle">{section.content.title}</h2>
+                <Box>
+                  {section.content.paragraphs.map((item, i) => (
+                    <div key={i} className="line-wrapper">
+                      <p className="line" style={{ color: "#3a3a3a" }}>{item}</p>
+                      <p className="line-overlay">{item}</p>
+                    </div>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </Box>
+      ))}
+
       </div>
       <Footer />
     </section>
