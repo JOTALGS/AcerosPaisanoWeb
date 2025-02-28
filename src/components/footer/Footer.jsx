@@ -6,10 +6,19 @@ export const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="footer-grid">
+        {/* Logo (video) */}
+        <div className="background-video">
+          <video autoPlay loop muted playsInline>
+            <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
+            Tu navegador no admite videos.
+          </video>
+        </div>
+
+        {/* Columna 1: Descubrir */}
         <div className="footer-column">
-          <h3>Descubri</h3>
+          <h3>DESCUBRÍ </h3>
           <nav className="footer-nav">
-            <Link to="/Home">Inicio</Link>
+            <Link to="/#/">Inicio</Link>
             <Link to="/catalogue">Productos</Link>
             <Link to="/distribution">Encuéntranos</Link>
             <Link to="/about-us">Sobre nosotros</Link>
@@ -17,6 +26,7 @@ export const Footer = () => {
           </nav>
         </div>
 
+        {/* Columna 2: Contacto */}
         <div className="footer-column">
           <h3>Contacto</h3>
           <nav className="footer-nav">
@@ -25,6 +35,7 @@ export const Footer = () => {
           </nav>
         </div>
 
+        {/* Columna 3: Encuéntranos */}
         <div className="footer-column company-info">
           <h3>Encuéntranos</h3>
           <div className="company-details">
@@ -56,24 +67,16 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-          </div>
+        </div>
 
-          
-
-        <div className="footer-column socials">
+        {/* Columna 4: Redes (comentada) */}
+        {/* <div className="footer-column socials">
           <h3>Redes</h3>
           <nav className="footer-nav">
             <a href="#">Facebook</a>
             <a href="#">Instagram</a>
           </nav>
-        </div>
-      </div>
-
-      <div className="background-video">
-        <video autoPlay loop muted playsInline>
-          <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
-          Tu navegador no admite videos.
-        </video>
+        </div> */}
       </div>
 
       <div className="footer-legal-top">

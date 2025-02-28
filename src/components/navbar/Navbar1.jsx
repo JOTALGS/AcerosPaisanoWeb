@@ -75,7 +75,7 @@ export const NavBar = () => {
             <Box component="img" src="/images/logo.png" alt="Logo" sx={{ height: 50 }} />
           </Button>
           <Box sx={{ display: "flex", justifyContent: "space-between", width: "45%" }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: "55%" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "70%" }}>
               <Button component={Link} to="/" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
                 <Typography fontSize={"1.2rem"} color="white">Inicio</Typography>
               </Button>

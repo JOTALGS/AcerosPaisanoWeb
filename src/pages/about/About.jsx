@@ -74,7 +74,7 @@ export const About = () => {
   
       ScrollTrigger.create({
         trigger: section,
-        start: "top 5%",
+        start: "top 0%",
         pin: true,
         pinSpacing: false,
         id: 'pin',
@@ -135,7 +135,7 @@ export const About = () => {
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                height={{ md:"70%", xl:"80%"}}
+                height={{ sm:"60%", md:"70%", xl:"80%"}}
                 padding={"80px"}
               >
                 <Typography className="subtitle" variant="h3">{section.content.title}</Typography>

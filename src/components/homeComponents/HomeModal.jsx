@@ -152,23 +152,23 @@ export const HomeModal = ({ info }) => {
         <div style={{ zIndex: 1000 }}>
           <div>
             <div className='industrias-container'>
-              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="cyaind-container modal-entry">
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '15px' }} className="cyaind-container modal-entry">
                 <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{ modalInfo[info][0].title}</Typography>
                 <p className="modal-description">{modalInfo[info][0].content}</p>
               </Box>
-              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="eind-container">
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '15px' }} className="eind-container">
                 <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][1].title}</Typography>
                 <p className="modal-description">{modalInfo[info][1].content}</p>
               </Box>
-              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="mfind-container">
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '15px' }} className="mfind-container">
                 <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][2].title}</Typography>
                 <p className="modal-description">{modalInfo[info][2].content}</p>
               </Box>
-              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="mahorro-container">
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '15px' }} className="mahorro-container">
                 <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][3].title}</Typography>
                 <p className="modal-description">{modalInfo[info][3].content}</p>
               </Box>
-              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="aind-container">
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '15px' }} className="aind-container">
                 <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][4].title}</Typography>
                 <p className="modal-description">{modalInfo[info][4].content}</p>
               </Box>

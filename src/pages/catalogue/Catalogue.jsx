@@ -255,7 +255,7 @@ export function Catalogue() {
                                     <div>
                                         <div className={styles.productHeader}>
                                             <img
-                                                style={{ height: "50px", width: "150px", objectFit: "contain", padding: "0px 2px" }}
+                                                style={{ height: "2vw", width: "5vw", objectFit: "contain", padding: "0px 2px" }}
                                                 className={styles.logoImage} 
                                                 src='./images/paisanologo.png' 
                                                 alt="Logo" 
