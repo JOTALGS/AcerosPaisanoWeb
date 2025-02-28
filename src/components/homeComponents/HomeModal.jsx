@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from '../modal/Modal'
 import './HomeModal.css'
-import { use } from 'react';
+import { Box, Typography } from '@mui/material'
 import { useEffect } from 'react';
 
 
@@ -143,75 +143,75 @@ export const HomeModal = ({ info }) => {
   };
 
   return (
-    <div className="interact" style={{ zIndex: 1000 }}>
-      <div className="interact-item" onClick={() => {handleOpenModal("industrias");}}>
+    <div className="interact" style={{ zIndex: 0 }}>
+      <div className="interact-item" style={{ zIndex: 0 }}onClick={() => {handleOpenModal("industrias");}}>
         <p>{info}</p>
       </div>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} >
         <div style={{ zIndex: 1000 }}>
-        <div>
-          <div className='industrias-container'>
-            <div className="cyaind-container">
-              <h2>{modalInfo[info][0].title}</h2>
-              <p className="modal-description">{modalInfo[info][0].content}</p>
+          <div>
+            <div className='industrias-container'>
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="cyaind-container modal-entry">
+                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{ modalInfo[info][0].title}</Typography>
+                <p className="modal-description">{modalInfo[info][0].content}</p>
+              </Box>
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="eind-container">
+                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][1].title}</Typography>
+                <p className="modal-description">{modalInfo[info][1].content}</p>
+              </Box>
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="mfind-container">
+                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][2].title}</Typography>
+                <p className="modal-description">{modalInfo[info][2].content}</p>
+              </Box>
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="mahorro-container">
+                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][3].title}</Typography>
+                <p className="modal-description">{modalInfo[info][3].content}</p>
+              </Box>
+              <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="aind-container">
+                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][4].title}</Typography>
+                <p className="modal-description">{modalInfo[info][4].content}</p>
+              </Box>
             </div>
-            <div className="eind-container">
-              <h2>{modalInfo[info][1].title}</h2>
-              <p className="modal-description">{modalInfo[info][1].content}</p>
-            </div>
-            <div className="mfind-container">
-              <h2>{modalInfo[info][2].title}</h2>
-              <p className="modal-description">{modalInfo[info][2].content}</p>
-            </div>
-            <div className="mahorro-container">
-              <h2>{modalInfo[info][3].title}</h2>
-              <p className="modal-description">{modalInfo[info][3].content}</p>
-            </div>
-            <div className="aind-container">
-              <h2>{modalInfo[info][4].title}</h2>
-              <p className="modal-description">{modalInfo[info][4].content}</p>
+            <div className='images-container'>
+              <div className="images cyaind">
+                <img src='./images/doblado2.jpg' alt="Construcción y Arquitectura" />
+              </div>
+              <div className="images eind">
+                <img src='./images/doblado6.jpg' alt="Industria Energética" />
+              </div>
+              <div className="images mfind">
+                  <img src='./images/doblado4.jpg' alt="Manufactura Industrial" />
+              </div>
+              <div className="images mahorro">
+                <img src='./images/doblado7.jpg' alt="Ahorro" />
+              </div>
+              <div className="images aind">
+                <img src='./images/doblado5.jpg' alt="Industria Agropecuaria" />
+              </div>
             </div>
           </div>
-          <div className='images-container'>
-            <div className="images cyaind">
-              <img src='./images/doblado2.jpg' alt="Construcción y Arquitectura" />
-            </div>
-            <div className="images eind">
-              <img src='./images/doblado6.jpg' alt="Industria Energética" />
-            </div>
-            <div className="images mfind">
-                <img src='./images/doblado4.jpg' alt="Manufactura Industrial" />
-            </div>
-            <div className="images mahorro">
-              <img src='./images/doblado7.jpg' alt="Ahorro" />
-            </div>
-            <div className="images aind">
-              <img src='./images/doblado5.jpg' alt="Industria Agropecuaria" />
-            </div>
-          </div>
-        </div>
 
-        <svg 
-          viewBox="0 0 1024 1024" 
-          xmlns="http://www.w3.org/2000/svg" 
-          fill="#000000" 
-          onClick={handleCloseModal}
-          width="5vh"
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            transition: "fill 0.3s ease-in-out",
-          }}
-          onMouseEnter={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#ffffff")}
-          onMouseLeave={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#9e9e9e")}
-        >
-          <g id="SVGRepo_iconCarrier">
-            <path fill="#9e9e9e" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path>
-          </g>
-        </svg>
+          <svg 
+            viewBox="0 0 1024 1024" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="#000000" 
+            onClick={handleCloseModal}
+            width="5vh"
+            style={{
+              cursor: "pointer",
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              transition: "fill 0.3s ease-in-out",
+            }}
+            onMouseEnter={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#ffffff")}
+            onMouseLeave={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#9e9e9e")}
+          >
+            <g id="SVGRepo_iconCarrier">
+              <path fill="#9e9e9e" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path>
+            </g>
+          </svg>
         </div>
       </Modal>
     </div>

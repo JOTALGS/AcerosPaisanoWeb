@@ -1,15 +1,21 @@
-import React from 'react';
-import './Modal.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./Modal.css";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="modal-overlay" style={{ zIndex: 9999 }} onClick={onClose}>
+      <div
+        className="modal-content"
+        style={{ zIndex: 9999 }}
+        onClick={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

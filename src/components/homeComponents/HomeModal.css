@@ -30,6 +30,7 @@ body {
   font-weight: 400;
   display: flex;
   align-items: top;
+  z-index: -1000;
 }
 
 .interact-item:hover {
@@ -38,10 +39,9 @@ body {
 }
 
 .industrias-container {
-
   height: 100%;
   width: 40%;
-  margin-top: 15vh;
+  margin-top: 10vh;
   display: flex;
   align-self: flex-end;
   justify-self: flex-end;
@@ -53,6 +53,8 @@ body {
   line-height: 1;
   font-weight: 700;
   letter-spacing: -1px;
+  position: relative;
+  z-index: 1000;
 }
 
 .images-container {
@@ -72,10 +74,11 @@ body {
 
 .images img {
   position: fixed;
-  top: -250px;
-  left: -250px;
-  width: 1000px;
-  height: 1000px;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -20%);
+  width: 75vw;
+  height: 100vh;
   object-fit: cover;
   border-radius: 5px;
 }
@@ -112,6 +115,13 @@ body {
 }
 
 .modal-description {
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: #666;
+  line-height: 1;
+}
+
+.modal-entry {
   font-weight: 300;
   font-size: 1.5rem;
   color: #666;

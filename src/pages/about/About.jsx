@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
 import { NavBar } from "../../components/navbar/NavBar1";
 import { Footer } from "../../components/footer/Footer";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -135,10 +135,10 @@ export const About = () => {
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                height={"600px"}
+                height={{ md:"70%", xl:"80%"}}
                 padding={"80px"}
               >
-                <h2 className="subtitle">{section.content.title}</h2>
+                <Typography className="subtitle" variant="h3">{section.content.title}</Typography>
                 <Box>
                   {section.content.paragraphs.map((item, i) => (
                     <div key={i} className="line-wrapper">
@@ -164,7 +164,7 @@ export const About = () => {
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                height={"600px"}
+                height={{ md:"70%", xl:"80%"}}
                 padding={"80px"}
               >
                 <h2 className="subtitle">{section.content.title}</h2>
