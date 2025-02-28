@@ -183,8 +183,12 @@ export const Home = () => {
         <ParallaxVideoBox
           videoSrc="/videos/Electro.mp4"
         />
-        <HomeModal2 />
+
       </div>
+        <Box display="flex" width={"100%"}>
+          <HomeModal info={"Barras lisas y Conformadas"} />
+          <HomeModal info={"Mallas Plegadas"} />
+        </Box>
         <ParallaxVideoBox
           videoSrc="/videos/19.mp4" />  
       <Footer />
