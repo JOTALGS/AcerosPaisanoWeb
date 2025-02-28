@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './Catalogue.css';
 import { NavBar } from "../../components/navbar/NavBar1";
+import styles from './Catalogue.module.css';
 import ButtonHoverBg from '../../components/CustomButton/ButtonHoverBg';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -203,7 +203,7 @@ export function Catalogue() {
     };
 
     return (
-        <section className='catalogue'>
+        <section className={styles.catalogue}>
             <NavBar />
             <Box position="absolute" zIndex={0} marginTop={"8vh"}>
                 <Typography 
@@ -220,77 +220,59 @@ export function Catalogue() {
                 </Typography>
             </Box>
 
-            <div ref={containerRef} className="catalogue-container">
-                <div className="catalogue-filters">
-                    <div ref={filtersRef} className={`filters-container`}>
-                        <div className="filters">
-                            <div className="filter-subcontainer">
-                                <label>
-                                </label>
-                                <Link to={"/contact"}>
-                                </Link>
+            <div ref={containerRef} className={styles.catalogueContainer}>
+                <div className={styles.catalogueFilters}>
+                    <div ref={filtersRef} className={styles.filtersContainer}>
+                        <div className={styles.filters}>
+                            <div className={styles.filterSubcontainer}>
+                                <label></label>
+                                <Link to={"/contact"}></Link>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="catalogue-products">
-                    <div className="view-toggle">
-                        <button className='view-toggle-button' onClick={() => setViewMode('grid')}>
+                <div className={styles.catalogueProducts}>
+                    <div className={styles.viewToggle}>
+                        <button className={styles.viewToggleButton} onClick={() => setViewMode('grid')}>
                             <svg viewBox="0 0 16 16" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7 1H1V7H7V1ZM7 9H1V15H7V9ZM9 1H15V7H9V1ZM15 9H9V15H15V9Z" fill="#000000"></path>
-                                </g>
+                                <path fillRule="evenodd" clipRule="evenodd" d="M7 1H1V7H7V1ZM7 9H1V15H7V9ZM9 1H15V7H9V1ZM15 9H9V15H15V9Z" fill="#000000"></path>
                             </svg>
                             Grid View
                         </button>
-                        <button className='view-toggle-button' onClick={() => setViewMode('list')}>
-                            <svg fill="#000000" viewBox="-4 0 32 32" width="30" height="30" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <title>list</title>
-                                    <path d="M4.031 8.844c0-1.125-0.875-2-2-2s-2.031 0.875-2.031 2 0.906 2.031 2.031 2.031 2-0.906 2-2.031zM6.375 10.5h17.625v-3.25h-17.625v3.25zM4.031 16c0-1.125-0.875-2.031-2-2.031s-2.031 0.906-2.031 2.031 0.906 2 2.031 2 2-0.875 2-2zM6.375 17.625h17.625v-3.25h-17.625v3.25zM4.031 23.125c0-1.125-0.875-2-2-2s-2.031 0.875-2.031 2 0.906 2.031 2.031 2.031 2-0.906 2-2.031zM6.375 24.719h17.625v-3.219h-17.625v3.219z"></path>
-                                </g>
+                        <button className={styles.viewToggleButton} onClick={() => setViewMode('list')}>
+                            <svg fill="#000000" viewBox="-4 0 32 32" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.031 8.844c0-1.125-0.875-2-2-2s-2.031 0.875-2.031 2 0.906 2.031 2.031 2.031 2-0.906 2-2.031zM6.375 10.5h17.625v-3.25h-17.625v3.25zM4.031 16c0-1.125-0.875-2.031-2-2.031s-2.031 0.906-2.031 2.031 0.906 2 2.031 2 2-0.875 2-2zM6.375 17.625h17.625v-3.25h-17.625v3.25z"></path>
                             </svg>
                             List View
                         </button>
                     </div>
-                    <div className={`products-list ${viewMode}`}>
+                    <div className={`${styles.productsList} ${styles[viewMode]}`}>
                         {products.map((product) => (
-                            <div className={`product-item ${viewMode}`} key={product.id}>
+                            <div className={`${styles.productItem} ${styles[viewMode]}`} key={product.id}>
                                 <img src={product.image} alt={product.title} />
-                                <div className="product-info" style={{ maxWidth: viewMode === 'grid' ? '100%' : undefined }}>
+                                <div className={styles.productInfo}>
                                     <div>
-                                        <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                            <img 
-                                                style={{ 
-                                                    backgroundColor: '#e40000', 
-                                                    padding: '5px', 
-                                                    border: 'none', 
-                                                    width: '150px', 
-                                                    margin: '0px', 
-                                                    marginRight: '15px' 
-                                                }} 
+                                        <div className={styles.productHeader}>
+                                            <img
+                                                style={{ height: "50px", width: "150px", objectFit: "contain", padding: "0px 2px" }}
+                                                className={styles.logoImage} 
                                                 src='./images/paisanologo.png' 
                                                 alt="Logo" 
                                             />
-                                            <h3 className="product-title">{product.title}</h3>
+                                            <h3 className={styles.productTitle}>{product.title}</h3>
                                         </div>
-                                        <ul className="product-description-list">
+                                        <ul className={styles.productDescriptionList}>
                                             {product.description.slice(0, 4).map((point, index) => (
                                                 <li key={index}>{point}</li>
                                             ))}
-                                            
                                         </ul>
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <span className="product-price">{product.price}</span>
+                                    <div className={styles.productFooter}>
+                                        <span className={styles.productPrice}>{product.price}</span>
                                         {product.showModal && (
                                             <button 
-                                                className="ver-mas-btn"
+                                                className={styles.verMasBtn}
                                                 onClick={() => handleOpenModal(product)}
                                             >
                                                 Ver más
@@ -304,51 +286,45 @@ export function Catalogue() {
                 </div>
             </div>
 
-            {/* Modal para información detallada */}
-            <Modal
-                open={modalOpen}
-                onClose={handleCloseModal}
-                aria-labelledby="modal-product-title"
-                aria-describedby="modal-product-description"
-            >
-                <div className="product-modal">
+            <Modal open={modalOpen} onClose={handleCloseModal}>
+                <div className={styles.productModal}>
                     {selectedProduct && (
                         <>
-                            <div className="modal-header">
-                                <h2 id="modal-product-title">{selectedProduct.title}</h2>
-                                <button className="close-modal-btn" onClick={handleCloseModal}>×</button>
+                            <div className={styles.modalHeader}>
+                                <h2>{selectedProduct.title}</h2>
+                                <button className={styles.closeModalBtn} onClick={handleCloseModal}>×</button>
                             </div>
-                            <div className="modal-content">
-                                <div className="modal-left">
+                            <div className={styles.modalContent}>
+                                <div className={styles.modalLeft}>
                                     <img src={selectedProduct.image} alt={selectedProduct.title} />
-                                    <p className="modal-price">{selectedProduct.price}</p>
+                                    <p className={styles.modalPrice}>{selectedProduct.price}</p>
                                 </div>
-                                <div className="modal-right">
+                                <div className={styles.modalRight}>
                                     <h3>Características:</h3>
-                                    <ul className="modal-description-list">
+                                    <ul className={styles.modalDescriptionList}>
                                         {selectedProduct.description.map((point, index) => (
                                             <li key={index}>{point}</li>
                                         ))}
                                     </ul>
                                     {selectedProduct.extraInfo && (
-                                        <div className="modal-extra-info">
+                                        <div className={styles.modalExtraInfo}>
                                             <h3>Información adicional:</h3>
                                             <p>{selectedProduct.extraInfo}</p>
                                         </div>
                                     )}
                                 </div>
                             </div>
-                            <div className="modal-footer">
+                            <div className={styles.modalFooter}>
                                 <Link to="/contact">
-                                    <button className="contact-btn">Solicitar información</button>
+                                    <button className={styles.contactBtn}>Solicitar información</button>
                                 </Link>
-                                <button className="close-btn" onClick={handleCloseModal}>Cerrar</button>
+                                <button className={styles.closeBtn} onClick={handleCloseModal}>Cerrar</button>
                             </div>
                         </>
                     )}
                 </div>
             </Modal>
-            
+
             <Footer />
         </section>
     );

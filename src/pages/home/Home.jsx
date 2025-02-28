@@ -12,6 +12,7 @@ import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 import ParallaxVideoBox from "../../components/parallaxBox/ParallaxVideoBox";
 import ZoomOutVideo from "../../components/zoomOutVideo/ZoomOutVideo";
 import { HomeModal2 } from "../../components/homeComponents/HomeModal2";
+import { Box } from "@mui/material";
 
 
 
@@ -173,7 +174,10 @@ export const Home = () => {
           titleBottom="10%" 
         />
 
-        <HomeModal />
+        <Box display="flex" width={"100%"}>
+          <HomeModal info={"Hierro Cortado y Doblado"} />
+          <HomeModal info={"Mallas Electrosoldadas"} />
+        </Box>
       </div>
       <div className="Home">
         <ParallaxVideoBox

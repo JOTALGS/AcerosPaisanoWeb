@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Modal from '../modal/Modal'
-import './HomeModal.css'
 import { use } from 'react';
 import { useEffect } from 'react';
 

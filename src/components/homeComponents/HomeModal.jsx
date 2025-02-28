@@ -4,11 +4,110 @@ import './HomeModal.css'
 import { use } from 'react';
 import { useEffect } from 'react';
 
-export const HomeModal = () => {
+
+const modalInfo = {
+  "Hierro Cortado y Doblado": [
+    {
+      "title": "A Medida",
+      "content": "Dimensiones precisas según necesidades del proyecto.",
+      "image": "./images/doblado2.jpg",
+      "alt": "Construcción y Arquitectura"
+    },
+    {
+      "title": "Calidad",
+      "content": "Procesos de calidad garantizada.",
+      "image": "./images/doblado6.jpg",
+      "alt": "Industria Energética"
+    },
+    {
+      "title": "Cero Desperdicio",
+      "content": "Componentes diseñados para optimizar procesos productivos.",
+      "image": "./images/doblado4.jpg",
+      "alt": "Manufactura Industrial"
+    },
+    {
+      "title": "Ahorro",
+      "content": "Economía de tiempo y mano de obra.",
+      "image": "./images/doblado7.jpg",
+      "alt": "Ahorro"
+    },
+    {
+      "title": "Asistencia Técnica",
+      "content": "Asesoramiento y seguimiento de obra por técnicos especializados.",
+      "image": "./images/doblado5.jpg",
+      "alt": "Industria Agropecuaria"
+    }
+  ],
+  "Mallas Electrosoldadas": [
+    {
+      "title": "Certificación",
+      "content": "Garantía de calidad y cumplimiento con normativas internacionales.",
+      "image": "./images/certificado1.jpg",
+      "alt": "Construcción y Arquitectura"
+    },
+    {
+      "title": "Medidas Estándar",
+      "content": "Diferentes opciones para adaptarse a múltiples aplicaciones.",
+      "image": "./images/mallas3.jpg",
+      "alt": "Industria Energética"
+    },
+    {
+      "title": "Diámetros",
+      "content": "Variedad de grosores para proyectos de alta exigencia.",
+      "image": "./images/mallas4.jpg",
+      "alt": "Manufactura Industrial"
+    },
+    {
+      "title": "Presentación",
+      "content": "Formatos versátiles para distintas necesidades constructivas.",
+      "image": "./images/mallas2.jpg",
+      "alt": "Industria Agropecuaria"
+    },
+    {
+      "title": "Diseño Especial",
+      "content": "Soluciones personalizadas para proyectos específicos.",
+      "image": "./images/mallas6.jpg",
+      "alt": "Industria Agropecuaria"
+    }
+  ],
+  "clientes": [
+    {
+      "title": "A Medida",
+      "content": "Dimensiones precisas según necesidades del proyecto.",
+      "image": "./images/doblado2.jpg",
+      "alt": "Construcción y Arquitectura"
+    },
+    {
+      "title": "Calidad",
+      "content": "Procesos de calidad garantizada.",
+      "image": "./images/doblado6.jpg",
+      "alt": "Industria Energética"
+    },
+    {
+      "title": "Cero Desperdicio",
+      "content": "Componentes diseñados para optimizar procesos productivos.",
+      "image": "./images/doblado4.jpg",
+      "alt": "Manufactura Industrial"
+    },
+    {
+      "title": "Ahorro",
+      "content": "Economía de tiempo y mano de obra.",
+      "image": "./images/doblado7.jpg",
+      "alt": "Ahorro"
+    },
+    {
+      "title": "Asistencia Técnica",
+      "content": "Asesoramiento y seguimiento de obra por técnicos especializados.",
+      "image": "./images/doblado5.jpg",
+      "alt": "Industria Agropecuaria"
+    }
+  ]
+}
+
+export const HomeModal = ({ info }) => {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-
 
   useEffect(() => {
     document.querySelectorAll('.industrias-container > div').forEach(container => {
@@ -46,103 +145,52 @@ export const HomeModal = () => {
   return (
     <div className="interact" style={{ zIndex: 1000 }}>
       <div className="interact-item" onClick={() => {handleOpenModal("industrias");}}>
-        <p>Hierro cortado y doblado</p>
-      </div>
-      <div className="interact-item" onClick={() => {handleOpenModal("mallas");}}>
-        <p>Mallas electrosoldadas</p>
+        <p>{info}</p>
       </div>
 
-      {/* Render Modal */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} >
-        <div  style={{ zIndex: 1000 }}>
-        {modalContent === "industrias" && (
-          <div>
-            <div className='industrias-container'>
-              <div className="cyaind-container">
-                <h2>A medida</h2>
-                <p className="modal-description">Dimensiones precisas según necesidades del proyecto.</p>
-              </div>
-              <div className="eind-container">
-                <h2>Calidad</h2>
-                <p className="modal-description">Procesos de calidad garantizada.</p>
-              </div>
-              <div className="mfind-container">
-                <h2>Cero desperdicio</h2>
-                <p className="modal-description">Componentes diseñados para optimizar procesos productivos.</p>
-              </div>
-              <div className="mahorro-container">
-                <h2>Ahorro</h2>
-                <p className="modal-description">Economía de tiempo y mano de obra.</p>
-              </div>
-              <div className="aind-container">
-                <h2>Asistencia tecnica</h2>
-                <p className="modal-description">Asesoramiento y seguimiento de obra por técnicos especializados.</p>
-              </div>
+        <div style={{ zIndex: 1000 }}>
+        <div>
+          <div className='industrias-container'>
+            <div className="cyaind-container">
+              <h2>{modalInfo[info][0].title}</h2>
+              <p className="modal-description">{modalInfo[info][0].content}</p>
             </div>
-            <div className='images-container'>
-              <div className="images cyaind">
-                <img src='./images/doblado2.jpg' alt="Construcción y Arquitectura" />
-              </div>
-              <div className="images eind">
-                <img src='./images/doblado6.jpg' alt="Industria Energética" />
-              </div>
-              <div className="images mfind">
-                  <img src='./images/doblado4.jpg' alt="Manufactura Industrial" />
-              </div>
-              <div className="images mahorro">
-                <img src='./images/doblado7.jpg' alt="Ahorro" />
-              </div>
-              <div className="images aind">
-                <img src='./images/doblado5.jpg' alt="Industria Agropecuaria" />
-              </div>
+            <div className="eind-container">
+              <h2>{modalInfo[info][1].title}</h2>
+              <p className="modal-description">{modalInfo[info][1].content}</p>
+            </div>
+            <div className="mfind-container">
+              <h2>{modalInfo[info][2].title}</h2>
+              <p className="modal-description">{modalInfo[info][2].content}</p>
+            </div>
+            <div className="mahorro-container">
+              <h2>{modalInfo[info][3].title}</h2>
+              <p className="modal-description">{modalInfo[info][3].content}</p>
+            </div>
+            <div className="aind-container">
+              <h2>{modalInfo[info][4].title}</h2>
+              <p className="modal-description">{modalInfo[info][4].content}</p>
             </div>
           </div>
-        )}
-
-
-        {modalContent === "mallas" && (
-          <div>
-            <div className='industrias-container'>
-              <div className="certificada-container">
-                <h2>Certificación</h2>
-                <p className="modal-description">Garantía de calidad y cumplimiento con normativas internacionales.</p>
-              </div>
-              <div className="medidas-container">
-                <h2>Medidas Estándar</h2>
-                <p className="modal-description">Diferentes opciones para adaptarse a múltiples aplicaciones.</p>
-              </div>
-              <div className="diametros-container">
-                <h2>Diámetros</h2>
-                <p className="modal-description">Variedad de grosores para proyectos de alta exigencia.</p>
-              </div>
-              <div className="presentacion-container">
-                <h2>Presentación</h2>
-                <p className="modal-description">Formatos versátiles para distintas necesidades constructivas.</p>
-              </div>
-              <div className="diseno-container">
-                <h2>Diseño Especial</h2>
-                <p className="modal-description">Soluciones personalizadas para proyectos específicos.</p>
-              </div>
+          <div className='images-container'>
+            <div className="images cyaind">
+              <img src='./images/doblado2.jpg' alt="Construcción y Arquitectura" />
             </div>
-            <div className='images-container'>
-              <div className="images certificada">
-                <img src='./images/certificado1.jpg' alt="Construcción y Arquitectura" />
-              </div>
-              <div className="images medidas">
-                <img src='./images/mallas3.jpg' alt="Industria Energética" />
-              </div>
-              <div className="images diametros">
-                  <img src='./images/mallas4.jpg' alt="Manufactura Industrial" />
-              </div>
-              <div className="images presentacion">
-                <img src='./images/mallas2.jpg' alt="Industria Agropecuaria" />
-              </div>
-              <div className="images diseno">
-                <img src='./images/mallas6.jpg' alt="Industria Agropecuaria" />
-              </div>
+            <div className="images eind">
+              <img src='./images/doblado6.jpg' alt="Industria Energética" />
+            </div>
+            <div className="images mfind">
+                <img src='./images/doblado4.jpg' alt="Manufactura Industrial" />
+            </div>
+            <div className="images mahorro">
+              <img src='./images/doblado7.jpg' alt="Ahorro" />
+            </div>
+            <div className="images aind">
+              <img src='./images/doblado5.jpg' alt="Industria Agropecuaria" />
             </div>
           </div>
-        )}
+        </div>
 
         <svg 
           viewBox="0 0 1024 1024" 
