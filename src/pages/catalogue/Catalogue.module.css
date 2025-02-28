@@ -235,8 +235,7 @@
   width: 80%;
   max-width: 110vh;
   max-height: 90vh;
-  overflow-x: hidden;
-  overflow-y: hidden; /* sto mantiene la barra de desplazamiento vertical si es necesario */
+  overflow: auto; /* sto mantiene la barra de desplazamiento vertical si es necesario */
   background-color: #1a1a1a;
   border: 1px solid #333;
   border-radius: 8px;
