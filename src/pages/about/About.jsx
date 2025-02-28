@@ -13,7 +13,7 @@ const content = [
     title: "Misión",
     paragraphs: [
       "Nuestra misión es desarrollar una empresa sustentable, brindando productos metálicos de calidad certificada destinados a los sectores de la construcción, el agro y la industria.",
-      "La sustentabilidad se obtiene a través de mejorar en forma continua el Sistema de Gestión, el Sistema de Seguridad, y el Sistema Ambiental.",
+      "La sustentabilidad se obtiene a través de mejorar en forma continua el Sistema de Gestión, el Sistema de Seguridad y el Sistema Ambiental.",
     ],
   },
   {
@@ -27,22 +27,22 @@ const content = [
     title: "Política de Calidad",
     paragraphs: [
       "Nuestro Sistema de Calidad tiene como prioridades:",
-      "- La obtención y el mantenimiento de la certificación de Calidad de Producto.",
+      "- La obtención y el mantenimiento de la certificación de calidad de producto.",
       "- La venta de productos metálicos que cumplan los requisitos de las normas vigentes aplicables y las necesidades de nuestros clientes.",
     ],
   },
   {
     title: "Política de Seguridad",
     paragraphs: [
-      "Nuestro Sistema de Seguridad se controla con la obtención y el mantenimiento de la certificación de la norma OHSAS 18001.",
-      "Nuestra principal política es que cualquier operador debe detener el proceso que no se encuentre dentro de las condiciones estándares de seguridad, hasta no asegurarse de la remoción de la condición insegura.",
+      "Nuestro Sistema de Seguridad se controla con la obtención y el mantenimiento de la certificación de la norma ISO 45001",
+      "Nuestra principal política es que el operador debe detener el proceso si no se encuentra dentro de las condiciones estándares de seguridad, hasta asegurarse de la ERRADICACIÓN de la condición insegura.",
     ],
   },
   {
     title: "Política Ambiental",
     paragraphs: [
       "Nuestro Sistema de Protección del Medio Ambiente se controla con la obtención y el mantenimiento de la certificación de la norma ISO 14001.",
-      "Nuestra principal política es realizar inversiones y orientar nuestra operación de acuerdo a los conceptos de Tecnología Limpia.",
+      "Nuestra política es realizar inversiones y orientar nuestras operaciones de acuerdo AL concepto de tecnología limpia, de forma de prevenir y minimizar la generación de elementos contaminantes.",
     ],
   },
 ];

@@ -5,13 +5,15 @@ import ButtonHoverBg from '../../components/CustomButton/ButtonHoverBg';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Modal } from "@mui/material";
 import { Footer } from '../../components/footer/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Catalogue() {
     const [viewMode, setViewMode] = useState('list');
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
     const filtersRef = useRef(null);
     const titleRef = useRef(null);
     const containerRef = useRef(null);
@@ -20,51 +22,120 @@ export function Catalogue() {
         {
             id: 1,
             title: 'Malla Electrosoldada (a medida)',
-            description: 'Mallas electrosoldadas para hormigón. Certificadas bajo norma UNIT 845:1995. Medidas estándar de 600x240cm en stock. Todos los diámetros, combinados de hasta 12 +12 mm. Presentación en paños y rollos. Diseño de mallas especiales que se adapten a los requerimientos del proyecto. Largos especiales que evitan empalmes y minimizan desperdicios. Bigotes y entramados especiales. Largos de hasta 12m. Atillado de paquetes identificados con etiquetas. Cortado de mallas a medida con guillotina.',
-            price: 'Entregas a todo el Pais',
+            description: [
+                'Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995',
+                'Medidas estándar de 600x240cm en stock',
+                'Todos los diámetros, combinados de hasta 12+12 mm',
+                'Presentación en paños y rollos',
+                'Diseño de mallas especiales adaptadas a los requerimientos del proyecto',
+                'Largos especiales que evitan empalmes y minimizan desperdicios',
+                'Bigotes y entramados especiales con largos de hasta 12m',
+                'Atillado de paquetes identificados con etiquetas',
+                'Cortado de mallas a medida con guillotina',
+                'Entrega del material de acuerdo al cronograma',
+                'Controles de carga y descarga en obra mediante planillas',
+                'Asistencia técnica permanente'
+            ],
+            extraInfo: 'Las mallas electrosoldadas son fundamentales para reforzar estructuras de hormigón. Nuestra capacidad de fabricarlas a medida permite optimizar el uso de material, reducir desperdicios y acelerar los procesos constructivos.',
+            price: 'Entregas a todo el País',
             image: './images/mallaElectrosoldada.jpg',
+            showModal: true
         },
         {
             id: 2,
             title: 'Malla Plegada',
-            description: 'Combina las ventajas del cortado y doblado + mallas. Diseños a medida. Alta precisión. Proceso industrializado con plegadora automatizada. Optimiza el uso de hierro en obra. Evita empalmes y atado manual. Evita el armado de estructuras en obra. Refuerzos de borde.',
-            price: 'Consultar',
+            description: [
+                'Combina las ventajas del cortado y doblado + mallas',
+                'Diseños a medida con alta precisión',
+                'Proceso industrializado con plegadora automatizada',
+                'Optimiza el uso de hierro en obra',
+                'Evita empalmes y atado manual',
+                'Evita el armado de estructuras en obra',
+                'Refuerzos de borde',
+                'Entrega del material de acuerdo al cronograma',
+                'Controles de carga y descarga en obra mediante planillas',
+                'Asistencia técnica permanente'
+            ],
+            extraInfo: 'Las mallas plegadas representan un avance significativo en la prefabricación de armaduras para hormigón, reduciendo tiempos de obra y garantizando mayor precisión estructural.',
+            price: 'Entregas a todo el País',
             image: './images/plegada.jpg',
+            showModal: true
         },
         {
             id: 3,
             title: 'Barras Lisas (superficie uniforme y lisa)',
-            description: 'Barras de acero de alta calidad con superficie lisa, ideales para proyectos estructurales y de construcción. Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995, Barras cortadas a medida.',
-            price: 'Entregas a todo el Pais',
+            description: [
+                'Barras de acero de alta calidad con superficie lisa',
+                'Ideales para proyectos estructurales y de construcción',
+                'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
+                'Barras cortadas a medida',
+                'Entrega del material de acuerdo al cronograma',
+                'Controles de carga y descarga en obra mediante planillas',
+                'Asistencia técnica permanente'
+            ],
+            price: 'Entregas a todo el País',
             image: './images/barrasLisas.jpg',
+            showModal: false
         },
         {
             id: 4,
             title: 'Barras Conformadas (superficie rugosa)',
-            description: 'Barras de acero con textura rugosa, diseñadas para un mejor agarre en concreto y estructuras reforzadas. Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995',
-            price: 'Entregas a todo el Pais',
+            description: [
+                'Barras de acero de alta calidad con textura rugosa',
+                'Diseñadas para un mejor agarre en concreto y estructuras reforzadas',
+                'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
+                'Barras cortadas a medida',
+                'Entrega del material de acuerdo al cronograma',
+                'Controles de carga y descarga en obra mediante planillas',
+                'Asistencia técnica permanente'
+            ],
+            price: 'Entregas a todo el País',
             image: './images/barras.jpg',
+            showModal: false
         },
         {
             id: 5,
             title: 'Hierro Cortado y Doblado (a medida)',
-            description: 'Sistema industrial de corte y doblado de varillas de acero. Permite cumplir con las especifiaciones del proyecto. Asesoramiento y seguimiento de obra por técnicos especializados. Entregas en obra según cronograma definido. Procesos de calidad garantizada. Pedidos diseñados y validados en software especializado. Pedidos identificados con colores por elemento estructural. Entrega del pedido en paquetes identificados con doble etiquetado. Diagramas y guías de armado en obra a petición. Todos los diámetros y dimensiones. Ventajas para nuestros clientes: Cero desperdicio de acero, economía de tiempo y mano de obra, Dimensiones precisas según necesidades del proyecto, Identificación de los paquetes facilitando su uso y armado, Entrega del material de acuerdo al cronograma, Controles de carga y descarga en obra mediante planillas, Asistencia técnica permanente.',
-            price: 'Entregas a Todo el Pais',
+            description: [
+                'Sistema industrial de corte y doblado de varillas de acero',
+                'Procesos de calidad garantizada',
+                'Pedidos diseñados y validados en software especializado',
+                'Pedidos identificados con colores por elemento estructural',
+                'Entrega del pedido en paquetes identificados con doble etiquetado',
+                'Diagramas y guías de armado en obra a petición',
+                'Todos los diámetros y dimensiones'
+            ],
+            extraInfo: 'Ventajas para nuestros clientes:\n• Cero desperdicio de acero\n• Economía de tiempo y mano de obra\n• Dimensiones precisas según necesidades del proyecto\n• Identificación de los paquetes facilitando su uso y armado\n• Entrega del material de acuerdo al cronograma\n• Controles de carga y descarga en obra mediante planillas\n• Asistencia técnica permanente',
+            price: 'Entregas a Todo el País',
             image: './images/cortadoYdoblado.jpg',
+            showModal: true
         },
         {
             id: 6,
             title: 'Clavos de Acero',
-            description: 'Clavos de acero de 2" y 2 1/2".',
-            price: 'Entregas a todo el Pais',
+            description: [
+                'Clavos de acero de 2" y 2 1/2"',
+                'Alta resistencia y durabilidad',
+                'Entrega del material de acuerdo al cronograma',
+                'Asistencia técnica permanente'
+            ],
+            price: 'Entregas a todo el País',
             image: './images/clavos.jpg',
+            showModal: false
         },
         {
             id: 7,
             title: 'Alambres Recocidos',
-            description: 'Alambres Recocidos, ISWG 14, ISWG 16, ISWG 18',
+            description: [
+                'Alambres Recocidos, ISWG 14, ISWG 16, ISWG 18',
+                'Alta flexibilidad y resistencia',
+                'Entrega del material de acuerdo al cronograma',
+                'Controles de carga y descarga en obra mediante planillas',
+                'Asistencia técnica permanente'
+            ],
             price: 'Entregas a todo el país',
             image: './images/alambrerecocido.jpg',
+            showModal: false
         },
     ];
 
@@ -122,8 +193,13 @@ export function Catalogue() {
         };
     }, []);
 
-    const handleOpenModal = (modalId) => {
-        console.log(`Opening modal: ${modalId}`);
+    const handleOpenModal = (product) => {
+        setSelectedProduct(product);
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
     };
 
     return (
@@ -162,18 +238,18 @@ export function Catalogue() {
                     <div className="view-toggle">
                         <button className='view-toggle-button' onClick={() => setViewMode('grid')}>
                             <svg viewBox="0 0 16 16" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 1H1V7H7V1ZM7 9H1V15H7V9ZM9 1H15V7H9V1ZM15 9H9V15H15V9Z" fill="#000000"></path>
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M7 1H1V7H7V1ZM7 9H1V15H7V9ZM9 1H15V7H9V1ZM15 9H9V15H15V9Z" fill="#000000"></path>
                                 </g>
                             </svg>
                             Grid View
                         </button>
                         <button className='view-toggle-button' onClick={() => setViewMode('list')}>
                             <svg fill="#000000" viewBox="-4 0 32 32" width="30" height="30" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
                                     <title>list</title>
                                     <path d="M4.031 8.844c0-1.125-0.875-2-2-2s-2.031 0.875-2.031 2 0.906 2.031 2.031 2.031 2-0.906 2-2.031zM6.375 10.5h17.625v-3.25h-17.625v3.25zM4.031 16c0-1.125-0.875-2.031-2-2.031s-2.031 0.906-2.031 2.031 0.906 2 2.031 2 2-0.875 2-2zM6.375 17.625h17.625v-3.25h-17.625v3.25zM4.031 23.125c0-1.125-0.875-2-2-2s-2.031 0.875-2.031 2 0.906 2.031 2.031 2.031 2-0.906 2-2.031zM6.375 24.719h17.625v-3.219h-17.625v3.219z"></path>
@@ -203,24 +279,21 @@ export function Catalogue() {
                                             />
                                             <h3 className="product-title">{product.title}</h3>
                                         </div>
-                                        <p className="product-description">{product.description}</p>
+                                        <ul className="product-description-list">
+                                            {product.description.slice(0, 4).map((point, index) => (
+                                                <li key={index}>{point}</li>
+                                            ))}
+                                            
+                                        </ul>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <span className="product-price">{product.price}</span>
-                                        {product.id === 1 && (
+                                        {product.showModal && (
                                             <button 
-                                                style={{ 
-                                                    backgroundColor: 'transparent', 
-                                                    border: 'none', 
-                                                    padding: '10px', 
-                                                    cursor: 'pointer' 
-                                                }} 
-                                                onClick={() => { 
-                                                    handleOpenModal("industrias"); 
-                                                    window.scrollTo(0, 2000); 
-                                                }}
+                                                className="ver-mas-btn"
+                                                onClick={() => handleOpenModal(product)}
                                             >
-                                                Ver mas
+                                                Ver más
                                             </button>
                                         )}
                                     </div>
@@ -230,6 +303,52 @@ export function Catalogue() {
                     </div>
                 </div>
             </div>
+
+            {/* Modal para información detallada */}
+            <Modal
+                open={modalOpen}
+                onClose={handleCloseModal}
+                aria-labelledby="modal-product-title"
+                aria-describedby="modal-product-description"
+            >
+                <div className="product-modal">
+                    {selectedProduct && (
+                        <>
+                            <div className="modal-header">
+                                <h2 id="modal-product-title">{selectedProduct.title}</h2>
+                                <button className="close-modal-btn" onClick={handleCloseModal}>×</button>
+                            </div>
+                            <div className="modal-content">
+                                <div className="modal-left">
+                                    <img src={selectedProduct.image} alt={selectedProduct.title} />
+                                    <p className="modal-price">{selectedProduct.price}</p>
+                                </div>
+                                <div className="modal-right">
+                                    <h3>Características:</h3>
+                                    <ul className="modal-description-list">
+                                        {selectedProduct.description.map((point, index) => (
+                                            <li key={index}>{point}</li>
+                                        ))}
+                                    </ul>
+                                    {selectedProduct.extraInfo && (
+                                        <div className="modal-extra-info">
+                                            <h3>Información adicional:</h3>
+                                            <p>{selectedProduct.extraInfo}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <Link to="/contact">
+                                    <button className="contact-btn">Solicitar información</button>
+                                </Link>
+                                <button className="close-btn" onClick={handleCloseModal}>Cerrar</button>
+                            </div>
+                        </>
+                    )}
+                </div>
+            </Modal>
+            
             <Footer />
         </section>
     );

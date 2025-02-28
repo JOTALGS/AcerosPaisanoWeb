@@ -78,10 +78,6 @@ export const Footer = () => {
 
       <div className="footer-legal-top">
         <div className="footer-legal-top-left">
-          <select defaultValue="es">
-            <option value="en">English</option>
-            <option value="es">Español</option>
-          </select>
         </div>
       </div>
 

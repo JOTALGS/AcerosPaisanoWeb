@@ -120,3 +120,22 @@ body {
   color: #666;
   line-height: 1;
 }
+
+.number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #777;
+  position: absolute;
+  left: -8vh; /* Mueve los números a la izquierda */
+  top: 30%;
+  transform: translateY(-50%);
+  transition: color 0.3s ease-in-out;
+}
+
+.cyaind-container:hover .number,
+.eind-container:hover .number,
+.mfind-container:hover .number,
+.mahorro-container:hover .number,
+.aind-container:hover .number {
+  color: white;
+}

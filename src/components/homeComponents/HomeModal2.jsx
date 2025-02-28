@@ -58,26 +58,36 @@ export const HomeModal2 = () => {
         {modalContent === "industrias" && (
           <div>
             <div className='industrias-container'>
-              <div className="cyaind-container">
-                <h2>Certificación</h2>
-                <p className="modal-description">Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995.</p>
-              </div>
-              <div className="eind-container">
-                <h2>Calidad</h2>
-                <p className="modal-description">Procesos de calidad garantizada.</p>
-              </div>
-              <div className="mfind-container">
-                <h2>Cero desperdicio</h2>
-                <p className="modal-description">Barras cortadas a medida.</p>
-              </div>
-              <div className="mahorro-container">
-                <h2>Ahorro</h2>
-                <p className="modal-description">Optimización de recursos en obra.</p>
-              </div>
-              <div className="aind-container">
-                <h2>Facilidad</h2>
-                <p className="modal-description">Facilidad en el transporte.</p>
-              </div>
+            <div className="cyaind-container">
+              <span className="number">01.</span>
+              <h2>Certificación</h2>
+              <p className="modal-description">Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995.</p>
+            </div>
+
+            <div className="eind-container">
+              <span className="number">02.</span>
+              <h2>Rendimiento y calidad</h2>
+              <p className="modal-description">Procesos de calidad garantizada.</p>
+            </div>
+
+            <div className="mfind-container">
+              <span className="number">03.</span>
+              <h2>Cero desperdicio</h2>
+              <p className="modal-description">Barras cortadas a medida.</p>
+            </div>
+
+            <div className="mahorro-container">
+              <span className="number">04.</span>
+              <h2>Maximización de recursos</h2>
+              <p className="modal-description">Optimización de recursos en obra.</p>
+            </div>
+
+            <div className="aind-container">
+              <span className="number">05.</span>
+              <h2>Logística optimizada</h2>
+              <p className="modal-description">Traslado sencillo y seguro.</p>
+            </div>
+
             </div>
             <div className='images-container'>
               <div className="images cyaind">
@@ -93,7 +103,7 @@ export const HomeModal2 = () => {
                 <img src='./images/barras3.jpg' alt="Ahorro" />
               </div>
               <div className="images aind">
-                <img src='./images/barras4.jpg' alt="Industria Agropecuaria" />
+                <img src='./images/barras5.jpg' alt="Industria Agropecuaria" />
               </div>
             </div>
           </div>
@@ -103,26 +113,35 @@ export const HomeModal2 = () => {
         {modalContent === "mallas" && (
           <div>
             <div className='industrias-container'>
-              <div className="certificada-container">
-                <h2>Certificación</h2>
-                <p className="modal-description">Combina las ventajas del cortado y doblado + mallas.</p>
-              </div>
-              <div className="medidas-container">
-                <h2>Alta precisión</h2>
-                <p className="modal-description">Proceso industrializado con plegadora automatizada.</p>
-              </div>
-              <div className="diametros-container">
-                <h2>Agil y rapido</h2>
-                <p className="modal-description">Evita el armado de estructuras en obra.</p>
-              </div>
-              <div className="presentacion-container">
-                <h2>Presentación</h2>
-                <p className="modal-description">Formatos versátiles para distintas necesidades constructivas.</p>
-              </div>
-              <div className="diseno-container">
-                <h2>Diseño Especial</h2>
-                <p className="modal-description">Soluciones personalizadas para proyectos específicos.</p>
-              </div>
+            <div className="certificada-container">
+              <span className="number">01.</span>
+              <h2>Estandarización y confiabilidad</h2>
+              <p className="modal-description">Combina las ventajas del cortado y doblado + mallas.</p>
+            </div>
+
+            <div className="medidas-container">
+              <span className="number">02.</span>
+              <h2>Alta precisión</h2>
+              <p className="modal-description">Proceso industrializado con plegadora automatizada.</p>
+            </div>
+
+            <div className="diametros-container">
+              <span className="number">03.</span>
+              <h2>Optimización en obra</h2>
+              <p className="modal-description">Elimina procesos manuales y mejora la productividad.</p>
+            </div>
+
+            <div className="presentacion-container">
+              <span className="number">04.</span>
+              <h2>Soluciones adaptables</h2>
+              <p className="modal-description">Formatos versátiles para distintas necesidades constructivas.</p>
+            </div>
+
+            <div className="diseno-container">
+              <span className="number">05.</span>
+              <h2>Diseño optimizado</h2>
+              <p className="modal-description">Adaptamos cada detalle a los requerimientos de la obra.</p>
+            </div>
             </div>
             <div className='images-container'>
               <div className="images certificada">
@@ -138,7 +157,7 @@ export const HomeModal2 = () => {
                 <img src='./images/plegada3.jpg' alt="Industria Agropecuaria" />
               </div>
               <div className="images diseno">
-                <img src='./images/plegada5.jpg' alt="Industria Agropecuaria" />
+                <img src='./images/plegada6.jpg' alt="Industria Agropecuaria" />
               </div>
             </div>
           </div>
