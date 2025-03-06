@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Contact.css";
-import { NavBar } from "../../components/navbar/NavBar1";
+import { NavBar } from "../../components/navbar/Navbar1";
 import { Footer } from "../../components/footer/Footer";
 import ContactComponent from "../../components/contact/Contact";
 

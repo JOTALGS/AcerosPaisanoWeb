@@ -1,12 +1,63 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer } from "@mui/material";
-import { gsap } from "gsap";
+import React, { useState, useEffect } from "react";
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Button, 
+  IconButton,
+  Box, 
+  Drawer,
+  useMediaQuery,
+  useTheme,
+  List,
+  ListItem,
+  ListItemText,
+  GlobalStyles
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate } from "react-router-dom";
 
+const fontImportStyles = `
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Urbanist:wght@300;400;500;700&display=swap');
+`;
+
+const AnimatedMenuIcon = ({ isOpen }) => (
+  <Box sx={{ 
+    width: '36px',
+    height: '36px',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }}>
+    <Box sx={{ 
+      width: '30px',
+      height: '3px',
+      backgroundColor: isOpen ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
+      position: 'absolute',
+      transition: 'all 0.3s ease',
+      transform: isOpen ? 'rotate(45deg)' : 'translateY(-6px)',
+      boxShadow: isOpen ? '0 0 5px #FFFFFF' : 'none',
+    }} />
+    <Box sx={{ 
+      width: '30px',
+      height: '3px',
+      backgroundColor: isOpen ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
+      position: 'absolute',
+      transition: 'all 0.3s ease',
+      transform: isOpen ? 'rotate(-45deg)' : 'translateY(6px)',
+      boxShadow: isOpen ? '0 0 5px #FFFFFF' : 'none',
+    }} />
+  </Box>
+);
 
 export const NavBar = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('md', 'lg'));
+  
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hidden, setHidden] = useState(true); // Start with hidden true
+  const [hidden, setHidden] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -16,11 +67,11 @@ export const NavBar = () => {
     if (hidden) {
       const timeout = setTimeout(() => {
         setDelayedHidden(true);
-      }, 2000); // Delay of 2 seconds
+      }, 2000);
 
-      return () => clearTimeout(timeout); // Cleanup on unmount or change
+      return () => clearTimeout(timeout);
     } else {
-      setDelayedHidden(false); // Apply immediately when hidden becomes false
+      setDelayedHidden(false);
     }
   }, [hidden]);
 
@@ -28,18 +79,18 @@ export const NavBar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  // Initial load effect
   useEffect(() => {
     const timer = setTimeout(() => {
       setHidden(false);
     }, 1000);
 
-    // Cleanup timeout if component unmounts
     return () => clearTimeout(timer);
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
+      if (menuOpen) return;
+      
       const currentScrollY = window.scrollY;
       setScrolled(currentScrollY > 0);
 
@@ -53,65 +104,277 @@ export const NavBar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, menuOpen]);
+
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.type = 'text/css';
+    styleElement.appendChild(document.createTextNode(fontImportStyles));
+    
+    document.head.appendChild(styleElement);
+
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+  
+  useEffect(() => {
+    if (menuOpen) {
+      setHidden(false);
+    }
+  }, [menuOpen]);
+
+  const navItems = [
+    { title: "Inicio", path: "/" },
+    { title: "Sobre Nosotros", path: "/about-us" },
+    { title: "Productos y Servicios", path: "/catalogue" },
+    { title: "Contacto", path: "/contact" },
+  ];
+
+  const handleNavClick = (path) => {
+    window.scrollTo(0, 0);
+    if (isMobile) {
+      toggleMenu();
+    }
+  };
 
   return (
-    <Box sx={{ position: "fixed", right: "auto", zIndex: delayedHidden ? -1 : 100, width: "100vw", height: "100px" }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          right: "auto",
-          width: "100vw",
-          padding: "6px 16px",
-          transition: "transform 0.4s ease-in-out, background-color 0.3s ease-in-out, all 0.3s ease-in-out",
-          transform: hidden ? "translateY(-100%)" : "translateY(0)",
-          backgroundColor: "transparent",
-          backdropFilter: "blur(10px)",
-          boxShadow: scrolled ? "0 4px 10px rgba(0, 0, 0, 0.1)" : "none",
+    <>
+      <GlobalStyles
+        styles={{
+          '@import': 'url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Urbanist:wght@300;400;500;700&display=swap")',
+          'button:focus, a:focus': {
+            outline: 'none'
+          },
+          'a, button': {
+            WebkitTapHighlightColor: 'transparent'
+          }
         }}
-      >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Button component={Link} to="/" onClick={() => {window.scrollTo(0, 0);}} color="inherit">
-            <Box component="img" src="/images/logo.png" alt="Logo" sx={{ height: 50 }} />
-          </Button>
-          <Box sx={{ display: "flex", justifyContent: "space-between", width: "45%" }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: "70%" }}>
-              <Button component={Link} to="/" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
-                <Typography fontSize={"1.2rem"} color="white">Inicio</Typography>
-              </Button>
-              <Button component={Link} to="/about-us" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
-                <Typography fontSize={"1.2rem"} color="white">Sobre Nosotros</Typography>
-              </Button>
-              <Button component={Link} to="/catalogue" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
-                <Typography fontSize={"1.2rem"} color="white">Productos y Servicios</Typography>
-              </Button>
-            </Box>
-
-            <Button component={Link} to="/contact" onClick={() => {window.scrollTo(0, 0);}} color="inherit" sx={{ textTransform: "none" }} >
-              <Typography fontSize={"1.2rem"} color="white">Contacto</Typography>
+      />
+      
+      <Box sx={{ position: "fixed", right: "auto", zIndex: delayedHidden ? -1 : 100, width: "100vw", height: "100px" }}>
+        <AppBar
+          position="fixed"
+          sx={{
+            right: "auto",
+            width: "100vw",
+            padding: isMobile ? "6px 8px" : "6px 16px",
+            transition: "transform 0.4s ease-in-out, background-color 0.3s ease-in-out",
+            transform: hidden && !menuOpen ? "translateY(-100%)" : "translateY(0)",
+            backgroundColor: menuOpen ? "#000000" : "transparent",
+            backdropFilter: menuOpen ? "none" : "blur(10px)",
+            boxShadow: "none",
+            zIndex: 1300,
+          }}
+        >
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: isMobile ? "0 8px" : "0 16px" }}>
+            <Button 
+              component={Link} 
+              to="/" 
+              onClick={() => {window.scrollTo(0, 0);}} 
+              color="inherit"
+              sx={{ padding: isMobile ? "4px" : "8px" }}
+            >
+              <Box 
+                component="img" 
+                src="/images/logo.png" 
+                alt="Logo" 
+                sx={{ height: isMobile ? 40 : 50 }} 
+              />
             </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
 
-      {/* Sliding Fullscreen Menu */}
-      <Drawer
-        anchor="top"
-        open={menuOpen}
-        onClose={toggleMenu}
-        PaperProps={{
-          sx: { height: "100vh", width: "100%", backgroundColor: "navbar.main", color: "text.primary", overflow: "hidden", backdropFilter: "blur(20px)", },
-        }}
-        transitionDuration={{ enter: 500, exit: 500 }}
-      >
-        <div className="menu-content" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", }}>
-          <Typography fontFamily="Bona Nova SC" fontWeight="bold" fontSize={60} variant="h3" gutterBottom>Menu</Typography>
-          <Button component={Link} to="/" color="inherit" sx={{ fontSize: 20, marginBottom: 2 }} onClick={() => {toggleMenu();window.scrollTo(0, 0);}}><Typography fontWeight="bold" fontFamily="Bona Nova SC" fontSize={30}>Home</Typography></Button>
-          <Button component={Link} to="/about" color="inherit" sx={{ fontSize: 20, marginBottom: 2 }} onClick={() => {toggleMenu();window.scrollTo(0, 0);}}><Typography fontWeight="bold" fontFamily="Bona Nova SC" fontSize={30}>About</Typography></Button>
-          <Button component={Link} to="/contact" color="inherit" sx={{ fontSize: 20, marginBottom: 2 }} onClick={() => {toggleMenu();window.scrollTo(0, 0);}}><Typography fontWeight="bold" fontFamily="Bona Nova SC" fontSize={30}>Contact</Typography></Button>
-        </div>
-      </Drawer>
-    </Box>
+            {!isMobile && (
+              <Box 
+                sx={{ 
+                  display: "flex", 
+                  justifyContent: "space-between", 
+                  width: isTablet ? "65%" : "45%",
+                  flexWrap: isTablet ? "wrap" : "nowrap",
+                }}
+              >
+                <Box 
+                  sx={{ 
+                    display: "flex", 
+                    justifyContent: isTablet ? "space-around" : "space-between", 
+                    width: isTablet ? "100%" : "70%",
+                    mb: isTablet ? 1 : 0
+                  }}
+                >
+                  {navItems.slice(0, 3).map((item, index) => (
+                    <Button 
+                      key={index}
+                      component={Link} 
+                      to={item.path} 
+                      onClick={() => {window.scrollTo(0, 0);}} 
+                      color="inherit" 
+                      sx={{ 
+                        textTransform: "none",
+                        fontSize: isTablet ? "0.9rem" : "inherit"
+                      }} 
+                    >
+                      <Typography 
+                        fontSize={isTablet ? "1rem" : "1.2rem"} 
+                        color="rgba(255, 255, 255, 0.75)"
+                        sx={{
+                          transition: "color 0.3s ease",
+                          "&:hover": {
+                            color: "white"
+                          }
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                    </Button>
+                  ))}
+                </Box>
+
+                {!isTablet && (
+                  <Button 
+                    component={Link} 
+                    to="/contact" 
+                    onClick={() => {window.scrollTo(0, 0);}} 
+                    color="inherit" 
+                    sx={{ textTransform: "none" }} 
+                  >
+                    <Typography 
+                      fontSize={"1.2rem"} 
+                      color="rgba(255, 255, 255, 0.75)"
+                      sx={{
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: "white"
+                        }
+                      }}
+                    >
+                      Contacto
+                    </Typography>
+                  </Button>
+                )}
+              </Box>
+            )}
+
+            {isMobile && (
+              <IconButton 
+                edge="end" 
+                color="inherit" 
+                aria-label="menu" 
+                onClick={toggleMenu}
+                sx={{ 
+                  color: "white",
+                  padding: 1,
+                  '&:hover': {
+                    backgroundColor: 'transparent'
+                  }
+                }}
+              >
+                <AnimatedMenuIcon isOpen={menuOpen} />
+              </IconButton>
+            )}
+          </Toolbar>
+        </AppBar>
+
+        <Drawer
+          anchor="bottom"
+          open={menuOpen}
+          onClose={toggleMenu}
+          PaperProps={{
+            sx: { 
+              width: "100%", 
+              height: "calc(100vh - 70px)",
+              backgroundColor: "#000000", 
+              color: "white", 
+              overflow: "hidden", 
+              backdropFilter: "none",
+              WebkitTapHighlightColor: "transparent",
+              top: "69px",
+              borderTopLeftRadius: "0",
+              borderTopRightRadius: "0",
+              boxShadow: "none",
+              borderTop: "none",
+              margin: 0,
+            },
+          }}
+          transitionDuration={{ enter: 500, exit: 500 }}
+          SlideProps={{
+            direction: "up"
+          }}
+          ModalProps={{
+            BackdropProps: {
+              invisible: true
+            }
+          }}
+        >
+          
+          <Box sx={{ 
+            display: "flex", 
+            flexDirection: "column",
+            padding: "24px",
+            paddingTop: "20px",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            marginTop: "0"
+          }}>
+            <List sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+              {navItems.map((item, index) => (
+                <ListItem 
+                  key={index} 
+                  sx={{ 
+                    padding: "12px 0",
+                    borderBottom: "none",
+                    justifyContent: "center",
+                    textAlign: "center"
+                  }}
+                >
+                  <ListItemText 
+                    primary={
+                      <Button
+                        component={Link}
+                        to={item.path}
+                        color="inherit"
+                        onClick={() => handleNavClick(item.path)}
+                        sx={{ 
+                          width: "auto",
+                          justifyContent: "center",
+                          padding: "6px 12px",
+                          borderRadius: "0",
+                          transition: "all 0.3s ease",
+                          "&:active": {
+                            backgroundColor: "transparent"
+                          },
+                          "&:hover": {
+                            backgroundColor: "transparent"
+                          }
+                        }}
+                      >
+                        <Typography 
+                          fontWeight={600}
+                          fontFamily="Archivo"
+                          fontSize={36}
+                          color="#FFFFFF"
+                          letterSpacing="0.05em"
+                          sx={{
+                            transition: "all 0.3s ease",
+                            textTransform: "uppercase",
+                            textShadow: "0 0 5px rgba(255,255,255,0.5)",
+                            "&:hover": {
+                              color: "white",
+                              textShadow: "0 0 8px rgba(255,255,255,0.8)"
+                            }
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                      </Button>
+                    }
+                    sx={{ width: "100%" }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Drawer>
+      </Box>
+    </>
   );
 };
-

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
-import { NavBar } from "../../components/navbar/NavBar1";
+import { NavBar } from "../../components/navbar/Navbar1";
 import { Footer } from "../../components/footer/Footer";
 import { Box, Typography } from "@mui/material";
 
@@ -49,9 +49,9 @@ const content = [
 
 const sections = [
   { content: content[0], video: "/videos/13.mp4", reverse: false },
-  { content: content[1], video: "/videos/8.mp4", reverse: true },
+  { content: content[1], video: "/videos/home3.mp4", reverse: true },
   { content: content[2], video: "/videos/9.mp4", reverse: false },
-  { content: content[3], video: "/videos/27.mp4", reverse: true },
+  { content: content[3], video: "/videos/22.mp4", reverse: true },
   { content: content[4], video: "/videos/1.mp4", reverse: false },
 ];
 
