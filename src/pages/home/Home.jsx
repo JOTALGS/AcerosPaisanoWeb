@@ -10,8 +10,6 @@ import { HomeModal } from "../../components/homeComponents/HomeModal";
 import { Footer } from "../../components/footer/Footer";
 import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 import ParallaxVideoBox from "../../components/parallaxBox/ParallaxVideoBox";
-import ZoomOutVideo from "../../components/zoomOutVideo/ZoomOutVideo";
-import { HomeModal2 } from "../../components/homeComponents/HomeModal2";
 import { Box } from "@mui/material";
 
 

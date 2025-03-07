@@ -5,6 +5,7 @@ import "./About.css";
 import { NavBar } from "../../components/navbar/NavBar1";
 import { Footer } from "../../components/footer/Footer";
 import { Box, Typography } from "@mui/material";
+import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,7 +75,7 @@ export const About = () => {
   
       ScrollTrigger.create({
         trigger: section,
-        start: "top 5%",
+        start: "top 0%",
         pin: true,
         pinSpacing: false,
         id: 'pin',
@@ -116,8 +117,14 @@ export const About = () => {
       <NavBar />
       <div className="intro-about"></div>
 
-      <Box height={"600px"}>
-        
+      <Box height={"550px"}>
+                <ParallaxBox 
+                  image="/images/about2.jpg" 
+                  title="" 
+                  titleColor="text.primary" 
+                  titleLeft="2%" 
+                  titleBottom="10%" 
+                />
       </Box>
 
       <div className="about-sub-section">
@@ -135,7 +142,7 @@ export const About = () => {
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                height={{ md:"70%", xl:"80%"}}
+                height={{ sm:"60%", md:"70%", xl:"80%"}}
                 padding={"80px"}
               >
                 <Typography className="subtitle" variant="h3">{section.content.title}</Typography>

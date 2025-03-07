@@ -117,7 +117,6 @@ export function Catalogue() {
                 'Clavos de acero de 2" y 2 1/2"',
                 'Alta resistencia y durabilidad',
                 'Entrega del material de acuerdo al cronograma',
-                'Asistencia técnica permanente'
             ],
             price: 'Entregas a todo el País',
             image: './images/clavos.jpg',
@@ -134,7 +133,7 @@ export function Catalogue() {
                 'Asistencia técnica permanente'
             ],
             price: 'Entregas a todo el país',
-            image: './images/alambrerecocido.jpg',
+            image: './images/alambrerecocido2.jpg',
             showModal: false
         },
     ];
@@ -255,7 +254,7 @@ export function Catalogue() {
                                     <div>
                                         <div className={styles.productHeader}>
                                             <img
-                                                style={{ height: "50px", width: "150px", objectFit: "contain", padding: "0px 2px" }}
+                                                style={{ height: "2vw", width: "5vw", objectFit: "contain", padding: "0px 2px" }}
                                                 className={styles.logoImage} 
                                                 src='./images/paisanologo.png' 
                                                 alt="Logo" 

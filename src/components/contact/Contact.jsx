@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, TextField, Button, Typography, Box, Grid, FormControlLabel, Checkbox, Alert, Input } from "@mui/material";
 import gsap from "gsap";
+import * as emailjs from "emailjs-com";
 
 const ContactComponent = ({ isPage = false }) => {
   const [formData, setFormData] = useState({
@@ -37,15 +38,36 @@ const ContactComponent = ({ isPage = false }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://formspree.io/f/moqgzovg", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        setSuccess(true);
-        setFormData({ name: "", email: "", company: "", services: [], budget: "", message: "", agree: false });
-      }
+      const templateParams = {
+        from_name: formData.email,
+        user_name: formData.name,
+        company: formData.company,
+        to_name: "Dear",
+        services: formData.services,
+        budget: formData.budget,
+        message: formData.message,
+        agree: formData.agree,
+      };
+
+      emailjs
+        .send(
+          "service_ybabvup",
+          "template_w6xty5u",
+          templateParams,
+          "L6N1Xu8IVjNmQXfKD"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+            setSuccess(true);
+            setFormData({ name: "", email: "", company: "", services: [], budget: "", message: "", agree: false });
+          },
+          (error) => {
+            console.log(error.text);
+            console.error("Error submitting form:", error);
+          }
+        );
+
     } catch (error) {
       console.error("Error submitting form:", error);
     }

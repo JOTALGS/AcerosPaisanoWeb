@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
 
 * {
   font-family: 'Inter', sans-serif;
-  /* Puedes cambiar a 300, 500, 600, 700 según necesites */
 }
-
 
 .site-footer {
   position: relative;
@@ -19,42 +17,37 @@
   justify-content: space-between;
 }
 
-.background-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 650px;
-  z-index: 1;
-}
-
-.background-video video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.30;
-}
-
 .footer-grid {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 1fr 1.2fr 0.8fr;
-  gap: 40px;
-  margin-top: 60px;
+  grid-template-columns: 30vw 1.2fr 1.2fr 1.2fr; /* Logo + 3 columnas */
+  gap: 5vh;
+  margin-top: 40px;
   padding: 0 20px;
+  align-items: start; /* Alinear contenido al inicio */
 }
 
-.footer-column.socials {
-  justify-self: end;
+.background-video {
+  width: 80%; /* Ocupa el ancho de la columna */
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Ajuste específico para la columna de compañía */
-.footer-column.company-info {
-  justify-self: end;
-  padding-right: 40px;
+.background-video video {
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.30;
 }
 
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 .footer-column h3 {
   font-family: 'Inter', sans-serif;
@@ -63,7 +56,7 @@
   font-size: 1.2rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   margin-bottom: 8px;
 }
 
@@ -119,31 +112,11 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 40px;
-  padding-top: 40px;
+  gap: 20px;
+  padding-top: 30px;
   border-top: 1px solid #333;
 }
 
-.language-selector select {
-  background: transparent;
-  color: #666;
-  border: none;
-  font-size: 0.9rem;
-  cursor: pointer;
-  padding-right: 20px;
-}
-
-.language-selector select:focus {
-  outline: none;
-}
-
-
-.copyright {
-  display: flex;
-  gap: 40px;
-  color: #666;
-  font-size: 0.9rem;
-}
 
 @media (max-width: 1280px) {
   .site-footer {
@@ -205,6 +178,7 @@
     height: 300px;
   }
 }
+
 .footer-legal-top {
   position: relative;
   z-index: 2;
@@ -236,7 +210,6 @@
   background-color: #a1a0a0;
   margin: 0 20px;
 }
-
 
 .footer-copyright-container {
   position: relative;
@@ -324,7 +297,6 @@
   width: 400px;
   margin-top: 10px; 
 }
-
 
 .map-tooltip::before {
   content: '';

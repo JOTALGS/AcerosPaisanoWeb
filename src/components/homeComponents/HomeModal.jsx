@@ -77,7 +77,7 @@ export const HomeModal = ({ info }) => {
   return (
     <div className="interact" style={{ zIndex: 0 }}>
       <div className="interact-item" style={{ zIndex: 0 }}onClick={() => {handleOpenModal("industrias");}}>
-        <p>{info}</p>
+        <p  style={{ paddingLeft: "5px"}} >{info}</p>
       </div>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} >
@@ -86,7 +86,7 @@ export const HomeModal = ({ info }) => {
             <div className='industrias-container'>
               <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="cyaind-container modal-entry">
                 <span className="number" style={{ fontWeight: 'bold'}}>01.</span>
-                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{ modalInfo[info][0].title}</Typography>
+                <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }}fontWeight={600}>{ modalInfo[info][0].title}</Typography>
                 <p className="modal-description">{modalInfo[info][0].content}</p>
               </Box>
               <Box paddingBlock={{ xs: '5px', md: '10px', xl: '20px' }} className="eind-container">
