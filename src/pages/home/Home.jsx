@@ -188,7 +188,7 @@ export const Home = () => {
           <HomeModal info={"Mallas Plegadas"} />
         </Box>
         <ParallaxVideoBox
-          videoSrc="/videos/19.mp4" />  
+          videoSrc="/videos/2.mp4"/>  
       <Footer />
     </section>
   );
