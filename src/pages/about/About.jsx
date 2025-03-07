@@ -134,16 +134,17 @@ export const About = () => {
           key={index}
           ref={(el) => (sectionsRef.current[index] = el)}
           display="flex"
+          flexDirection={{xs: "column", md: "row"}}
           sx={{ backgroundColor: "black" }}
         >
           {!section.reverse && (
-            <Box width={"50%"} fontSize={"25px"}>
+            <Box width={{xs: "100%", md: "50%"}} fontSize={"25px"}>
               <Box
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
                 height={{ sm:"60%", md:"70%", xl:"80%"}}
-                padding={"80px"}
+                padding={{ xs: "40px", sm: "50px", md: "60px", xl: "80px"}}
               >
                 <Typography className="subtitle" variant="h3">{section.content.title}</Typography>
                 <Box>
@@ -158,7 +159,7 @@ export const About = () => {
             </Box>
           )}
 
-          <Box width="50%" height="760px" sx={{ overflow: "hidden" }}>
+          <Box width={{ xs: "100%", md: "50%"}} height={{ xs: "350px", md: "760px"}} sx={{ overflow: "hidden" }}>
             <video autoPlay loop muted playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
               <source src={section.video} type="video/mp4" />
               Tu navegador no admite videos.
@@ -166,13 +167,13 @@ export const About = () => {
           </Box>
 
           {section.reverse && (
-            <Box width={"50%"} fontSize={"25px"}>
+            <Box width={{xs: "100%", md: "50%"}} fontSize={"25px"}>
               <Box
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
                 height={{ md:"70%", xl:"80%"}}
-                padding={"80px"}
+                padding={{ xs: "40px", sm: "50px", md: "60px", xl: "80px"}}
               >
                 <h2 className="subtitle">{section.content.title}</h2>
                 <Box>
