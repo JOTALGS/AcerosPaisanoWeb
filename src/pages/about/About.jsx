@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
@@ -6,6 +6,8 @@ import { NavBar } from "../../components/navbar/Navbar1";
 import { Footer } from "../../components/footer/Footer";
 import { Box, Typography } from "@mui/material";
 import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,6 +61,30 @@ const sections = [
 
 export const About = () => {
   const sectionsRef = useRef([]);
+  const titleRef = useRef(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  
+  // Función para calcular el tamaño de fuente del título según el dispositivo
+  const getHeadingFontSize = () => {
+    if (isMobile) return "50px";
+    if (isTablet) return "70px";
+    return "100px";
+  };
+
+  // Animación para el título
+  useEffect(() => {
+    // Aplicar animación al título
+    const tl = gsap.timeline({ delay: 0.5 });
+    if (titleRef.current) {
+      tl.fromTo(titleRef.current, 
+        { y: 0, opacity: 0 }, 
+        { y: isMobile ? "50px" : isTablet ? "150px" : "180px", opacity: 1, duration: 1.5, ease: "power3.out" }
+      );
+    }
+  }, [isMobile, isTablet]);
 
   useEffect(() => {
     sectionsRef.current.forEach((section, index) => {
@@ -117,14 +143,52 @@ export const About = () => {
       <NavBar />
       <div className="intro-about"></div>
 
-      <Box height={"550px"}>
-                <ParallaxBox 
-                  image="/images/about2.jpg" 
-                  title="" 
-                  titleColor="text.primary" 
-                  titleLeft="2%" 
-                  titleBottom="10%" 
-                />
+      {/* Contenedor para ParallaxBox con título superpuesto */}
+      <Box 
+        sx={{
+          position: "relative",
+          height: "550px",
+          width: "100%"
+        }}
+      >
+        {/* ParallaxBox de fondo */}
+        <ParallaxBox 
+          image="/images/malla10.jpg"
+          title="" 
+          titleColor="text.primary" 
+          titleLeft="2%" 
+          titleBottom="10%" 
+        />
+        
+        {/* Título Sobre Nosotros superpuesto */}
+        <Box 
+          position="absolute" 
+          zIndex={10}
+          ref={titleRef}
+          sx={{
+            top: 0,
+            left: 0,
+            width: "100%",
+            textAlign: isMobile ? "center" : "left",
+            paddingLeft: isMobile ? 0 : "20px",
+            paddingTop: isMobile ? "20px" : "40px"
+          }}
+        >
+          <Typography 
+            variant="h2" 
+            fontSize={getHeadingFontSize()} 
+            fontFamily="'Archivo', sans-serif" 
+            fontWeight={400} 
+            color="#fff"
+            sx={{
+              textShadow: "0 0 10px rgba(255, 255, 255, 0.2)",
+              letterSpacing: "2px",
+              textTransform: "uppercase"
+            }}
+          >
+            Sobre Nosotros
+          </Typography>
+        </Box>
       </Box>
 
       <div className="about-sub-section">

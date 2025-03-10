@@ -517,21 +517,20 @@ export function Catalogue() {
 
     // Calcular el tamaño de fuente responsivo para el título
     const getHeadingFontSize = () => {
-        if (isMobile) return "60px";
-        if (isTablet) return "80px";
-        return "120px";
+        if (isMobile) return "50px";
+        if (isTablet) return "70px";
+        return "100px";
     };
 
   // GSAP animations
 useEffect(() => {
-    // Only apply animation on larger screens
-    if (!isMobile) {
-      const tl = gsap.timeline({ delay: 0.5 });
-      // Recorrido más corto para la animación
+    // Aplicar animación al título como en ContactComponent
+    const tl = gsap.timeline({ delay: 0.5 });
+    if (titleRef.current) {
       tl.fromTo(
         titleRef.current, 
-        { y: isMobile ? "50px" : isTablet ? "70px" : "90px", opacity: 0 }, 
-        { y: "0", opacity: 1, duration: 1.5, ease: "power3.out" }
+        { y: 0, opacity: 0 }, 
+        { y: isMobile ? "50px" : isTablet ? "150px" : "180px", opacity: 1, duration: 1.5, ease: "power3.out" }
       );
     }
     
@@ -584,7 +583,7 @@ useEffect(() => {
                     position="absolute" 
                     zIndex={0}
                     sx={{
-                        top: isMobile ? "20%" : "25%", // Mantiene la posición vertical
+                        top: isMobile ? "2%" : "10%",
                         left: 0,
                         width: "100%",
                         textAlign: isMobile ? "center" : "left",
@@ -598,6 +597,11 @@ useEffect(() => {
                         fontFamily="'Archivo', sans-serif" 
                         fontWeight={400} 
                         color="#fff"
+                        sx={{
+                          textShadow: "0 0 10px rgba(255, 255, 255, 0.2)",
+                          letterSpacing: "2px",
+                          textTransform: "uppercase"
+                        }}
                     >
                         Productos y Servicios
                     </Typography>

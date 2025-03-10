@@ -165,9 +165,9 @@ const ContactComponent = ({ isPage = false }) => {
 
   // Calculate responsive font size for the heading
   const getHeadingFontSize = () => {
-    if (isMobile) return "60px";
-    if (isTablet) return "80px";
-    return "120px";
+    if (isMobile) return "50px";
+    if (isTablet) return "70px";
+    return "100px";
   };
 
   return (
@@ -193,11 +193,11 @@ const ContactComponent = ({ isPage = false }) => {
        <Typography 
         variant="h2" 
         fontSize={getHeadingFontSize()} 
-        fontFamily="'Archivo', sans-serif" 
+        fontFamily="'DM Sans', sans-serif" 
         fontWeight={400} 
         color="#fff"
       >
-          Contacto
+          CONTACTO
         </Typography>
       </Box>
 
@@ -469,7 +469,7 @@ const ContactComponent = ({ isPage = false }) => {
                   bgcolor: redIntensity,
                   color: "#fff",
                   "&:hover": { bgcolor: redIntensity, color: "#fff" },
-                  padding: isMobile ? "5px 15px" : "6px 20px",
+                 padding : isMobile ? "5px 15px" : "6px 20px",
                   textTransform: "none",
                   fontSize: isMobile ? "0.875rem" : "1rem",
                   position: "relative",
