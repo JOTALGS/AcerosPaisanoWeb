@@ -192,7 +192,7 @@ export const Home = () => {
             </Box>
           </Link>
 
-          <Link to={'/hierro-cortado-y-doblado'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
+          <Link to={'/mallas-electrosoldadas'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
             <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
               <div className="interact-item" style={{ zIndex: 0 }}onClick={() => {handleOpenModal("industrias");}}>
                 <p  style={{ paddingLeft: "5px"}} >Mallas Electrosoldadas</p>
@@ -208,8 +208,22 @@ export const Home = () => {
 
       </div>
 
-        <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"} sx={{ textAlign: "center"}}>
+        <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"}>
+          <Link to={'/barras-lisas-y-conformadas'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
+            <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
+              <div className="interact-item" style={{ zIndex: 0 }} onClick={() => {handleOpenModal("industrias");}}>
+                <p  style={{ paddingLeft: "5px"}} >Barras Lisas y Conformadas</p>
+              </div>
+            </Box>
+          </Link>
 
+          <Link to={'/mallas-plegadas'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
+            <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
+              <div className="interact-item" style={{ zIndex: 0 }} onClick={() => {handleOpenModal("industrias");}}>
+                <p  style={{ paddingLeft: "5px"}} >Mallas Plegadas</p>
+              </div>
+            </Box>
+          </Link>
         </Box>
 
         <ParallaxVideoBox

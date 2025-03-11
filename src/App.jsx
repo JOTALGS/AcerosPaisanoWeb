@@ -42,10 +42,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/sobre-nosotros" element={<About />} />
         <Route path="/productos-y-servicios" element={<Catalogue />} />
+        <Route path="/contacto" element={<Contact />} />
         <Route path="/hierro-cortado-y-doblado" element={<HomeModal info={"Hierro Cortado y Doblado"} />} />
-        <Route path="/mallas-electrosoldadas" element={<Contact />} />
-        <Route path="/barras-lisas-y-conformadas" element={<Contact />} />
-        <Route path="/mallas-plegadas" element={<Contact />} />
+        <Route path="/mallas-electrosoldadas" element={<HomeModal info={"Mallas Electrosoldadas"} />} />
+        <Route path="/barras-lisas-y-conformadas" element={<HomeModal info={"Barras lisas y Conformadas"} />} />
+        <Route path="/mallas-plegadas" element={<HomeModal info={"Mallas Plegadas"} />} />
       </Routes>
     </div>
   );
