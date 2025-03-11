@@ -126,9 +126,9 @@ export const NavBar = () => {
 
   const navItems = [
     { title: "Inicio", path: "/" },
-    { title: "Sobre Nosotros", path: "/about-us" },
-    { title: "Productos y Servicios", path: "/catalogue" },
-    { title: "Contacto", path: "/contact" },
+    { title: "Sobre Nosotros", path: "/sobre-nosotros" },
+    { title: "Productos y Servicios", path: "/productos-y-servicios" },
+    { title: "Contacto", path: "/contacto" },
   ];
 
   const handleNavClick = (path) => {
@@ -231,7 +231,7 @@ export const NavBar = () => {
                 {!isTablet && (
                   <Button 
                     component={Link} 
-                    to="/contact" 
+                    to="/contacto" 
                     onClick={() => {window.scrollTo(0, 0);}} 
                     color="inherit" 
                     sx={{ textTransform: "none" }} 

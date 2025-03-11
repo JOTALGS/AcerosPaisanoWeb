@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 import './SlidingContainers.css';
 
 const SlidingContainers = () => {
@@ -15,21 +16,21 @@ const SlidingContainers = () => {
       title: "Gama Premium",
       description: "Productos de acero de alta calidad diseñados para cumplir con los más altos estándares de la industria.",
       buttonText: "Explorar Productos",
-      link: "/catalogue",
+      link: "/productos-y-servicios",
       external: false
     },
     {
       title: "Conócenos",
       description:"Conoce quiénes somos, nuestra visión y nuestro compromiso con la excelencia.",
       buttonText: "Sobre Nosotros",
-      link: "/about-us",
+      link: "/sobre-nosotros",
       external: false
     },
     {
       title: "Contáctanos",
       description: "Equipo de expertos disponible para asesorarte en tu próximo proyecto.",
       buttonText: "Contactar",
-      link: "/contact",
+      link: "/contacto",
       external: false
     }
   ];
@@ -73,7 +74,7 @@ const SlidingContainers = () => {
         onMouseLeave={() => setIsPaused(false)}
       >
         {allItems.map((item, index) => (
-          <div key={index} className="sliderItem">
+          <Box key={index} sx={{ width: { xs: '60%', md: '33%'}}} className="sliderItem">
             <div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
@@ -87,7 +88,7 @@ const SlidingContainers = () => {
                 <button>{item.buttonText}</button>
               </Link>
             )}
-          </div>
+          </Box>
         ))}
       </div>
     </div>

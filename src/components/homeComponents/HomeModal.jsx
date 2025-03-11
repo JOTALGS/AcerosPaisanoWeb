@@ -3,22 +3,23 @@ import Modal from '../modal/Modal'
 import './HomeModal.css'
 import { Box, Typography } from '@mui/material'
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const modalInfo = {
   "Hierro Cortado y Doblado": [
     { "title": "A Medida", "content": "Dimensiones precisas según necesidades del proyecto.", "image": "./images/doblado2.jpg", "alt": "Construcción y Arquitectura" },
     { "title": "Calidad", "content": "Procesos de calidad garantizada.", "image": "./images/doblado6.jpg", "alt": "Industria Energética" },
-    { "title": "Cero Desperdicio", "content": "Componentes diseñados para optimizar procesos productivos.", "image": "./images/doblado4.jpg", "alt": "Manufactura Industrial" },
+    { "title": "Cero Desperdicio", "content": "Trabajamos con rollos de alambrón que generan cero desperdicio.", "image": "./images/doblado4.jpg", "alt": "Manufactura Industrial" },
     { "title": "Ahorro", "content": "Economía de tiempo y mano de obra.", "image": "./images/doblado7.jpg", "alt": "Ahorro" },
     { "title": "Asistencia Técnica", "content": "Asesoramiento y seguimiento de obra por técnicos especializados.", "image": "./images/doblado5.jpg", "alt": "Industria Agropecuaria" }
   ],
   "Mallas Electrosoldadas": [
-    { "title": "Certificación", "content": "Garantía de calidad y cumplimiento con normativas internacionales.", "image": "./images/certificado1.jpg", "alt": "Construcción y Arquitectura" },
-    { "title": "Medidas Estándar", "content": "Diferentes opciones para adaptarse a múltiples aplicaciones.", "image": "./images/mallas3.jpg", "alt": "Industria Energética" },
-    { "title": "Diámetros", "content": "Variedad de grosores para proyectos de alta exigencia.", "image": "./images/mallas4.jpg", "alt": "Manufactura Industrial" },
-    { "title": "Presentación", "content": "Formatos versátiles para distintas necesidades constructivas.", "image": "./images/mallas2.jpg", "alt": "Industria Agropecuaria" },
-    { "title": "Diseño Especial", "content": "Soluciones personalizadas para proyectos específicos.", "image": "./images/mallas6.jpg", "alt": "Industria Agropecuaria" }
+    { "title": "Certificación", "content": " Certificadas bajo norma UNIT 845:1995.", "image": "./images/certificado1.jpg", "alt": "Construcción y Arquitectura" },
+    { "title": "Garantía de calidad", "content": "Producción validada por ensayos en laboratorio.", "image": "./images/mallas3.jpg", "alt": "Industria Energética" },
+    { "title": "Medidas estándar", "content": "Todos los diámetros encontrados en plaza.", "image": "./images/mallas4.jpg", "alt": "Manufactura Industrial" },
+    { "title": "Presentación", "content": "Adapatable a las necesidades del proyecto civíl.", "image": "./images/mallas2.jpg", "alt": "Industria Agropecuaria" },
+    { "title": "Diseño Especial", "content": "Soluciones a medida, personalizadas para proyectos específicos.", "image": "./images/mallas6.jpg", "alt": "Industria Agropecuaria" }
   ],
   "Barras lisas y Conformadas": [
     { "title": "Certificación", "content": "Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995.", "image": "./images/barras.jpg", "alt": "Construcción y Arquitectura" },
@@ -75,12 +76,7 @@ export const HomeModal = ({ info }) => {
   };
 
   return (
-    <div className="interact" style={{ zIndex: 0 }}>
-      <div className="interact-item" style={{ zIndex: 0 }}onClick={() => {handleOpenModal("industrias");}}>
-        <p  style={{ paddingLeft: "5px"}} >{info}</p>
-      </div>
-
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} >
+      <Box isOpen={isModalOpen} onClose={handleCloseModal} >
         <div style={{ zIndex: 1000 }}>
           <div>
             <div className='industrias-container'>
@@ -129,28 +125,28 @@ export const HomeModal = ({ info }) => {
             </div>
           </div>
 
-          <svg 
-            viewBox="0 0 1024 1024" 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="#000000" 
-            onClick={handleCloseModal}
-            width="5vh"
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              transition: "fill 0.3s ease-in-out",
-            }}
-            onMouseEnter={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#ffffff")}
-            onMouseLeave={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#9e9e9e")}
-          >
-            <g id="SVGRepo_iconCarrier">
-              <path fill="#9e9e9e" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path>
-            </g>
-          </svg>
+          <Link to='/'>
+            <svg 
+              viewBox="0 0 1024 1024" 
+              xmlns="http://www.w3.org/2000/svg" 
+              fill="#000000"
+              width="5vh"
+              style={{
+                cursor: "pointer",
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                transition: "fill 0.3s ease-in-out",
+              }}
+              onMouseEnter={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#ffffff")}
+              onMouseLeave={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#9e9e9e")}
+            >
+              <g id="SVGRepo_iconCarrier">
+                <path fill="#9e9e9e" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path>
+              </g>
+            </svg>
+          </Link>
         </div>
-      </Modal>
-    </div>
+      </Box>
   )
 }

@@ -122,12 +122,6 @@
   align-items: center;
 }
 
-.image-column img {
-  width: auto;
-  height: 20vh;
-  margin-top: 60px;
-}
-
 
 .Portada-video {
   position: absolute;
@@ -186,8 +180,8 @@
 }
 
 .catalogue-button {
-  padding: 0px 40px;
   font-size: 0.7rem;
+  width: 100%;
   color: #ffffff !important;
   background-color: #EE2737;
   border: 1px solid transparent;

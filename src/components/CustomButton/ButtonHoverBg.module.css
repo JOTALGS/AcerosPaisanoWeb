@@ -4,6 +4,8 @@
   }
   .buttonHoverBg p {
     position: relative;
+    line-height: 0;
+    padding: 0px;
     z-index: 1000;
   }
   

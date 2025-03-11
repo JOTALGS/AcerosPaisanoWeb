@@ -6,6 +6,7 @@ import { About } from "./pages/about/About";
 import { Catalogue } from "./pages/catalogue/Catalogue";
 import { Contact } from "./pages/contact/Contact";
 import Lenis from "@studio-freight/lenis";
+import { HomeModal } from "./components/homeComponents/HomeModal";
 
 function App() {
   const location = useLocation();
@@ -39,10 +40,13 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<About />} />
-        <Route path="/catalogue" element={<Catalogue />} />
-        <Route path="/contact" element={<Contact />} />
-        </Routes>
+        <Route path="/sobre-nosotros" element={<About />} />
+        <Route path="/productos-y-servicios" element={<Catalogue />} />
+        <Route path="/hierro-cortado-y-doblado" element={<HomeModal info={"Hierro Cortado y Doblado"} />} />
+        <Route path="/mallas-electrosoldadas" element={<Contact />} />
+        <Route path="/barras-lisas-y-conformadas" element={<Contact />} />
+        <Route path="/mallas-plegadas" element={<Contact />} />
+      </Routes>
     </div>
   );
 }

@@ -199,7 +199,7 @@ export const About = () => {
           ref={(el) => (sectionsRef.current[index] = el)}
           display="flex"
           flexDirection={{xs: "column", md: "row"}}
-          sx={{ backgroundColor: "black" }}
+          sx={{ backgroundColor: "black", minHeight: { xs: "100vh", md: "80vh"}, justifyContent: "space-between" }}
         >
           {!section.reverse && (
             <Box width={{xs: "100%", md: "50%"}} fontSize={"25px"}>
@@ -208,7 +208,7 @@ export const About = () => {
                 flexDirection={"column"}
                 justifyContent={"space-between"}
                 height={{ sm:"60%", md:"70%", xl:"80%"}}
-                padding={{ xs: "40px", sm: "50px", md: "60px", xl: "80px"}}
+                padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px"}}
               >
                 <Typography className="subtitle" variant="h3">{section.content.title}</Typography>
                 <Box>
@@ -237,9 +237,9 @@ export const About = () => {
                 flexDirection={"column"}
                 justifyContent={"space-between"}
                 height={{ md:"70%", xl:"80%"}}
-                padding={{ xs: "40px", sm: "50px", md: "60px", xl: "80px"}}
+                padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px"}}
               >
-                <h2 className="subtitle">{section.content.title}</h2>
+                <Typography className="subtitle" variant="h3">{section.content.title}</Typography>
                 <Box>
                   {section.content.paragraphs.map((item, i) => (
                     <div key={i} className="line-wrapper">

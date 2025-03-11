@@ -140,7 +140,7 @@ export const Footer = () => {
             }}
           >
             <StyledLink to="/#/">Inicio</StyledLink>
-            <StyledLink to="/catalogue">Productos</StyledLink>
+            <StyledLink to="/productos-y-servicios">Productos</StyledLink>
             <Box
               component="a"
               href="https://www.google.com/maps/place/Acerospaisano+S.A./@-34.7006875,-56.2419389,17z/data=!4m14!1m7!3m6!1s0x95a1cd0dee1b74d7:0x9d3355e7c66adcd2!2sAcerospaisano+S.A.!8m2!3d-34.7006919!4d-56.239364!16s%2Fg%2F11hd1s7_fc!3m5!1s0x95a1cd0dee1b74d7:0x9d3355e7c66adcd2!8m2!3d-34.7006919!4d-56.239364!16s%2Fg%2F11hd1s7_fc?hl=en&entry=ttu&g_ep=EgoyMDI1MDMwMy4wIKXMDSoASAFQAw%3D%3D"
@@ -150,8 +150,8 @@ export const Footer = () => {
             >
               Encuéntranos
             </Box>
-            <StyledLink to="/about-us">Sobre nosotros</StyledLink>
-            <StyledLink to="/contact">Contáctanos</StyledLink>
+            <StyledLink to="/sobre-nosotros">Sobre nosotros</StyledLink>
+            <StyledLink to="/contacto">Contáctanos</StyledLink>
           </Box>
         </Box>
 
