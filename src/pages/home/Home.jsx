@@ -71,8 +71,7 @@ export const Home = () => {
     );
   }, []);
 
-  const homeText = `Desde 2011 apoyando a la 
-                    industria nacional.`;
+  const homeText = `Le damos forma al acero: Soluciones eficientes para el hormigón armado`;
     const splitText = (text, parts) => {
     const partLength = Math.ceil(text.length / parts);
     const result = [];
@@ -97,7 +96,7 @@ export const Home = () => {
     return result;
   };
   
-  const textParts = splitText(homeText, 6);
+  const textParts = splitText(homeText, 3);
 
   return (
     <section id="home" className="home">
@@ -145,7 +144,7 @@ export const Home = () => {
           <div ref={descubrirRef} className={`scroll-indicator`}>Desliza para descubrir</div>
         </div>
 
-      {/* WDASDASDASDsDASD
+      
         <div className="home-bottom-row">
           <div className="about-intro">
             {textParts.map((part, index) => (
@@ -158,12 +157,12 @@ export const Home = () => {
                 </p>
               </div>
             ))}
-            <Link to={"/about-us"}>
+            <Link to={"/sobre-nosotros"} style={{ textDecoration: "none" }}>
               <ButtonHoverBg label="Sobre Nosotros" buttonStyles={"about-link-button"} />
             </Link>
           </div>
         </div>
-        */}
+        
 
         <div className="home-products-slider">
           <SlidingContainers />

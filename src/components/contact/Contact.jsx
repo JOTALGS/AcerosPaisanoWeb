@@ -17,7 +17,6 @@ const ContactComponent = ({ isPage = false }) => {
     email: "",
     company: "",
     services: [],
-    budget: "",
     message: "",
     agree: false,
   });
@@ -32,11 +31,15 @@ const ContactComponent = ({ isPage = false }) => {
 
   // Estado para controlar si se ha intentado enviar el formulario
   const [submitted, setSubmitted] = useState(false);
-
+  const [formError, setFormError] = useState("");
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
   const servicesList = ["Estribos a Medida", "Barras Lisas", "Barras Conformadas", "Mallas Electrosoldadas", "Otros Productos"];
-  const budgetOptions = ["0-5K", "5-10K", "10-20K", "20-40K", "Mayor a 40K"];
+
+  // Inicializar EmailJS
+  useEffect(() => {
+    emailjs.init("mG1zb3WhQquVBDEy5");
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -113,44 +116,54 @@ const ContactComponent = ({ isPage = false }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
+    setFormError(""); // Limpiar errores anteriores
 
     if (validateForm()) {
       try {
         const templateParams = {
-          from_name: formData.email,
-          user_name: formData.name,
-          company: formData.company,
-          to_name: "Dear",
-          services: formData.services,
-          budget: formData.budget,
-          message: formData.message,
-          agree: formData.agree,
+          from_name: formData.name,         // Nombre del usuario
+          email: formData.email,            // Email del usuario para responder
+          company: formData.company || "No especificada",
+          to_name: "Ventas Aceros Paisano",
+          services: formData.services.join(", "), // Convertir array a string
+          message: formData.message || "No se proporcionó un mensaje.",
+          agree: formData.agree ? "Sí" : "No",
         };
+
+        console.log("Enviando formulario con parámetros:", templateParams);
 
         emailjs
           .send(
-            "service_ybabvup",
-            "template_w6xty5u",
+            "service_u25ou8s",
+            "template_t3qai7e",
             templateParams,
-            "L6N1Xu8IVjNmQXfKD"
+            "mG1zb3WhQquVBDEy5"
           )
           .then(
             (result) => {
-              console.log(result.text);
+              console.log("Respuesta del servidor:", result.text);
               setSuccess(true);
-              setFormData({ name: "", email: "", company: "", services: [], budget: "", message: "", agree: false });
+              setFormData({ 
+                name: "", 
+                email: "", 
+                company: "", 
+                services: [], 
+                message: "", 
+                agree: false 
+              });
               setSubmitted(false); // Resetear el estado de envío
             },
             (error) => {
-              console.log(error.text);
-              console.error("Error submitting form:", error);
+              console.error("Error de EmailJS:", error);
+              setFormError("Hubo un problema al enviar tu solicitud. Por favor intenta nuevamente.");
             }
           );
       } catch (error) {
-        console.error("Error submitting form:", error);
+        console.error("Error inesperado:", error);
+        setFormError("Ocurrió un error al procesar tu solicitud. Por favor intenta más tarde.");
       }
     } else {
-      console.log("Form has validation errors");
+      console.log("El formulario tiene errores de validación");
     }
   };
 
@@ -228,6 +241,18 @@ const ContactComponent = ({ isPage = false }) => {
             }}
           >
             ¡Gracias! Tu solicitud ha sido enviada correctamente.
+          </Alert>
+        }
+        
+        {formError && 
+          <Alert 
+            severity="error"
+            sx={{
+              width: isMobile ? "90%" : "75%",
+              margin: "0 auto"
+            }}
+          >
+            {formError}
           </Alert>
         }
         
@@ -469,7 +494,7 @@ const ContactComponent = ({ isPage = false }) => {
                   bgcolor: redIntensity,
                   color: "#fff",
                   "&:hover": { bgcolor: redIntensity, color: "#fff" },
-                 padding : isMobile ? "5px 15px" : "6px 20px",
+                  padding: isMobile ? "5px 15px" : "6px 20px",
                   textTransform: "none",
                   fontSize: isMobile ? "0.875rem" : "1rem",
                   position: "relative",
