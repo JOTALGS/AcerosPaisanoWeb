@@ -38,14 +38,14 @@ const content = [
     title: "Política de Seguridad",
     paragraphs: [
       "Nuestro Sistema de Seguridad se controla con la obtención y el mantenimiento de la certificación de la norma ISO 45001",
-      "Nuestra principal política es que el operador debe detener el proceso si no se encuentra dentro de las condiciones estándares de seguridad, hasta asegurarse de la ERRADICACIÓN de la condición insegura.",
+      "Nuestra principal política es que el operador debe detener el proceso si no se encuentra dentro de las condiciones estándares de seguridad, hasta asegurarse de la erradicación de la condición insegura.",
     ],
   },
   {
     title: "Política Ambiental",
     paragraphs: [
       "Nuestro Sistema de Protección del Medio Ambiente se controla con la obtención y el mantenimiento de la certificación de la norma ISO 14001.",
-      "Nuestra política es realizar inversiones y orientar nuestras operaciones de acuerdo AL concepto de tecnología limpia, de forma de prevenir y minimizar la generación de elementos contaminantes.",
+      "Nuestra política es realizar inversiones y orientar nuestras operaciones de acuerdo al concepto de tecnología limpia, de forma de prevenir y minimizar la generación de elementos contaminantes.",
     ],
   },
 ];
@@ -206,16 +206,16 @@ export const About = () => {
               <Box
                 display={"flex"}
                 flexDirection={"column"}
-                justifyContent={"space-between"}
+                justifyContent={{ xs: "flex-start", md: "space-between" }}
                 height={{ sm:"60%", md:"70%", xl:"80%"}}
                 padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px"}}
               >
-                <Typography className="subtitle" variant="h3">{section.content.title}</Typography>
+                <Typography className="subtitle" variant="h3" fontSize={{ xs: "25px", md: "30px", xl: "40px" }}>{section.content.title}</Typography>
                 <Box>
                   {section.content.paragraphs.map((item, i) => (
                     <div key={i} className="line-wrapper">
-                      <p className="line" style={{ color: "#3a3a3a" }}>{item}</p>
-                      <p className="line-overlay">{item}</p>
+                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line" style={{ color: "#3a3a3a" }}>{item}</Typography>
+                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line-overlay">{item}</Typography>
                     </div>
                   ))}
                 </Box>
@@ -235,16 +235,16 @@ export const About = () => {
               <Box
                 display={"flex"}
                 flexDirection={"column"}
-                justifyContent={"space-between"}
+                justifyContent={{ xs: "flex-start", md: "space-between" }}
                 height={{ md:"70%", xl:"80%"}}
                 padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px"}}
               >
-                <Typography className="subtitle" variant="h3">{section.content.title}</Typography>
+                <Typography className="subtitle" variant="h3" fontSize={{ xs: "25px", md: "30px", xl: "40px" }}>{section.content.title}</Typography>
                 <Box>
                   {section.content.paragraphs.map((item, i) => (
                     <div key={i} className="line-wrapper">
-                      <p className="line" style={{ color: "#3a3a3a" }}>{item}</p>
-                      <p className="line-overlay">{item}</p>
+                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line" style={{ color: "#3a3a3a" }}>{item}</Typography>
+                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line-overlay">{item}</Typography>
                     </div>
                   ))}
                 </Box>

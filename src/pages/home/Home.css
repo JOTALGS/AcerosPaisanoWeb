@@ -35,7 +35,6 @@
   width: 100vw;
   height: 100vh;
   background-color: rgb(0, 0, 0);
-  animation: moveOut 1s ease-in-out 2s forwards;
 }
 
 @keyframes moveOut {
@@ -246,7 +245,7 @@
 }
 
 .about-link-button {
-  padding: 0px 30px;
+  padding: 10px 30px;
   font-size: 2rem;
   color: #ffffff;
   background-color: #EE2737;
@@ -262,7 +261,6 @@
 }
 
 .about-link-button:hover {
-  background-color: #ffffff;
   transition-delay: 0.3s; 
 }
 

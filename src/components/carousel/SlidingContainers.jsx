@@ -13,7 +13,7 @@ const SlidingContainers = () => {
       external: true
     },
     {
-      title: "Gama Premium",
+      title: "Productos y Servicios",
       description: "Productos de acero de alta calidad diseñados para cumplir con los más altos estándares de la industria.",
       buttonText: "Explorar Productos",
       link: "/productos-y-servicios",

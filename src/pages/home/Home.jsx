@@ -20,6 +20,8 @@ export const Home = () => {
   const descubrirRef = useRef()
   const imageRef = useRef()
   const lineWrapperRef = useRef([])
+  const imageTitleRef = useRef()
+  const welcomeRef = useRef()
   
   useLayoutEffect(() => {
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
@@ -98,15 +100,84 @@ export const Home = () => {
   
   const textParts = splitText(homeText, 3);
 
+  useEffect(() => {
+    // Create a GSAP timeline for better sequencing and performance
+    const tl = gsap.timeline();
+    
+    // Set initial states
+    gsap.set(welcomeRef.current, {
+      y: '0%',
+      opacity: 1,
+    });
+    
+    gsap.set(imageTitleRef.current, {
+      y: '200px',
+      opacity: 1,
+    });
+    
+    tl
+    .to(imageTitleRef.current, {
+      y: "0%",
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.2,
+    }, "+=0.2")
+    .to(welcomeRef.current, {
+      y: "-100vh",
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.8,
+    }, "+=0.2");
+    
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+
   return (
     <section id="home" className="home">
       <NavBar />
-      <div className="init-baseline">
-        <div className="init-title">
-          <img src="./images/titulo.jpg" alt="title" className="img-title" />
-        </div>
-        <div className="baseline-start"></div>
-      </div>
+      <Box
+        ref={welcomeRef}
+        sx={{
+          display: { xs: "none", md: "block" },
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "black",
+          zIndex: 100,
+        }}
+      >
+        <Box
+          ref={imageTitleRef}
+          component="img"
+          src="./images/titulo.jpg"
+          alt="title"
+          sx={{
+            height: "150px",
+            width: "auto",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 101, // Lower z-index than red box
+          }}
+        />
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: "rgb(0, 0, 0)", // Fixed typo
+            width: "90%",
+            height: "45%",
+            bottom: "0%",
+            left: "5%", // Center it by offsetting 5% from left
+            zIndex: 9999, // Extremely high z-index to be on top of everything
+          }} 
+        />
+      </Box>
 
       <div className="home-container" style={{ zIndex: 1 }}>
         <div className="top">
@@ -131,7 +202,7 @@ export const Home = () => {
         </div>
 
         <div className="home-middle-row">
-          <Box sx={{ width: {xs: "70%", sm: "50%", md: "30%", lg: "20%"} }} className="catalogue-section">
+          <Box sx={{ paddingBottom: {xs: "60px", sm: "0px", md: "0px", lg: "0px"}, width: {xs: "70%", sm: "50%", md: "30%", lg: "20%"} }} className="catalogue-section">
             <Typography sx={{ lineHeight: "1.3", marginBottom: "20px" }} className="catalogue-description">
               Desde 2011 apoyando a la industria nacional
             </Typography>
@@ -141,7 +212,7 @@ export const Home = () => {
               </Link>
             </Box>
           </Box>
-          <div ref={descubrirRef} className={`scroll-indicator`}>Desliza para descubrir</div>
+          <Box sx={{ paddingBottom: {xs: "60px", sm: "0px", md: "0px", lg: "0px"}}} ref={descubrirRef} className={`scroll-indicator`}>Desliza para descubrir</Box>
         </div>
 
       
@@ -149,12 +220,12 @@ export const Home = () => {
           <div className="about-intro">
             {textParts.map((part, index) => (
               <div ref={el => lineWrapperRef.current[index] = el} className="line-wrapper">
-                <p className="line" style={{ color: "#3a3a3a"}}>
+                <Typography variant="p" fontSize={{xs: "20px", sm: "30px", md: "40px", lg: "50px"}} className="line" style={{ color: "#3a3a3a"}}>
                   {part}
-                </p>
-                <p className="line-overlay">
+                </Typography>
+                <Typography variant="p" fontSize={{xs: "20px", sm: "30px", md: "40px", lg: "50px"}} className="line-overlay">
                   {part}
-                </p>
+                </Typography>
               </div>
             ))}
             <Link to={"/sobre-nosotros"} style={{ textDecoration: "none" }}>
