@@ -3,10 +3,11 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/home/Home";
 import { About } from "./pages/about/About";
-import { Catalogue } from "./pages/catalogue/Catalogue";
+import CatalogueNew from "./pages/catalogue/CatalogueNew";
 import { Contact } from "./pages/contact/Contact";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Lenis from "@studio-freight/lenis";
-import { HomeModal } from "./components/homeComponents/HomeModal";
+// import { initBarba, initPageAnimations, setupBarbaExclusions } from "./utils/barbaConfig";
 
 function App() {
   const location = useLocation();
@@ -24,8 +25,22 @@ function App() {
     }
 
     requestAnimationFrame(raf);
-
     window.addEventListener("scroll", lenis.raf);
+
+    // Barba.js temporarily disabled - will be implemented progressively
+    // if (typeof document !== 'undefined') {
+    //   if (document.readyState === 'loading') {
+    //     document.addEventListener('DOMContentLoaded', () => {
+    //       initBarba();
+    //       setupBarbaExclusions();
+    //       initPageAnimations();
+    //     });
+    //   } else {
+    //     initBarba();
+    //     setupBarbaExclusions();
+    //     initPageAnimations();
+    //   }
+    // }
 
     return () => {
       window.removeEventListener("scroll", lenis.raf);
@@ -33,7 +48,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Handle hash navigation for sections
+    const hash = location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [location]);
 
   return (
@@ -41,12 +67,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sobre-nosotros" element={<About />} />
-        <Route path="/productos-y-servicios" element={<Catalogue />} />
+        <Route path="/productos" element={<CatalogueNew />} />
+        <Route path="/productos-y-servicios" element={<CatalogueNew />} />
         <Route path="/contacto" element={<Contact />} />
-        <Route path="/hierro-cortado-y-doblado" element={<HomeModal info={"Hierro Cortado y Doblado"} />} />
-        <Route path="/mallas-electrosoldadas" element={<HomeModal info={"Mallas Electrosoldadas"} />} />
-        <Route path="/barras-lisas-y-conformadas" element={<HomeModal info={"Barras lisas y Conformadas"} />} />
-        <Route path="/mallas-plegadas" element={<HomeModal info={"Mallas Plegadas"} />} />
+
+        {/* Product Detail Pages - Clean URLs */}
+        <Route path="/productos/:slug" element={<ProductDetail />} />
+
+        {/* Legacy redirects for compatibility */}
+        <Route path="/mallas-electrosoldadas" element={<ProductDetail />} />
+        <Route path="/mallas-plegadas" element={<ProductDetail />} />
+        <Route path="/hierro-cortado-y-doblado" element={<ProductDetail />} />
+        <Route path="/barras-lisas-y-conformadas" element={<ProductDetail />} />
       </Routes>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+/* Font is loaded in index.html to prevent FOUT */
 
 body {
   font-family: 'Anton', sans-serif;
@@ -28,8 +28,8 @@ body {
   font-size: 3.5rem;
   font-weight: 400;
   display: flex;
-  align-items: top;
-  z-index: -1000;
+  align-items: flex-start;
+  z-index: 1;
 }
 
 .interact-item:hover {

@@ -37,50 +37,42 @@ const modalInfo = {
   ]
 }
 
-export const HomeModal = ({ info }) => {
-  
+export const HomeModal = ({ info, onClose }) => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     // Get all containers
-    const containers = document.querySelectorAll('.industrias-container > div');
-    
+    const containers = document.querySelectorAll('.modal-entry');
+
     // Show the first image by default when the component mounts
     if (containers.length > 0) {
-      const firstContainer = containers[0];
-      const indName = firstContainer.classList[0].split('-')[0];
-      const firstImage = document.querySelector(`.images.${indName}`);
-      
+      const firstImage = document.querySelector(`.images.image-0`);
       if (firstImage) {
         firstImage.style.opacity = "1";
-        firstImage.style.transform = "translateX(30px)";
       }
     }
-    
+
     // Set up event listeners for each container
-    containers.forEach(container => {
+    containers.forEach((container, index) => {
       container.addEventListener('mouseenter', () => {
+        setActiveIndex(index);
         // Hide all images first
         document.querySelectorAll('.images').forEach(img => {
           img.style.opacity = "0";
-          img.style.transform = "translateX(0)";
         });
-        
+
         // Show the current image
-        const indName = container.classList[0].split('-')[0];
-        const image = document.querySelector(`.images.${indName}`);
-        
+        const image = document.querySelector(`.images.image-${index}`);
         if (image) {
           image.style.opacity = "1";
-          image.style.transform = "translateX(30px)";
-          image.style.transition = "opacity 0.3s ease-in-out, transform 0.3s ease-in-out";
+          image.style.transition = "opacity 0.5s ease-in-out";
         }
       });
-      
-      // Remove mouseleave event - we don't want to hide images on mouse leave anymore
     });
-    
+
     // Clean up event listeners on component unmount
     return () => {
       containers.forEach(container => {
@@ -88,7 +80,7 @@ export const HomeModal = ({ info }) => {
       });
     };
   }, []);
-  
+
 
   const handleOpenModal = (content) => {
     setModalContent(content);
@@ -102,261 +94,481 @@ export const HomeModal = ({ info }) => {
   };
 
   return (
-      <Box width={"100%"} height={"100vh"} sx={{ overflow: 'hidden', }} isOpen={isModalOpen} onClose={handleCloseModal} >
-        <div style={{ zIndex: 1000 }}>
-          <Box display={"flex"} flexDirection={"column"}>
+      <Box width={"100%"} height={"100vh"} sx={{ overflow: 'hidden', backgroundColor: 'rgba(0, 0, 0, 0.98)' }} isOpen={isModalOpen} onClose={handleCloseModal} >
+        <div style={{ zIndex: 1000, position: 'relative', height: '100%' }}>
+          {/* X Close Button */}
+          <Box
+            onClick={onClose}
+            sx={{
+              position: "fixed",
+              top: "40px",
+              left: "40px",
+              cursor: "pointer",
+              color: "#999",
+              fontSize: "3rem",
+              fontWeight: "100",
+              zIndex: 1001,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                transform: "rotate(90deg)",
+                color: "#fff",
+              }
+            }}
+          >
+            ×
+          </Box>
+
+          <Box display={"flex"} flexDirection={"row"} sx={{ height: '100%' }}>
+            {/* Left Side - Text Content */}
             <Box
               className='industrias-container'
               sx={{
                 height: '100%',
-                width: { xs: '90%', md: '40%', xl: '40%'},
-                marginTop: '10vh',
-                paddingRight: { xs: '15px', md: '1px', xl: '1px' },
+                width: { xs: '100%', md: '55%', xl: '50%'},
                 display: 'flex',
-                alignSelf: 'flex-end',
-                justifySelf: 'flex-end',
-                textAlign: 'start',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                padding: 0,
-                color: '#666',
-                fontSize: '1.3rem',
-                lineHeight: 1,
-                fontWeight: 700,
-                letterSpacing: '-1px',
+                paddingLeft: { xs: '40px', md: '100px', xl: '120px' },
+                paddingRight: { xs: '40px', md: '40px', xl: '60px' },
+                color: '#999',
+                fontSize: '1.1rem',
+                lineHeight: 1.5,
                 position: 'relative',
                 zIndex: 1000,
-                '& div:hover h2': {
-                  color: { xs: 'white', md: 'white', xl: 'white'},
-                },
-                '& div:hover .modal-description': {
-                  color: { xs: 'white', md: 'white', xl: 'white'},
-                  transition: 'color 0.3s ease-in-out',
-                }
               }}
             >
+              {/* Entry 1 */}
               <Box
-                className="cyaind-container modal-entry"
+                className="modal-entry"
                 sx={{
-                  borderRadius: "10px",
-                  paddingInline: { xs: "15px", md: "0px", xl: "0px" },
-                  paddingBlock: { xs: "25px", md: "10px", xl: "20px" },
-                  marginBottom: { xs: "10px", md: "0px", xl: "0px" },
-                  width: "fit-content",
-                  minWidth: "1000px",
-                  transition: "background-color 0.3s ease-in-out", // Smooth effect
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  paddingBlock: { xs: "15px", md: "20px", xl: "25px" },
+                  width: "100%",
+                  cursor: 'pointer',
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    backgroundColor: {xs: "rgba(53, 53, 53, 0.76)", md: "transparent", lg: "transparent"}, // Translucent gray
+                    ".number": {
+                      color: "#fff",
+                    },
+                    ".modal-title": {
+                      color: "#fff",
+                    },
+                    ".modal-description": {
+                      color: "#ccc",
+                    }
                   },
                 }}
               >
-                <Box width={{ xs: "350px", md: "100%", xl: "100%" }}>
-                  <span className="number" style={{ fontWeight: 'bold'}}>01.</span>
-                  <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' } }fontWeight={600}>{ modalInfo[info][0].title}</Typography>
-                  <Typography paddingBlock={{ xs: '0px', md: '0px', xl: '15px' }} fontSize={{ xs: '1rem', sm: '1.25rem', md: '1.25rem' }} className="modal-description">{modalInfo[info][0].content}</Typography>
-                </Box>
-              </Box>
-              <Box
-                className="eind-container modal-entry"
-                sx={{
-                  borderRadius: "10px",
-                  paddingInline: { xs: "15px", md: "0px", xl: "0px" },
-                  paddingBlock: { xs: "25px", md: "10px", xl: "20px" },
-                  marginBottom: { xs: "10px", md: "0px", xl: "0px" },
-                  width: "fit-content",
-                  minWidth: "1000px",
-                  transition: "background-color 0.3s ease-in-out", // Smooth effect
-                  "&:hover": {
-                    backgroundColor: {xs: "rgba(53, 53, 53, 0.76)", md: "transparent", lg: "transparent"}, // Translucent gray
-                  },
-                }}
-              >
-                <Box width={{ xs: "350px", md: "100%", xl: "100%" }}>
-                  <span className="number" style={{ fontWeight: 'bold'}}>02.</span>
-                  <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][1].title}</Typography>
-                  <Typography paddingBlock={{ xs: '0px', md: '0px', xl: '15px' }} fontSize={{ xs: '1rem', sm: '1.25rem', md: '1.25rem' }} className="modal-description">{modalInfo[info][1].content}</Typography>
-                </Box>
-              </Box>
-
-              <Box
-                className="mfind-container modal-entry"
-                sx={{
-                  borderRadius: "10px",
-                  paddingInline: { xs: "15px", md: "0px", xl: "0px" },
-                  paddingBlock: { xs: "25px", md: "10px", xl: "20px" },
-                  marginBottom: { xs: "10px", md: "0px", xl: "0px" },
-                  width: "fit-content",
-                  minWidth: "1000px",
-                  transition: "background-color 0.3s ease-in-out", // Smooth effect
-                  "&:hover": {
-                    backgroundColor: {xs: "rgba(53, 53, 53, 0.76)", md: "transparent", lg: "transparent"}, // Translucent gray
-                  },
-                }}
-              >
-                <Box width={{ xs: "350px", md: "100%", xl: "100%" }}>
-                  <span className="number" style={{ fontWeight: 'bold'}}>03.</span>
-                  <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][2].title}</Typography>
-                  <Typography paddingBlock={{ xs: '0px', md: '0px', xl: '15px' }} fontSize={{ xs: '1rem', sm: '1.25rem', md: '1.25rem' }} className="modal-description">{modalInfo[info][2].content}</Typography>
-                </Box>
-              </Box>
-
-              <Box
-                className="mahorro-container modal-entry"
-                sx={{
-                  borderRadius: "10px",
-                  paddingInline: { xs: "15px", md: "0px", xl: "0px" },
-                  paddingBlock: { xs: "15px", md: "10px", xl: "20px" },
-                  marginBottom: { xs: "10px", md: "0px", xl: "0px" },
-                  width: "fit-content",
-                  minWidth: "1000px",
-                  transition: "background-color 0.3s ease-in-out", // Smooth effect
-                  "&:hover": {
-                    backgroundColor: {xs: "rgba(53, 53, 53, 0.76)", md: "transparent", lg: "transparent"}, // Translucent gray
-                  },
-                }}
-              >
-                <Box width={{ xs: "350px", md: "100%", xl: "100%" }}>
-                  <span className="number" style={{ fontWeight: 'bold'}}>04.</span>
-                  <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][3].title}</Typography>
-                  <Typography paddingBlock={{ xs: '0px', md: '0px', xl: '15px' }} fontSize={{ xs: '1rem', sm: '1.25rem', md: '1.25rem' }} className="modal-description">{modalInfo[info][3].content}</Typography>
+                <Typography
+                  className="number"
+                  sx={{
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    color: '#666',
+                    marginRight: '40px',
+                    minWidth: '30px',
+                    transition: 'color 0.3s ease',
+                  }}
+                >
+                  01.
+                </Typography>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="h2"
+                    className="modal-title"
+                    sx={{
+                      fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
+                      fontWeight: 500,
+                      marginBottom: '8px',
+                      color: '#fff',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][0].title}
+                  </Typography>
+                  <Typography
+                    className="modal-description"
+                    sx={{
+                      fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
+                      lineHeight: 1.5,
+                      color: '#999',
+                      maxWidth: '450px',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][0].content}
+                  </Typography>
                 </Box>
               </Box>
 
+              {/* Entry 2 */}
               <Box
-                className="aind-container modal-entry"
+                className="modal-entry"
                 sx={{
-                  borderRadius: "10px",
-                  paddingInline: { xs: "15px", md: "0px", xl: "0px" },
-                  paddingBlock: { xs: "15px", md: "10px", xl: "20px" },
-                  marginBottom: { xs: "10px", md: "0px", xl: "0px" },
-                  width: "fit-content",
-                  minWidth: "1000px",
-                  transition: "background-color 0.3s ease-in-out", // Smooth effect
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  paddingBlock: { xs: "15px", md: "20px", xl: "25px" },
+                  width: "100%",
+                  cursor: 'pointer',
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    backgroundColor: {xs: "rgba(53, 53, 53, 0.76)", md: "transparent", lg: "transparent"}, // Translucent gray
+                    ".number": {
+                      color: "#fff",
+                    },
+                    ".modal-title": {
+                      color: "#fff",
+                    },
+                    ".modal-description": {
+                      color: "#ccc",
+                    }
                   },
                 }}
               >
-                <Box width={{ xs: "350px", md: "100%", xl: "100%" }}>
-                  <span className="number" style={{ fontWeight: 'bold'}}>05.</span>
-                  <Typography variant="h2" fontSize={{ xs: '1.25rem', sm: '1.5rem', md: '2rem' }} fontWeight={600}>{modalInfo[info][4].title}</Typography>
-                  <Typography paddingBlock={{ xs: '0px', md: '0px', xl: '15px' }} fontSize={{ xs: '1rem', sm: '1.25rem', md: '1.25rem' }} className="modal-description">{modalInfo[info][4].content}</Typography>
+                <Typography
+                  className="number"
+                  sx={{
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    color: '#666',
+                    marginRight: '40px',
+                    minWidth: '30px',
+                    transition: 'color 0.3s ease',
+                  }}
+                >
+                  02.
+                </Typography>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="h2"
+                    className="modal-title"
+                    sx={{
+                      fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
+                      fontWeight: 500,
+                      marginBottom: '8px',
+                      color: '#fff',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][1].title}
+                  </Typography>
+                  <Typography
+                    className="modal-description"
+                    sx={{
+                      fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
+                      lineHeight: 1.5,
+                      color: '#999',
+                      maxWidth: '450px',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][1].content}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Entry 3 */}
+              <Box
+                className="modal-entry"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  paddingBlock: { xs: "15px", md: "20px", xl: "25px" },
+                  width: "100%",
+                  cursor: 'pointer',
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    ".number": {
+                      color: "#fff",
+                    },
+                    ".modal-title": {
+                      color: "#fff",
+                    },
+                    ".modal-description": {
+                      color: "#ccc",
+                    }
+                  },
+                }}
+              >
+                <Typography
+                  className="number"
+                  sx={{
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    color: '#666',
+                    marginRight: '40px',
+                    minWidth: '30px',
+                    transition: 'color 0.3s ease',
+                  }}
+                >
+                  03.
+                </Typography>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="h2"
+                    className="modal-title"
+                    sx={{
+                      fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
+                      fontWeight: 500,
+                      marginBottom: '8px',
+                      color: '#fff',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][2].title}
+                  </Typography>
+                  <Typography
+                    className="modal-description"
+                    sx={{
+                      fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
+                      lineHeight: 1.5,
+                      color: '#999',
+                      maxWidth: '450px',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][2].content}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Entry 4 */}
+              <Box
+                className="modal-entry"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  paddingBlock: { xs: "15px", md: "20px", xl: "25px" },
+                  width: "100%",
+                  cursor: 'pointer',
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    ".number": {
+                      color: "#fff",
+                    },
+                    ".modal-title": {
+                      color: "#fff",
+                    },
+                    ".modal-description": {
+                      color: "#ccc",
+                    }
+                  },
+                }}
+              >
+                <Typography
+                  className="number"
+                  sx={{
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    color: '#666',
+                    marginRight: '40px',
+                    minWidth: '30px',
+                    transition: 'color 0.3s ease',
+                  }}
+                >
+                  04.
+                </Typography>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="h2"
+                    className="modal-title"
+                    sx={{
+                      fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
+                      fontWeight: 500,
+                      marginBottom: '8px',
+                      color: '#fff',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][3].title}
+                  </Typography>
+                  <Typography
+                    className="modal-description"
+                    sx={{
+                      fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
+                      lineHeight: 1.5,
+                      color: '#999',
+                      maxWidth: '450px',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][3].content}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Entry 5 */}
+              <Box
+                className="modal-entry"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  paddingBlock: { xs: "15px", md: "20px", xl: "25px" },
+                  width: "100%",
+                  cursor: 'pointer',
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    ".number": {
+                      color: "#fff",
+                    },
+                    ".modal-title": {
+                      color: "#fff",
+                    },
+                    ".modal-description": {
+                      color: "#ccc",
+                    }
+                  },
+                }}
+              >
+                <Typography
+                  className="number"
+                  sx={{
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    color: '#666',
+                    marginRight: '40px',
+                    minWidth: '30px',
+                    transition: 'color 0.3s ease',
+                  }}
+                >
+                  05.
+                </Typography>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="h2"
+                    className="modal-title"
+                    sx={{
+                      fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
+                      fontWeight: 500,
+                      marginBottom: '8px',
+                      color: '#fff',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][4].title}
+                  </Typography>
+                  <Typography
+                    className="modal-description"
+                    sx={{
+                      fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
+                      lineHeight: 1.5,
+                      color: '#999',
+                      maxWidth: '450px',
+                      transition: 'color 0.3s ease',
+                    }}
+                  >
+                    {modalInfo[info][4].content}
+                  </Typography>
                 </Box>
               </Box>
             </Box>
-            <Box width={{ xs: "100%", md: "fit-content"}} sx={{ position: "absolute", top: "20%", left: "10%" }} className='images-container'>
-              <Box className="images cyaind" >
+
+            {/* Right Side - Images Container */}
+            <Box
+              sx={{
+                position: "relative",
+                width: { xs: "0%", md: "45%", xl: "50%" },
+                height: "100%",
+                display: { xs: "none", md: "block" }
+              }}
+              className='images-container'
+            >
+              {/* Image 1 */}
+              <Box className="images image-0" sx={{ opacity: 0, position: 'absolute', width: '100%', height: '100%' }}>
                 <Box
                   component="img"
                   src={modalInfo[info][0].image}
                   alt={modalInfo[info][0].alt}
                   sx={{
-                    position: "fixed",
+                    position: "absolute",
                     top: "50%",
-                    left: "40%",
-                    transform: "translate(-50%, -20%)",
-                    width: { xs: "120vw", md: "75vw", xl: "75vw" },
-                    height: "100vh",
+                    left: "0",
+                    transform: "translateY(-50%)",
+                    width: "auto",
+                    height: "60%",
+                    maxWidth: "90%",
                     objectFit: "cover",
-                    borderRadius: "5px",
+                    borderRadius: "8px",
                   }}
                 />
               </Box>
-              <Box className="images eind">
+
+              {/* Image 2 */}
+              <Box className="images image-1" sx={{ opacity: 0, position: 'absolute', width: '100%', height: '100%' }}>
                 <Box
                   component="img"
                   src={modalInfo[info][1].image}
                   alt={modalInfo[info][1].alt}
                   sx={{
-                    position: "fixed",
+                    position: "absolute",
                     top: "50%",
-                    left: "40%",
-                    transform: "translate(-50%, -20%)",
-                    width: { xs: "120vw", md: "75vw", xl: "75vw" },
-                    height: "100vh",
+                    left: "0",
+                    transform: "translateY(-50%)",
+                    width: "auto",
+                    height: "60%",
+                    maxWidth: "90%",
                     objectFit: "cover",
-                    borderRadius: "5px",
+                    borderRadius: "8px",
                   }}
                 />
               </Box>
 
-              <Box className="images mfind">
+              {/* Image 3 */}
+              <Box className="images image-2" sx={{ opacity: 0, position: 'absolute', width: '100%', height: '100%' }}>
                 <Box
                   component="img"
                   src={modalInfo[info][2].image}
                   alt={modalInfo[info][2].alt}
                   sx={{
-                    position: "fixed",
+                    position: "absolute",
                     top: "50%",
-                    left: "40%",
-                    transform: "translate(-50%, -20%)",
-                    width: { xs: "120vw", md: "75vw", xl: "75vw" },
-                    height: "100vh",
+                    left: "0",
+                    transform: "translateY(-50%)",
+                    width: "auto",
+                    height: "60%",
+                    maxWidth: "90%",
                     objectFit: "cover",
-                    borderRadius: "5px",
+                    borderRadius: "8px",
                   }}
                 />
               </Box>
 
-              <Box className="images mahorro">
+              {/* Image 4 */}
+              <Box className="images image-3" sx={{ opacity: 0, position: 'absolute', width: '100%', height: '100%' }}>
                 <Box
                   component="img"
                   src={modalInfo[info][3].image}
                   alt={modalInfo[info][3].alt}
                   sx={{
-                    position: "fixed",
+                    position: "absolute",
                     top: "50%",
-                    left: "40%",
-                    transform: "translate(-50%, -20%)",
-                    width: { xs: "120vw", md: "75vw", xl: "75vw" },
-                    height: "100vh",
+                    left: "0",
+                    transform: "translateY(-50%)",
+                    width: "auto",
+                    height: "60%",
+                    maxWidth: "90%",
                     objectFit: "cover",
-                    borderRadius: "5px",
+                    borderRadius: "8px",
                   }}
                 />
               </Box>
 
-              <Box className="images aind">
+              {/* Image 5 */}
+              <Box className="images image-4" sx={{ opacity: 0, position: 'absolute', width: '100%', height: '100%' }}>
                 <Box
                   component="img"
                   src={modalInfo[info][4].image}
                   alt={modalInfo[info][4].alt}
                   sx={{
-                    position: "fixed",
+                    position: "absolute",
                     top: "50%",
-                    left: "40%",
-                    transform: "translate(-50%, -20%)",
-                    width: { xs: "120vw", md: "75vw", xl: "75vw" },
-                    height: "100vh",
+                    left: "0",
+                    transform: "translateY(-50%)",
+                    width: "auto",
+                    height: "60%",
+                    maxWidth: "90%",
                     objectFit: "cover",
-                    borderRadius: "5px",
+                    borderRadius: "8px",
                   }}
                 />
               </Box>
             </Box>
           </Box>
-
-          <Link to='/'>
-            <svg 
-              viewBox="0 0 1024 1024" 
-              xmlns="http://www.w3.org/2000/svg" 
-              fill="#000000"
-              width="5vh"
-              style={{
-                cursor: "pointer",
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                transition: "fill 0.3s ease-in-out",
-              }}
-              onMouseEnter={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#ffffff")}
-              onMouseLeave={(e) => e.currentTarget.querySelector("path").setAttribute("fill", "#9e9e9e")}
-            >
-              <g id="SVGRepo_iconCarrier">
-                <path fill="#9e9e9e" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path>
-              </g>
-            </svg>
-          </Link>
         </div>
       </Box>
   )

@@ -1,407 +1,436 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Typography, Grid, useMediaQuery, useTheme } from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  
-  const customTheme = createTheme({
-    typography: {
-      fontFamily: "'Inter', sans-serif",
-    },
-  });
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const baseTextStyle = {
-    color: "#ffffff",
-    textDecoration: "none",
-    fontSize: "0.9rem",
-    fontWeight: 400,
-    transition: "color 0.3s ease",
-    lineHeight: 1.8,
-    display: "block",
-    "&:hover": {
-      color: "#ff0000",
-    }
+  // Colores del tema industrial
+  const COLORS = {
+    background: "#0B0B0B",
+    text: "#ffffff",
+    textMuted: "rgba(255, 255, 255, 0.5)",
+    accent: "#DC543E",
+    hover: "#DC543E",
   };
 
-  const StyledLink = ({ to, children }) => (
+  // Estilo monoespaciado para textos técnicos
+  const monoStyle = {
+    fontFamily: "'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace",
+    fontSize: "0.75rem",
+    textTransform: "uppercase",
+    letterSpacing: "0.08em",
+    lineHeight: 1.8,
+    color: COLORS.textMuted,
+  };
+
+  // Estilo para títulos de sección
+  const headingStyle = {
+    color: COLORS.text,
+    fontWeight: 600,
+    fontSize: "0.875rem",
+    textTransform: "uppercase",
+    letterSpacing: "0.1em",
+    mb: 3,
+    fontFamily: "'Inter', sans-serif",
+  };
+
+  // Componente de enlace con flecha
+  const NavLink = ({ to, children }) => (
     <Box
       component={Link}
       to={to}
-      sx={baseTextStyle}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        color: COLORS.text,
+        textDecoration: "none",
+        mb: 2,
+        fontSize: "0.95rem",
+        fontFamily: "'Inter', sans-serif",
+        transition: "all 0.3s ease",
+        "&:hover": {
+          color: COLORS.hover,
+          transform: "translateX(4px)",
+        },
+      }}
     >
+      <Box component="span" sx={{ mr: 1.5, fontSize: "0.8rem", color: COLORS.textMuted }}>
+        ↳
+      </Box>
       {children}
     </Box>
   );
-
-  const StyledExternalLink = ({ href, children }) => (
-    <Box
-      component="a"
-      href={href}
-      sx={baseTextStyle}
-    >
-      {children}
-    </Box>
-  );
-
-  const headingStyle = {
-    color: "#646464",
-    fontSize: "1.2rem",
-    fontWeight: 500,
-    textTransform: "uppercase",
-    letterSpacing: "0.07em",
-    marginBottom: "8px"
-  };
 
   return (
     <Box
       component="footer"
       sx={{
-        position: "relative",
-        backgroundColor: "#000",
-        color: "#fff",
-        padding: isMobile ? "30px 20px 5px" : isTablet ? "40px 30px 5px" : "20px 20px 0px",
+        bgcolor: COLORS.background,
+        borderRadius: "20px",
+        mx: { xs: 2, md: 3 },
+        mb: { xs: 2, md: 3 },
         overflow: "hidden",
-        minHeight: "85vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        "& *": {
-          fontFamily: "'Inter', sans-serif"
-        }
+        position: "relative",
+        // Grain effect sutil
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: 0.05,
+          pointerEvents: "none",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          mixBlendMode: 'multiply',
+        },
       }}
     >
-      {/* Grid Principal */}
-      <Grid 
-        container 
+      {/* Sección de Contacto - Texto blanco sobre negro */}
+      <Box
         sx={{
-          position: "relative",
-          zIndex: 2,
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "30vw 1.2fr 1.2fr 1.2fr",
-          gap: isMobile ? "40px" : isTablet ? "40px" : "5vh",
-          marginTop: "40px",
-          marginBottom: isMobile ? "30px" : "40px",
-          padding: "0 20px",
-          alignItems: "start",
-          textAlign: isMobile ? "center" : "left"
+          p: { xs: 4, md: 6 },
+          px: { xs: 4, md: 8, lg: 10 },
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         }}
       >
-        {/* Logo (video) */}
-        <Box 
-          sx={{
-            width: isMobile ? "200px" : isTablet ? "400px" : "80%",
-            height: isMobile ? "300px" : isTablet ? "500px" : "auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: isMobile ? "0 auto" : "0"
-          }}
-        >
-          <Box 
-            component="video" 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            sx={{
-              width: "90%",
-              height: "auto",
-              objectFit: "contain",
-              opacity: 0.3
-            }}
-          >
-            <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
-            Tu navegador no admite videos.
-          </Box>
-        </Box>
-
-        {/* Columna 1: Descubrir */}
-        <Box 
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            alignItems: isMobile ? "center" : "flex-start" // Centrar en móvil
-          }}
-        >
-          <Typography variant="h3" sx={headingStyle}>
-            DESCUBRÍ
-          </Typography>
-          <Box 
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              alignItems: isMobile ? "center" : "flex-start" // Centrar en móvil
-            }}
-          >
-            <StyledLink to="/#/">Inicio</StyledLink>
-            <StyledLink to="/productos-y-servicios">Productos</StyledLink>
-            <Box
-              component="a"
-              href="https://www.google.com/maps/place/Acerospaisano+S.A./@-34.7006875,-56.2419389,17z/data=!4m14!1m7!3m6!1s0x95a1cd0dee1b74d7:0x9d3355e7c66adcd2!2sAcerospaisano+S.A.!8m2!3d-34.7006919!4d-56.239364!16s%2Fg%2F11hd1s7_fc!3m5!1s0x95a1cd0dee1b74d7:0x9d3355e7c66adcd2!8m2!3d-34.7006919!4d-56.239364!16s%2Fg%2F11hd1s7_fc?hl=en&entry=ttu&g_ep=EgoyMDI1MDMwMy4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={baseTextStyle}
-            >
-              Encuéntranos
-            </Box>
-            <StyledLink to="/sobre-nosotros">Sobre nosotros</StyledLink>
-            <StyledLink to="/contacto">Contáctanos</StyledLink>
-          </Box>
-        </Box>
-
-        {/* Columna 2: Contacto */}
-        <Box 
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            alignItems: isMobile ? "center" : "flex-start" // Centrar en móvil
-          }}
-        >
-          <Typography variant="h3" sx={headingStyle}>
-            CONTACTO
-          </Typography>
-          <Box 
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              alignItems: isMobile ? "center" : "flex-start" // Centrar en móvil
-            }}
-          >
-            <StyledExternalLink href="tel:2365 0000">
-              2365 0000
-            </StyledExternalLink>
-            <StyledExternalLink href="mailto:ventas@acerospaisano.com.uy">
-              ventas@acerospaisano.com.uy
-            </StyledExternalLink>
-          </Box>
-        </Box>
-
-        {/* Columna 3: Encuéntranos */}
-        <Box 
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            justifySelf: isTablet ? "start" : "auto",
-            alignItems: isMobile ? "center" : "flex-start" // Centrar en móvil
-          }}
-        >
-          <Typography variant="h3" sx={headingStyle}>
-            ENCUÉNTRANOS
-          </Typography>
-          <Box 
-            sx={{
-              marginBottom: "10px",
-              textAlign: isMobile ? "center" : "left" // Centrar en móvil
-            }}
-          >
-            <Typography 
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Typography
               sx={{
-                fontWeight: 400,
-                color: "#ffffff",
-                fontSize: "0.9rem",
-                lineHeight: 1.8
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                color: COLORS.text,
+                mb: 1,
               }}
             >
-              Aceros Paisano S.A.
+              Ponete en contacto
             </Typography>
-            <Box 
-              className="address-tooltip-container"
+            <Typography
               sx={{
-                position: "relative",
-                cursor: "pointer",
-                "& .map-tooltip": {
-                  display: "none"
-                },
-                "&:hover .map-tooltip": {
-                  display: "block"
-                }
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                color: COLORS.text,
               }}
             >
-              <Box className="address-text">
+              Para aprender más.
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Grid container spacing={4}>
+              <Grid item xs={6}>
                 <Typography
                   sx={{
-                    fontWeight: 400,
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    lineHeight: 1.8
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: COLORS.textMuted,
+                    mb: 1,
                   }}
                 >
-                  Ruta 5 KM 25.500
+                  Teléfono
                 </Typography>
                 <Typography
+                  component="a"
+                  href="tel:+59823650000"
                   sx={{
-                    fontWeight: 400,
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    lineHeight: 1.8
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                    color: COLORS.text,
+                    textDecoration: "none",
+                    display: "block",
+                    transition: "color 0.3s",
+                    "&:hover": {
+                      color: COLORS.hover,
+                    },
                   }}
                 >
-                  Canelones, Las Piedras
+                  +598 2365 0000
                 </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
                 <Typography
                   sx={{
-                    fontWeight: 400,
-                    color: "#ffffff",
-                    fontSize: "0.9rem",
-                    lineHeight: 1.8
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: COLORS.textMuted,
+                    mb: 1,
                   }}
                 >
-                  Uruguay
+                  Consultas Generales
+                </Typography>
+                <Typography
+                  component="a"
+                  href="mailto:info@acerospaisano.com.uy"
+                  sx={{
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                    color: COLORS.text,
+                    textDecoration: "none",
+                    display: "block",
+                    transition: "color 0.3s",
+                    "&:hover": {
+                      color: COLORS.hover,
+                    },
+                  }}
+                >
+                  info@aceros.uy
+                </Typography>
+
+                <Typography
+                  sx={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: COLORS.textMuted,
+                    mb: 1,
+                    mt: 3,
+                  }}
+                >
+                  Prensa
+                </Typography>
+                <Typography
+                  component="a"
+                  href="mailto:press@acerospaisano.com.uy"
+                  sx={{
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                    color: COLORS.text,
+                    textDecoration: "none",
+                    display: "block",
+                    transition: "color 0.3s",
+                    "&:hover": {
+                      color: COLORS.hover,
+                    },
+                  }}
+                >
+                  press@aceros.uy
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+
+      {/* Main content area */}
+      <Box
+        sx={{
+          p: { xs: 4, md: 8, lg: 10 },
+          pb: { xs: 3, md: 4 },
+        }}
+      >
+        <Grid container spacing={{ xs: 6, md: 8 }}>
+          {/* Logo Column - Video Liquid Logo */}
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                height: "100%",
+              }}
+            >
+              {/* Video Liquid Logo */}
+              <Box
+                component="video"
+                autoPlay
+                loop
+                muted
+                playsInline
+                sx={{
+                  width: { xs: "140px", md: "180px" },
+                  height: "auto",
+                  opacity: 0.9,
+                  mixBlendMode: 'screen',
+                  filter: 'contrast(1.2) brightness(0.9)',
+                  display: "block",
+                  mb: 4,
+                }}
+              >
+                <source src="/videos/Liquidlogo.mp4" type="video/mp4" />
+              </Box>
+            </Box>
+          </Grid>
+
+          {/* Navigation Column */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography sx={headingStyle}>Navegación</Typography>
+            <NavLink to="/">Inicio</NavLink>
+            <NavLink to="/sobre-nosotros">Sobre Nosotros</NavLink>
+            <NavLink to="/productos">Productos</NavLink>
+            <NavLink to="/contacto">Contacto</NavLink>
+
+            {/* Forjado en Uruguay */}
+            <Box sx={{ mt: 4, pt: 3, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg"
+                  alt="Uruguay"
+                  style={{
+                    width: '20px',
+                    height: 'auto',
+                    opacity: 0.8,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    ...monoStyle,
+                    fontSize: "0.65rem",
+                  }}
+                >
+                  Forjado en Uruguay. Para Uruguay.
                 </Typography>
               </Box>
-              <Box 
+            </Box>
+          </Grid>
+
+          {/* Products Column */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography sx={headingStyle}>
+              Productos Principales
+            </Typography>
+            <NavLink to="/productos/barras-tratadas">Barras de Acero Tratadas</NavLink>
+            <NavLink to="/productos/perfiles">Perfiles Estructurales</NavLink>
+            <NavLink to="/productos/mallas-electrosoldadas">Mallas Electrosoldadas</NavLink>
+            <NavLink to="/productos/corte-doblado">Corte y Doblado CNC</NavLink>
+            <NavLink to="/productos/vigas">Vigas de Alta Resistencia</NavLink>
+
+            {/* Dirección con mapa */}
+            <Box
+              sx={{
+                mt: 4,
+                pt: 3,
+                borderTop: '1px solid rgba(255,255,255,0.1)',
+                position: "relative",
+                cursor: "help",
+                "&:hover .map-tooltip": {
+                  opacity: 1,
+                  visibility: "visible",
+                  transform: "translateY(0) scale(1)",
+                },
+              }}
+            >
+              <Typography sx={{ ...monoStyle, fontSize: "0.65rem", mb: 0.5 }}>
+                ACEROS PAISANO HQ
+              </Typography>
+              <Typography sx={{ ...monoStyle, fontSize: "0.65rem", color: COLORS.text }}>
+                RUTA 5 KM 25.500
+              </Typography>
+              <Typography sx={{ ...monoStyle, fontSize: "0.65rem", color: COLORS.text }}>
+                LAS PIEDRAS, CANELONES
+              </Typography>
+              <Typography sx={{ ...monoStyle, fontSize: "0.65rem", color: COLORS.text }}>
+                URUGUAY 90200
+              </Typography>
+
+              {/* Tooltip con mapa */}
+              <Box
                 className="map-tooltip"
                 sx={{
                   position: "absolute",
-                  top: "100%",
-                  left: isMobile ? "50%" : "auto",
-                  right: isMobile ? "auto" : "0",
-                  transform: isMobile ? "translateX(-50%)" : "translateX(-20%)",
-                  background: "#000",
-                  padding: "15px",
-                  borderRadius: "3px",
-                  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
+                  bottom: "120%",
+                  left: 0,
+                  width: "280px",
+                  height: "200px",
+                  bgcolor: "#111",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  opacity: 0,
+                  visibility: "hidden",
+                  transform: "translateY(10px) scale(0.95)",
+                  transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
                   zIndex: 1000,
-                  width: isMobile ? "300px" : isTablet ? "450px" : "500px",
-                  marginTop: "10px",
-                  "&::before": {
-                    content: "''",
-                    position: "absolute",
-                    top: "-8px",
-                    left: isMobile ? "50%" : "80%",
-                    transform: isMobile ? "translateX(-50%)" : "none",
-                    borderWidth: "0 8px 8px 8px",
-                    borderStyle: "solid",
-                    borderColor: "transparent transparent #000 transparent"
-                  }
+                  pointerEvents: "none",
                 }}
               >
-                <Box
-                  component="iframe"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.1779293687914!2d-56.24193892425555!3d-34.70069187291963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a1cd0dee1b74d7%3A0x9d3355e7c66adcd2!2sAcerospaisano%20S.A.!5e0!3m2!1ses!2suy!4v1741197854397!5m2!1ses!2suy"
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3279.640175301675!2d-56.209438423302966!3d-34.71421366337666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a1d2e207027085%3A0x5745037081900058!2sRuta%205%20Km%2025.500!5e0!3m2!1ses!2suy!4v1708090000000!5m2!1ses!2suy"
                   width="100%"
-                  height={isMobile ? "250px" : "350px"}
-                  allowFullScreen=""
+                  height="100%"
+                  style={{ border: 0, filter: "grayscale(1) contrast(1.2)" }}
+                  allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  sx={{
-                    border: 0,
-                    filter: "grayscale(100%)",
-                    transition: "filter 0.3s ease",
-                    aspectRatio: "1/1",
-                    "&:hover": {
-                      filter: "grayscale(0%)"
-                    }
-                  }}
+                  title="Mapa Aceros Paisano"
                 />
-                <Box
-                  component="a"
-                  href="https://www.google.com/maps/place/Acerospaisano+S.A./@-34.7006875,-56.2419389,17z/data=!4m14!1m7!3m6!1s0x95a1cd0dee1b74d7:0x9d3355e7c66adcd2!2sAcerospaisano+S.A.!8m2!3d-34.7006919!4d-56.239364!16s%2Fg%2F11hd1s7_fc!3m5!1s0x95a1cd0dee1b74d7:0x9d3355e7c66adcd2!8m2!3d-34.7006919!4d-56.239364!16s%2Fg%2F11hd1s7_fc?hl=en&entry=ttu&g_ep=EgoyMDI1MDMwMy4wIKXMDSoASAFQAw%3D%3D"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    display: "block",
-                    boxSizing: "border-box",
-                    textAlign: "center",
-                    padding: "10px",
-                    marginTop: "10px",
-                    width: "100%",
-                    background: "#333",
-                    color: "#fff",
-                    textDecoration: "none",
-                    borderRadius: "4px",
-                    transition: "background-color 0.3s ease",
-                    "&:hover": {
-                      background: "#444"
-                    }
-                  }}
-                >
-                  Ver en Google Maps
-                </Box>
               </Box>
             </Box>
-          </Box>
-        </Box>
-      </Grid>
+          </Grid>
+        </Grid>
+      </Box>
 
+      {/* Bottom Bar - Separado del grid principal */}
       <Box
         sx={{
-          position: "relative",
-          zIndex: 2,
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "0 20px 5px",
-          marginTop: isMobile ? "10px" : "20px",
-          flexDirection: isMobile ? "column" : "row",
-          gap: isMobile ? "10px" : "0",
-          alignItems: isMobile ? "center" : "flex-start",
-          textAlign: isMobile ? "center" : "left" // Centrar en móvil
+          borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+          p: { xs: 3, md: 4 },
+          px: { xs: 4, md: 8, lg: 10 },
         }}
       >
         <Box
           sx={{
             display: "flex",
-            gap: "20px"
-          }}
-        >
-          {/* Contenido opcional */}
-        </Box>
-      </Box>
-
-      <Box>
-        {/* Divider - Sin margen inferior */}
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 2,
-            height: "1px",
-            backgroundColor: "#a1a0a0",
-            margin: "0 20px",
-            marginBottom: "0"
-          }}
-        />
-
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 2,
-            display: "flex",
             justifyContent: "space-between",
-            padding: "5px 20px",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: isMobile ? "center" : "flex-start",
-            gap: isMobile ? "2px" : "0",
-            textAlign: isMobile ? "center" : "left",
-            paddingLeft: isMobile ? "20px" : isTablet ? "30px" : "20px",
-            paddingRight: isMobile ? "20px" : isTablet ? "30px" : "20px",
-            marginTop: "4px"
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
           }}
         >
-          <Typography
-            sx={{
-              color: "#ffffff",
-              fontSize: "1.1rem"
-            }}
-          >
-            ©2025 Aceros Paisano S.A.
+          <Typography sx={{ ...monoStyle, fontSize: "0.65rem" }}>
+            ©2026 Aceros Paisano S.A.
           </Typography>
-          <Typography
-            sx={{
-              color: "#ffffff",
-              fontSize: "1.1rem"
-            }}
-          >
-            Todos los Derechos Reservados.
-          </Typography>
+
+          <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+            <Typography
+              component={Link}
+              to="/privacidad"
+              sx={{
+                ...monoStyle,
+                fontSize: "0.65rem",
+                textDecoration: "none",
+                "&:hover": { color: COLORS.text },
+              }}
+            >
+              Política de Privacidad
+            </Typography>
+            <Typography
+              component={Link}
+              to="/terminos"
+              sx={{
+                ...monoStyle,
+                fontSize: "0.65rem",
+                textDecoration: "none",
+                "&:hover": { color: COLORS.text },
+              }}
+            >
+              Términos de Uso
+            </Typography>
+            <Typography
+              component={Link}
+              to="/licencia"
+              sx={{
+                ...monoStyle,
+                fontSize: "0.65rem",
+                textDecoration: "none",
+                "&:hover": { color: COLORS.text },
+              }}
+            >
+              Acuerdo de Licencia
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>

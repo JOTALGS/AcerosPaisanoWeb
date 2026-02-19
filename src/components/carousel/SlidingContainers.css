@@ -1,16 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .fatherContainer {
-    width: 100%;
+    width: 100vw;
     max-width: 100vw;
     overflow: hidden;
     font-family: 'Outfit', sans-serif;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
 }
 
 .sliderContainer {
     display: flex;
-    margin-top: 15rem;
-    margin-bottom: 10rem;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .sliderItem {
@@ -28,6 +30,36 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .sliderItem {
+        width: 80%;
+        min-width: 280px;
+        height: auto;
+        min-height: 300px;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 1.5rem;
+    }
+
+    .sliderItem h3 {
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+    }
+
+    .sliderItem p {
+        font-size: 0.9rem;
+        max-width: 100%;
+        line-height: 1.5;
+    }
+
+    .sliderItem button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
 }
 
 .sliderItem:hover {
@@ -64,7 +96,7 @@
     padding: 16px 32px; /* Botones más grandes */
     background-color: transparent;
     color: #fff;
-    border: 1px solid #EE2737;
+    border: 1px solid #727171;
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: 'Outfit', sans-serif;

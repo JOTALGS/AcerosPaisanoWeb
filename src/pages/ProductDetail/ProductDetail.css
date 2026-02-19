@@ -1,0 +1,640 @@
+/* ============================================
+   PRODUCT DETAIL PAGE - INDUSTRIAL TECH STYLE
+   ============================================ */
+
+/* CSS Variables */
+.product-detail-wrapper {
+  --font-sans: 'Europa Grotesk', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', 'SF Mono', 'Courier New', monospace;
+  --bg: #000000;
+  --bg-elevated: #0a0a0a;
+  --bg-subtle: #111111;
+  --ink: #FFFFFF;
+  --muted: rgba(255, 255, 255, 0.7);
+  --tertiary: rgba(255, 255, 255, 0.45);
+  --hair: rgba(255, 255, 255, 0.12);
+  --hair2: rgba(255, 255, 255, 0.06);
+  --red: #dc2626;
+  --red-dark: #b91c1c;
+  --red-glow: rgba(220, 38, 38, 0.2);
+  --success: #10b981;
+
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  font-family: var(--font-sans);
+}
+
+/* ============================================
+   BREADCRUMBS - TECH STYLE
+   ============================================ */
+.breadcrumbs {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 100px 0 60px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.breadcrumbs a {
+  color: var(--tertiary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.breadcrumbs a:hover {
+  color: var(--muted);
+}
+
+.breadcrumbs a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--red);
+  transition: width 0.3s ease;
+}
+
+.breadcrumbs a:hover::after {
+  width: 100%;
+}
+
+.breadcrumbs .separator {
+  color: var(--hair);
+  font-weight: 300;
+}
+
+.breadcrumbs .current {
+  color: var(--red);
+  font-weight: 500;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.product-hero {
+  padding-bottom: 80px;
+}
+
+.hero-header {
+  margin-bottom: 60px;
+}
+
+.product-id {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--red);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.product-title {
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 700;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  margin: 0 0 20px 0;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.product-subtitle {
+  font-size: 18px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ============================================
+   MAIN GRID LAYOUT
+   ============================================ */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+@media (max-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.gallery-section {
+  width: 100%;
+}
+
+.info-section {
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+}
+
+/* ============================================
+   INFO CARD - INDUSTRIAL DESIGN
+   ============================================ */
+.info-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--hair);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  animation: scanline 3s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.info-header {
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.info-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.info-value {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+}
+
+.info-description {
+  margin-bottom: 24px;
+}
+
+.info-description p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 8px 0 0 0;
+}
+
+.info-availability {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--hair);
+  margin-bottom: 32px;
+}
+
+.availability-indicator {
+  width: 8px;
+  height: 8px;
+  background: var(--success);
+  box-shadow: 0 0 12px var(--success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.availability-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   CTA BUTTON - INDUSTRIAL STYLE
+   ============================================ */
+.cta-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-elevated) 100%);
+  border: 2px solid var(--red);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--red-glow), transparent);
+  transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:hover {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 30px var(--red-glow);
+  transform: translateY(-2px);
+}
+
+.cta-button .cta-arrow {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.cta-button:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+.cta-button.large {
+  padding: 24px 40px;
+  font-size: 16px;
+}
+
+/* ============================================
+   TECHNICAL SPECS SECTION - ULTRA TECH
+   ============================================ */
+.tech-specs-section {
+  margin-top: 120px;
+  padding-top: 80px;
+  border-top: 1px solid var(--hair2);
+}
+
+.section-header {
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+  background: linear-gradient(90deg, var(--ink), var(--muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.tech-specs-container {
+  background: var(--bg-elevated);
+  border: 1px solid var(--hair);
+  padding: 48px;
+  position: relative;
+}
+
+.tech-specs-container::before,
+.tech-specs-container::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--red);
+}
+
+.tech-specs-container::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.tech-specs-container::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.specs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 40px 1fr;
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--hair2);
+  transition: all 0.3s ease;
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+}
+
+.spec-row:hover {
+  background: rgba(220, 38, 38, 0.03);
+  padding-left: 12px;
+  margin-left: -12px;
+  margin-right: -12px;
+  padding-right: 12px;
+}
+
+.spec-index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 500;
+}
+
+.spec-label {
+  font-size: 14px;
+  color: var(--tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.spec-separator {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hair) 0%, transparent 100%);
+  margin: 0 20px;
+}
+
+.spec-value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink);
+  text-align: right;
+  font-weight: 500;
+}
+
+.specs-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hair2);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.certification-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--success);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--success);
+}
+
+.badge-icon {
+  font-size: 14px;
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+.features-section {
+  margin-top: 100px;
+  padding-top: 80px;
+  border-top: 1px solid var(--hair2);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+}
+
+.feature-item {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--hair);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.feature-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--red);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover::before {
+  transform: scaleY(1);
+}
+
+.feature-item:hover {
+  background: var(--bg-subtle);
+  border-color: var(--red);
+  transform: translateX(4px);
+}
+
+.feature-icon {
+  color: var(--red);
+  font-size: 18px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.feature-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ============================================
+   SPECIFICATIONS SECTION
+   ============================================ */
+.specifications-section {
+  margin-top: 100px;
+  padding-top: 80px;
+  border-top: 1px solid var(--hair2);
+}
+
+.specifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.specification-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--hair);
+  align-items: flex-start;
+  transition: all 0.3s ease;
+}
+
+.specification-item:hover {
+  border-color: var(--tertiary);
+  background: var(--bg-subtle);
+}
+
+.spec-number {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 500;
+  padding: 4px 8px;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid var(--red);
+}
+
+.spec-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  flex: 1;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.cta-section {
+  margin-top: 120px;
+  padding: 100px 0;
+  border-top: 1px solid var(--hair2);
+  text-align: center;
+  position: relative;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-title {
+  font-size: 36px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px 0;
+  color: var(--ink);
+}
+
+.cta-description {
+  font-size: 18px;
+  color: var(--muted);
+  margin: 0 0 40px 0;
+}
+
+.cta-section .cta-button {
+  display: inline-flex;
+  width: auto;
+  min-width: 300px;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 48px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .tech-specs-container {
+    padding: 24px;
+  }
+
+  .spec-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .spec-index,
+  .spec-separator {
+    display: none;
+  }
+
+  .spec-value {
+    text-align: left;
+    color: var(--muted);
+  }
+
+  .features-grid,
+  .specifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-title {
+    font-size: 28px;
+  }
+}

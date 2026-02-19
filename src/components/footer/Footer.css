@@ -1,339 +1,286 @@
+/* ================================
+   FOOTER - ESTILO REFERENCIA (ES)
+   ================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
-
-* {
-  font-family: 'Inter', sans-serif;
+/* 🎨 Cambiá acá el rojo custom */
+.apFooter {
+  --brand-red: #EE2737;   /* tu rojo */
+  --card-bg: #101010;
+  --text-on-red: rgba(255, 255, 255, 0.92);
+  --muted-on-red: rgba(255, 255, 255, 0.70);
+  --muted-on-card: rgba(255, 255, 255, 0.72);
+  --radius: 28px;
 }
 
-.site-footer {
+/* ✅ Fondo rojo continuo (soluciona el “partido”) */
+.apFooter {
+  width: 100%;
+  background:
+    radial-gradient(1200px 600px at 30% 10%, rgba(255, 255, 255, 0.10), transparent 60%),
+    radial-gradient(900px 600px at 80% 30%, rgba(0, 0, 0, 0.18), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.16)),
+    var(--brand-red);
+  padding: clamp(28px, 4vw, 64px) 0;
+  color: var(--text-on-red);
   position: relative;
-  background-color: #000;
-  color: #fff;
-  padding: 20px 20px 0px;
   overflow: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-.footer-grid {
+/* grano suave (opcional) */
+.apFooter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      transparent 2px,
+      transparent 6px
+    );
+  opacity: 0.10;
+  pointer-events: none;
+}
+
+.apFooter__container {
+  width: min(1320px, calc(100% - clamp(24px, 4vw, 64px)));
+  margin: 0 auto;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+}
+
+/* ======================
+   TOP ROJO (contacto + accesos)
+   ====================== */
+.apFooter__top {
   display: grid;
-  grid-template-columns: 30vw 1.2fr 1.2fr 1.2fr; /* Logo + 3 columnas */
-  gap: 5vh;
-  margin-top: 40px;
-  padding: 0 20px;
-  align-items: start; /* Alinear contenido al inicio */
+  grid-template-columns: 1.1fr 1.2fr;
+  gap: clamp(18px, 3vw, 56px);
+  padding-top: clamp(18px, 3vw, 28px);
+  padding-bottom: clamp(18px, 3vw, 36px);
+  border-top: 1px solid rgba(0,0,0,0.18);
 }
 
-.background-video {
-  width: 80%; /* Ocupa el ancho de la columna */
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.apFooter__topCol {
+  min-width: 0;
 }
 
-.background-video video {
-  width: 90%;
-  height: auto;
-  object-fit: contain;
-  opacity: 0.30;
-}
-
-.footer-column {
+.apFooter__topCol--right {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
 }
 
-.footer-column h3 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  color: #646464;
-  font-size: 1.2rem;
-  font-weight: 500;
+.apFooter__kicker {
+  font-size: 12px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-bottom: 8px;
+  color: var(--muted-on-red);
+  margin-bottom: 12px;
 }
 
-.footer-nav {
+.apFooter__bigLink {
+  display: block;
+  color: var(--text-on-red);
+  text-decoration: none;
+  font-size: clamp(18px, 2.2vw, 34px);
+  line-height: 1.18;
+  margin: 10px 0;
+}
+
+.apFooter__bigLink:hover {
+  opacity: 0.92;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.apFooter__quickNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 6px;
+}
+
+.apFooter__quickLink {
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.apFooter__quickLink:hover {
+  opacity: 0.92;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* ======================
+   CARD NEGRO (radius)
+   ====================== */
+.apFooter__card {
+  background:
+    radial-gradient(800px 400px at 20% 20%, rgba(255,255,255,0.06), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08)),
+    var(--card-bg);
+  border-radius: var(--radius);
+  padding: clamp(18px, 3.2vw, 42px);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Grid interno del card */
+.apFooter__cardGrid {
+  display: grid;
+  grid-template-columns: 70px 1fr 1fr 1fr;
+  gap: clamp(16px, 3vw, 42px);
+  align-items: start;
+}
+
+.apFooter__mark {
+  color: var(--brand-red);
+  opacity: 0.92;
+  transform: translateY(4px);
+}
+
+.apFooter__colTitle {
+  color: rgba(255,255,255,0.85);
+  font-size: clamp(18px, 2.2vw, 34px);
+  margin-bottom: 12px;
+}
+
+.apFooter__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--muted-on-card);
+  font-size: clamp(14px, 1.2vw, 18px);
+  line-height: 1.75;
+}
+
+.apFooter__arrow {
+  color: var(--brand-red);
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.apFooter__listLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.apFooter__listLink:hover {
+  color: rgba(255,255,255,0.92);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Bottom row dentro del card:
+   ✅ 3 columnas (izq bandera, centro aire, der dirección) */
+.apFooter__cardBottom {
+  margin-top: clamp(18px, 3vw, 36px);
+  padding-top: clamp(14px, 2vw, 24px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* ✅ “tercera columna” a la derecha */
+  gap: clamp(12px, 2vw, 24px);
+  align-items: end;
+}
+
+.apFooter__brandBlock {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  align-items: flex-start;
 }
 
-.footer-nav a {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-  line-height: 1.8;
+.apFooter__brandText {
+  color: var(--brand-red);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.5;
 }
 
-.footer-nav a:hover {
-  color: #ff0000;
+/* banderita en rojo custom */
+.apFooter__flag {
+  width: 42px;
+  height: auto;
 }
 
-.company-details {
-  margin-bottom: 40px;
+.apFooter__flagFill {
+  fill: var(--brand-red);
 }
 
-.company-details p,
-.contact-section a {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  color: #ffffff;
-  font-size: 0.9rem;
-  line-height: 1.8;
+.apFooter__flagStroke {
+  stroke: var(--brand-red);
+  stroke-width: 2;
 }
 
-.contact-section {
-  margin-top: 40px;
+.apFooter__spacer {}
+
+/* Dirección derecha */
+.apFooter__address {
+  justify-self: end;
+  text-align: left;
+  color: var(--brand-red);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.55;
 }
 
-.contact-section a {
-  display: block;
-  text-decoration: none;
+.apFooter__addressLine {
+  white-space: nowrap;
 }
 
-.contact-section a:hover {
-  color: #ff0000;
-}
-
-.footer-bottom {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
-  padding-top: 30px;
-  border-top: 1px solid #333;
-}
-
-
-@media (max-width: 1280px) {
-  .site-footer {
-    padding: 80px 60px 40px;
-  }
-  
-  .footer-grid {
-    gap: 40px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .site-footer {
-    padding: 60px 40px 30px;
-  }
-  
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .background-video {
-    width: 400px;
-    height: 500px;
-  }
-  
-  .footer-bottom {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    text-align: center;
-  }
-  
-  .copyright {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 640px) {
-  .site-footer {
-    padding: 40px 20px 20px;
-  }
-  
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .legal-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .copyright {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .background-video {
-    width: 200px;
-    height: 300px;
-  }
-}
-
-.footer-legal-top {
-  position: relative;
-  z-index: 2;
+/* ======================
+   LEGAL
+   ====================== */
+.apFooter__legalBar {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0,0,0,0.18);
   display: flex;
   justify-content: space-between;
-  padding: 0 20px 20px;
-  margin-top: auto;
+  gap: 18px;
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
 }
 
-.footer-legal-top-left {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-legal-top-left select,
-.footer-legal-top-left a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.footer-divider {
-  position: relative;
-  z-index: 2;
-  height: 1px;
-  background-color: #a1a0a0;
-  margin: 0 20px;
-}
-
-.footer-copyright-container {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 20px;
-}
-
-.footer-copyright-left,
-.footer-copyright-right {
-  color: #ffffff;
-  font-size: 1.1rem;
-}
-
-@media (max-width: 1280px) {
-  .footer-grid {
-    gap: 30px;
-    padding: 0 20px;
+/* ======================
+   RESPONSIVE
+   ====================== */
+@media (max-width: 900px) {
+  .apFooter__top {
+    grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 1024px) {
-  .site-footer {
-    padding: 40px 30px 20px;
+  .apFooter__quickNav {
+    gap: 10px 14px;
   }
-  
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+
+  .apFooter__cardGrid {
+    grid-template-columns: 1fr;
   }
-  
-  .footer-column.socials,
-  .footer-column.company-info {
+
+  .apFooter__cardBottom {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .apFooter__address {
     justify-self: start;
   }
-  
-  .footer-legal-top,
-  .footer-divider,
-  .footer-copyright-container {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-}
 
-@media (max-width: 640px) {
-  .site-footer {
-    padding: 30px 20px 15px;
+  .apFooter__addressLine {
+    white-space: normal;
   }
-  
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-legal-top {
+
+  .apFooter__legalBar {
     flex-direction: column;
-    gap: 20px;
-    align-items: center;
+    align-items: flex-start;
   }
-  
-  .footer-copyright-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-  }
-}
-
-.address-tooltip-container {
-  position: relative;
-  cursor: pointer;
-}
-
-.map-tooltip {
-  display: none;
-  position: absolute;
-  top: 100%; 
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgb(0, 0, 0);
-  padding: 10px;
-  border-radius: 3px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  width: 400px;
-  margin-top: 10px; 
-}
-
-.map-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -8px; 
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 0 8px 8px 8px;
-  border-style: solid;
-  border-color: transparent transparent white transparent;
-}
-
-.address-tooltip-container:hover .map-tooltip {
-  display: block;
-}
-
-.map-tooltip iframe {
-  filter: grayscale(100%);
-  transition: filter 0.3s ease;
-}
-
-.map-tooltip iframe:hover {
-  filter: grayscale(0%);
-}
-
-.map-link {
-  display: block;
-  text-align: center;
-  padding: 6px;
-  margin-top: 8px;
-  background: #f5f5f5;
-  color: #333;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.map-link:hover {
-  background: #e0e0e0;
 }

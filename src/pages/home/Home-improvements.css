@@ -1,0 +1,178 @@
+/* Mejoras adicionales para Home - Estilos de productos y móvil */
+
+/* Estilos para las cards de productos */
+.interact {
+  transition: background-color 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.interact:hover {
+  background-color: #EE2737 !important;
+}
+
+.interact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.interact-item p {
+  transition: all 0.3s ease;
+}
+
+/* Asegurar que los títulos sean siempre visibles */
+.interact-item p:first-child {
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Descripción de productos */
+.interact-item p:last-child {
+  max-width: 500px;
+}
+
+/* Mejoras para móvil */
+@media (max-width: 768px) {
+  .home-container {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .home-top-row {
+    height: 50vh;
+    border-radius: 0;
+  }
+
+  .home-middle-row {
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    top: 0;
+    margin-top: -100px;
+  }
+
+  .catalogue-section {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .catalogue-description {
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .catalogue-button {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+
+  .home-bottom-row {
+    padding: 40px 20px;
+  }
+
+  .about-intro {
+    padding: 0;
+  }
+
+  .line-wrapper {
+    margin-bottom: 10px;
+  }
+
+  /* Productos en móvil */
+  .interact {
+    min-height: 40vh !important;
+  }
+
+  .interact-item {
+    padding: 30px 20px !important;
+  }
+
+  .interact-item p:first-child {
+    font-size: 1.5rem !important;
+    margin-bottom: 10px;
+  }
+
+  .interact-item p:last-child {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+    max-width: 100% !important;
+  }
+
+  /* Espaciado entre secciones */
+  .home-products-slider {
+    padding: 40px 0;
+  }
+
+  /* Videos parallax en móvil */
+  .Home {
+    height: 50vh;
+  }
+}
+
+/* Mejoras para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .interact-item {
+    padding: 40px !important;
+  }
+
+  .interact-item p:first-child {
+    font-size: 2.2rem !important;
+  }
+
+  .interact-item p:last-child {
+    max-width: 70% !important;
+  }
+}
+
+/* Fix para visibilidad inicial de títulos */
+.interact-item p {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Asegurar contraste en hover */
+.interact:hover .interact-item p {
+  color: white !important;
+}
+
+/* Animación suave para hover */
+@keyframes fadeInProduct {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.interact-item {
+  animation: fadeInProduct 0.6s ease-out;
+}
+
+/* Fix para el espaciado del footer en móvil */
+@media (max-width: 768px) {
+  .footer {
+    margin-top: 60px;
+  }
+}
+
+/* Mejoras de performance */
+.interact {
+  will-change: background-color;
+}
+
+.interact-item p {
+  will-change: transform;
+}

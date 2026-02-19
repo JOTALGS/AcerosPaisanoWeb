@@ -1,143 +1,379 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  lazy,
+  Suspense,
+  useCallback,
+  useMemo,
+} from "react";
 import "./Home.css";
+import "./Home-performance.css";
+import "./Home-improvements.css";
+import "./Home-fixes.css";
 import { Link } from "react-router-dom";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
 import { NavBar } from "../../components/navbar/Navbar1";
-import SlidingContainers from "../../components/carousel/SlidingContainers";
-import { HomeModal } from "../../components/homeComponents/HomeModal";
 import { Footer } from "../../components/footer/Footer";
-import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
-import ParallaxVideoBox from "../../components/parallaxBox/ParallaxVideoBox";
 import { Box, Typography } from "@mui/material";
 
+// Lazy load heavy components
+const SlidingContainers = lazy(() =>
+  import("../../components/carousel/SlidingContainers")
+);
+const ParallaxBox = lazy(() =>
+  import("../../components/parallaxBox/ParallaxBox")
+);
+const ParallaxBoxColumn = lazy(() =>
+  import("../../components/parallaxBox/ParallaxBoxColumn")
+);
+const ParallaxVideoBox = lazy(() =>
+  import("../../components/parallaxBox/ParallaxVideoBox")
+);
+const HomeModal = lazy(() =>
+  import("../../components/homeComponents/HomeModal").then((module) => ({
+    default: module.HomeModal,
+  }))
+);
+const OptimizedImage = lazy(() =>
+  import("../../components/OptimizedImage/OptimizedImage")
+);
 
-
-gsap.registerPlugin(ScrollTrigger);
+// Lazy load GSAP only when needed
+let gsap, ScrollTrigger;
+const loadGSAP = async () => {
+  if (!gsap) {
+    const gsapModule = await import("gsap");
+    const scrollTriggerModule = await import("gsap/ScrollTrigger");
+    gsap = gsapModule.default;
+    ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+  }
+  return { gsap, ScrollTrigger };
+};
 
 export const Home = () => {
-  const descubrirRef = useRef()
-  const imageRef = useRef()
-  const lineWrapperRef = useRef([])
-  const imageTitleRef = useRef()
-  const welcomeRef = useRef()
-  
-  useLayoutEffect(() => {
-    lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
-    
-    lineWrapperRef.current.forEach((wrapper) => {
-      if (wrapper) {
-        const overlay = wrapper.querySelector(".line-overlay");
-        
-        gsap.to(overlay, {
-          scrollTrigger: {
-            trigger: wrapper,
-            start: "top center",
-            end: "bottom center",
-            scrub: 5,
-          },
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-          ease: "none",
-        });
-      }
-    });
+  const descubrirRef = useRef();
+  const imageRef = useRef();
+  const lineWrapperRef = useRef([]);
+  const imageTitleRef = useRef();
+  const welcomeRef = useRef();
+  const heroVideoRef = useRef();
 
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [animationsInitialized, setAnimationsInitialized] = useState(false);
 
-    gsap.fromTo(
-      descubrirRef.current,
-      { opacity: 1 },
-      { 
-        opacity: 0,
-        scrollTrigger: {
-          trigger: descubrirRef.current,
-          start: "bottom bottom",
-          end: "top top",
-          scrub: true,
-        },
-      }
-    );
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalProduct, setModalProduct] = useState(null);
 
-    gsap.fromTo(
-      imageRef.current,
-      { opacity: 1 },
-      { 
-        opacity: 0,
-        scrollTrigger: {
-          trigger: descubrirRef.current,
-          start: "bottom bottom",
-          end: "top top",
-          scrub: true,
-        },
-      }
-    );
-  }, []);
+  const handleOpenModal = (product) => {
+    setModalProduct(product);
+    setModalOpen(true);
+    document.body.style.overflow = "hidden";
+  };
 
-  const homeText = `Le damos forma al acero: Soluciones eficientes para el hormigón armado`;
-    const splitText = (text, parts) => {
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalProduct(null);
+    document.body.style.overflow = "unset";
+  };
+
+  const homeText = `Le damos forma al acero: soluciones eficientes para el hormigón armado`;
+
+  const splitText = (text, parts) => {
     const partLength = Math.ceil(text.length / parts);
     const result = [];
     let start = 0;
-  
+
     for (let i = 0; i < parts; i++) {
       let end = start + partLength;
-  
+
       if (end < text.length) {
-        while (end > start && text[end] !== " ") {
-          end--;
-        }
+        while (end > start && text[end] !== " ") end--;
       }
+
       result.push(text.substring(start, end).trim());
       start = end + 1;
     }
-  
+
     if (start < text.length) {
       result[result.length - 1] += " " + text.substring(start).trim();
     }
-  
+
     return result;
   };
-  
-  const textParts = splitText(homeText, 3);
 
+  const isSmallScreen = isMobile || window.innerWidth <= 768;
+  const textParts = useMemo(() => {
+    if (isSmallScreen) {
+      // En móvil: dividir en 3 líneas bien distribuidas
+      return [
+        "Le damos forma al",
+        "acero: soluciones eficientes",
+        "para el hormigón armado"
+      ];
+    }
+    return splitText(homeText, 3);
+  }, [homeText, isSmallScreen]);
+
+
+  const HERO_BEFORE_SLIDER_SPACING_DESKTOP = "180px"; // probá 140–240px
+  const HERO_BEFORE_SLIDER_SPACING_MOBILE = "120px";  // probá 90–160px
+
+  // =========================================================
+  // ✅ AJUSTE 2: INTERLINEADO más apretado del hero
+  // =========================================================
+  const heroLineSx = useMemo(
+    () => ({
+      // ✅ Tamaño más grande en móvil
+      fontSize: { xs: "36px", sm: "42px", md: "60px", lg: "96px" },
+
+      // ✅ Line-height más apretado para móvil
+      lineHeight: { xs: 0.9, sm: 1.0, md: 1.05, lg: 1.0 },
+
+      textAlign: "left",
+      fontFamily: "Inter, sans-serif",
+      fontWeight: 400,
+      letterSpacing: "-0.02em",
+      m: 0,
+      p: 0,
+    }),
+    []
+  );
+
+  const heroOverlaySx = useMemo(
+    () => ({
+      ...heroLineSx,
+      // color: "#fff", // si querés forzar overlay a blanco, descomentá
+    }),
+    [heroLineSx]
+  );
+
+  // ✅ Ajuste fino extra: espaciado adecuado ENTRE líneas
+  // (porque cada línea es un <div> separado)
+  // Ajustado para evitar cortes en las letras
+  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.05em"; // Espacio mínimo para evitar cortes
+  const HERO_LINE_GAP_TIGHT_MOBILE = "0em";  // Sin overlap en móvil
+
+  // Initialize scroll animations only when user starts scrolling
+  const initializeScrollAnimations = useCallback(async () => {
+    if (animationsInitialized || prefersReducedMotion) return;
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const { gsap } = await loadGSAP();
+
+    requestAnimationFrame(() => {
+      lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
+
+      lineWrapperRef.current.forEach((wrapper) => {
+        if (!wrapper) return;
+        const overlay = wrapper.querySelector(".line-overlay");
+        if (!overlay) return;
+
+        overlay.style.willChange = "clip-path";
+
+        gsap.to(overlay, {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 85%",
+            end: "top 45%",
+            scrub: 3,
+            onComplete: () => {
+              overlay.style.willChange = "auto";
+            },
+          },
+        });
+      });
+
+      if (descubrirRef.current) {
+        descubrirRef.current.style.willChange = "opacity, transform";
+        gsap.fromTo(
+          descubrirRef.current,
+          { opacity: 1, y: 0 },
+          {
+            opacity: 0,
+            y: -20,
+            scrollTrigger: {
+              trigger: descubrirRef.current,
+              start: "top 70%",
+              end: "top 20%",
+              scrub: 1,
+              onComplete: () => {
+                descubrirRef.current.style.willChange = "auto";
+              },
+            },
+          }
+        );
+      }
+
+      if (imageRef.current) {
+        imageRef.current.style.willChange = "opacity";
+        gsap.fromTo(
+          imageRef.current,
+          { opacity: 1 },
+          {
+            opacity: 0,
+            scrollTrigger: {
+              trigger: descubrirRef.current,
+              start: "top 70%",
+              end: "top 20%",
+              scrub: 1,
+              onComplete: () => {
+                imageRef.current.style.willChange = "auto";
+              },
+            },
+          }
+        );
+      }
+    });
+
+    setAnimationsInitialized(true);
+  }, [animationsInitialized, prefersReducedMotion, textParts.length]);
+
+  // Optimize mobile and motion detection with debounce
   useEffect(() => {
-    // Create a GSAP timeline for better sequencing and performance
-    const tl = gsap.timeline();
-    
-    // Set initial states
-    gsap.set(welcomeRef.current, {
-      y: '0%',
-      opacity: 1,
-    });
-    
-    gsap.set(imageTitleRef.current, {
-      y: '200px',
-      opacity: 1,
-    });
-    
-    tl
-    .to(imageTitleRef.current, {
-      y: "0%",
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.2,
-    }, "+=0.2")
-    .to(welcomeRef.current, {
-      y: "-100vh",
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.8,
-    }, "+=0.2");
-    
+    let resizeTimer;
+
+    const checkMobile = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        setIsMobile(window.innerWidth <= 768);
+      }, 150);
+    };
+
+    const checkReducedMotion = () => {
+      setPrefersReducedMotion(
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      );
+    };
+
+    setIsMobile(window.innerWidth <= 768);
+    checkReducedMotion();
+
+    window.addEventListener("resize", checkMobile, { passive: true });
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    motionQuery.addEventListener("change", checkReducedMotion);
+
     return () => {
-      tl.kill();
+      clearTimeout(resizeTimer);
+      window.removeEventListener("resize", checkMobile);
+      motionQuery.removeEventListener("change", checkReducedMotion);
     };
   }, []);
 
+  // Lazy load video with IntersectionObserver
+  useEffect(() => {
+    if (isMobile || prefersReducedMotion) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !videoLoaded) {
+            setVideoLoaded(true);
+          }
+        });
+      },
+      { rootMargin: "100px", threshold: 0.1 }
+    );
+
+    if (heroVideoRef.current) observer.observe(heroVideoRef.current);
+
+    return () => {
+      if (heroVideoRef.current) observer.unobserve(heroVideoRef.current);
+    };
+  }, [isMobile, prefersReducedMotion, videoLoaded]);
+
+  // Optimize intro animation
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      if (welcomeRef.current) welcomeRef.current.style.display = "none";
+      return;
+    }
+
+    let tl;
+
+    const initIntroAnimation = async () => {
+      await new Promise((resolve) => {
+        if (document.readyState === "complete") setTimeout(resolve, 100);
+        else window.addEventListener("load", () => setTimeout(resolve, 100));
+      });
+
+      const { gsap } = await loadGSAP();
+
+      requestAnimationFrame(() => {
+        if (!welcomeRef.current || !imageTitleRef.current) return;
+
+        gsap.set(imageTitleRef.current, { y: 200, opacity: 0 });
+        gsap.set(welcomeRef.current, { y: 0, opacity: 1 });
+
+        tl = gsap.timeline({
+          onComplete: () => {
+            if (welcomeRef.current) welcomeRef.current.style.display = "none";
+          },
+        });
+
+        tl.to(
+          imageTitleRef.current,
+          { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+          0.3
+        ).to(
+          welcomeRef.current,
+          { y: "-100%", duration: 1, ease: "power3.inOut" },
+          1.5
+        );
+      });
+    };
+
+    initIntroAnimation();
+    return () => {
+      if (tl) tl.kill();
+    };
+  }, [prefersReducedMotion]);
+
+  // Initialize scroll animations
+  useEffect(() => {
+    if (animationsInitialized || prefersReducedMotion) return;
+
+    const handleScroll = () => {
+      if (!animationsInitialized) {
+        initializeScrollAnimations();
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationsInitialized) {
+            initializeScrollAnimations();
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: "100px" }
+    );
+
+    const elementsToObserve = [descubrirRef.current, ...lineWrapperRef.current].filter(Boolean);
+    elementsToObserve.forEach((el) => el && observer.observe(el));
+
+    window.addEventListener("scroll", handleScroll, { passive: true, once: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, [animationsInitialized, prefersReducedMotion, initializeScrollAnimations]);
 
   return (
     <section id="home" className="home">
       <NavBar />
+
+      {/* Welcome Screen */}
       <Box
         ref={welcomeRef}
         sx={{
@@ -163,141 +399,371 @@ export const Home = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            zIndex: 101, // Lower z-index than red box
+            zIndex: 101,
+            opacity: 0,
           }}
         />
         <Box
           sx={{
             position: "absolute",
-            backgroundColor: "rgb(0, 0, 0)", // Fixed typo
+            backgroundColor: "rgb(0, 0, 0)",
             width: "90%",
             height: "45%",
             bottom: "0%",
-            left: "5%", // Center it by offsetting 5% from left
-            zIndex: 9999, // Extremely high z-index to be on top of everything
-          }} 
+            left: "5%",
+            zIndex: 9999,
+          }}
         />
       </Box>
 
       <div className="home-container" style={{ zIndex: 1 }}>
+        {/* Top Section with Hero Video */}
         <div className="top">
           <div className="home-top-row">
             <div className="home-top-grid">
-              <Box className="image-column image-left">
+              <Box className="image-column image-left" sx={{ paddingLeft: "3vw" }}>
                 <Box
                   component="img"
                   src="./images/paisanologowhite.png"
                   alt="Left Image"
-                  sx={{ width: "auto", height: { xs: "10vh", xl: "20vh"}, marginTop: "60px" }}
+                  sx={{ width: "auto", height: { xs: "10vh", xl: "20vh" }, marginTop: "60px" }}
                 />
               </Box>
             </div>
           </div>
-          <div className="Portada-video">
-            <video autoPlay loop muted playsInline>
-              <source src="/videos/14.mp4" type="video/mp4" />
-              Tu navegador no admite videos.
-            </video>
+
+          <div className="Portada-video" ref={heroVideoRef}>
+            {isMobile || prefersReducedMotion ? (
+              <Box
+                component="img"
+                src="/images/hero-poster.jpg"
+                alt="Hero background"
+                sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                onError={(e) => {
+                  e.target.style.display = "none";
+                  const video = document.createElement("video");
+                  video.src = "/14-optimized.mp4";
+                  video.muted = true;
+                  video.style.width = "100%";
+                  video.style.height = "100%";
+                  video.style.objectFit = "cover";
+                  e.target.parentElement.appendChild(video);
+                }}
+              />
+            ) : (
+              <video autoPlay loop muted playsInline preload="metadata" poster="/images/hero-poster.jpg">
+                {videoLoaded && <source src="/14-optimized.mp4" type="video/mp4" />}
+                {videoLoaded && <source src="/14.mp4" type="video/mp4" />}
+                Tu navegador no admite videos.
+              </video>
+            )}
           </div>
         </div>
 
+        {/* Middle Row */}
         <div className="home-middle-row">
-          <Box sx={{ paddingBottom: {xs: "60px", sm: "0px", md: "0px", lg: "0px"}, width: {xs: "70%", sm: "50%", md: "30%", lg: "20%"} }} className="catalogue-section">
+          <Box
+            sx={{
+              paddingBottom: { xs: "60px", sm: "0px", md: "0px", lg: "0px" },
+              width: { xs: "70%", sm: "50%", md: "30%", lg: "20%" },
+              paddingLeft: "3vw",
+            }}
+            className="catalogue-section"
+          >
             <Typography sx={{ lineHeight: "1.3", marginBottom: "20px" }} className="catalogue-description">
               Desde 2011 apoyando a la industria nacional
             </Typography>
             <Box className="catalogue-button-wrapper" sx={{ paddingRight: "20px" }}>
-              <Link to={"/productos-y-servicios"}>
+              <Link to={"/productos"}>
                 <ButtonHoverBg label="Explorar Productos" buttonStyles={"catalogue-button"} />
               </Link>
             </Box>
           </Box>
-          <Box sx={{ paddingBottom: {xs: "60px", sm: "0px", md: "0px", lg: "0px"}}} ref={descubrirRef} className={`scroll-indicator`}>Desliza para descubrir</Box>
+
+          <Box
+            sx={{ paddingBottom: { xs: "60px", sm: "0px", md: "0px", lg: "0px" } }}
+            ref={descubrirRef}
+            className="scroll-indicator"
+          >
+            Desliza para descubrir
+          </Box>
         </div>
 
-      
-        <div className="home-bottom-row">
-          <div className="about-intro">
+        {/* Bottom Row - Text Animation */}
+        <div
+          className="home-bottom-row"
+          style={{
+            // ✅ MÁS ESPACIO antes del slider
+            paddingBottom: isMobile
+              ? HERO_BEFORE_SLIDER_SPACING_MOBILE
+              : HERO_BEFORE_SLIDER_SPACING_DESKTOP,
+          }}
+        >
+          <div
+            className="about-intro"
+            style={{
+              width: "100%",
+              textAlign: "left",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              paddingLeft: "3vw",
+              paddingRight: "3vw",
+            }}
+          >
             {textParts.map((part, index) => (
-              <div ref={el => lineWrapperRef.current[index] = el} className="line-wrapper">
-                <Typography variant="p" fontSize={{xs: "20px", sm: "30px", md: "40px", lg: "50px"}} className="line" style={{ color: "#3a3a3a"}}>
+              <div
+                key={index}
+                ref={(el) => (lineWrapperRef.current[index] = el)}
+                className="line-wrapper"
+                style={{
+                  width: "100%",
+
+                  // ✅ Cierra el espacio ENTRE líneas (solo desde la 2da)
+                  marginTop:
+                    index === 0
+                      ? "0em"
+                      : (isMobile ? HERO_LINE_GAP_TIGHT_MOBILE : HERO_LINE_GAP_TIGHT_DESKTOP),
+                }}
+              >
+                <Typography
+                  component="p"
+                  variant="inherit"
+                  className="line"
+                  sx={{
+                    ...heroLineSx,
+                    color: "#3a3a3a",
+                  }}
+                >
                   {part}
                 </Typography>
-                <Typography variant="p" fontSize={{xs: "20px", sm: "30px", md: "40px", lg: "50px"}} className="line-overlay">
+
+                <Typography
+                  component="p"
+                  variant="inherit"
+                  className="line-overlay"
+                  sx={heroOverlaySx}
+                >
                   {part}
                 </Typography>
               </div>
             ))}
+
             <Link to={"/sobre-nosotros"} style={{ textDecoration: "none" }}>
               <ButtonHoverBg label="Sobre Nosotros" buttonStyles={"about-link-button"} />
             </Link>
           </div>
         </div>
-        
 
+        {/* Products Slider */}
         <div className="home-products-slider">
-          <SlidingContainers />
+          <Suspense
+            fallback={
+              <div style={{ height: "400px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                Cargando...
+              </div>
+            }
+          >
+            <SlidingContainers />
+          </Suspense>
         </div>
 
-        <Box 
+        {/* Two Column Parallax Images */}
+        <Box
           sx={{
             position: "relative",
             width: "100%",
             display: "flex",
+            gap: { xs: "20px", md: "40px" },
+            padding: { xs: "40px 20px", md: "80px 40px" },
             justifyContent: "center",
             alignItems: "center",
+            flexDirection: { xs: "column", md: "row" },
+            marginTop: "60px",
+            marginBottom: "60px",
           }}
         >
-          <ParallaxBox
-            image="/images/about1.jpg" 
-          />
+          <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
+            <Suspense fallback={<div style={{ height: "60vh", backgroundColor: "#f0f0f0", borderRadius: "8px" }} />}>
+              <ParallaxBoxColumn image="/images/malla10.jpg" />
+            </Suspense>
+          </Box>
+
+          <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
+            <Suspense fallback={<div style={{ height: "60vh", backgroundColor: "#f0f0f0", borderRadius: "8px" }} />}>
+              <ParallaxBoxColumn image="/images/barras.jpg" />
+            </Suspense>
+          </Box>
         </Box>
 
-        <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"}>
-          <Link to={'/hierro-cortado-y-doblado'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
-            <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
-              <div className="interact-item" style={{ zIndex: 0 }}onClick={() => {handleOpenModal("industrias");}}>
-                <p  style={{ paddingLeft: "5px"}} >Hierro Cortado y Doblado</p>
+        {/* First Product Row */}
+        <Box
+          display="flex"
+          flexDirection={{ xs: "column", sm: "row", md: "row" }}
+          width={"100%"}
+          sx={{ marginTop: "40px", marginBottom: "40px" }}
+        >
+          <Box onClick={() => handleOpenModal("Hierro Cortado y Doblado")} style={{ width: "100%", height: "100%", cursor: "pointer", position: "relative" }}>
+            <Box
+              className="interact"
+              sx={{
+                height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" },
+                zIndex: 0,
+                backgroundColor: "#000",
+                position: "relative",
+                transition: "background-color 0.3s ease",
+                "&:hover": { backgroundColor: "#EE2737" },
+              }}
+            >
+              <div
+                className="interact-item"
+                style={{
+                  zIndex: 0,
+                  backgroundColor: "transparent",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  paddingLeft: isMobile ? "30px" : "60px",
+                  paddingTop: isMobile ? "40px" : "60px",
+                  paddingBottom: isMobile ? "30px" : "60px",
+                  paddingRight: isMobile ? "30px" : "60px",
+                  height: "100%",
+                  boxSizing: "border-box",
+                }}
+              >
+                <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>
+                  Hierro Cortado y Doblado
+                </p>
+                <p
+                  style={{
+                    fontSize: "0.95rem",
+                    opacity: 0.7,
+                    fontFamily: "Inter, sans-serif",
+                    fontWeight: 300,
+                    maxWidth: isMobile ? "100%" : "450px",
+                    lineHeight: "1.6",
+                    color: "white",
+                    margin: 0,
+                    textAlign: "left",
+                  }}
+                >
+                  Sistema industrial de corte y doblado de varillas que garantiza precisión milimétrica y cero desperdicio. Nuestro proceso automatizado reduce hasta un 60% los tiempos de obra, optimizando recursos y garantizando la calidad estructural de su proyecto.
+                </p>
               </div>
             </Box>
-          </Link>
+          </Box>
 
-          <Link to={'/mallas-electrosoldadas'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
-            <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
-              <div className="interact-item" style={{ zIndex: 0 }}onClick={() => {handleOpenModal("industrias");}}>
-                <p  style={{ paddingLeft: "5px"}} >Mallas Electrosoldadas</p>
+          <Box onClick={() => handleOpenModal("Mallas Electrosoldadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+            <Box
+              className="interact"
+              sx={{
+                height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" },
+                zIndex: 0,
+                backgroundColor: "#000",
+                position: "relative",
+                "&:hover": { backgroundColor: "#EE2737" },
+              }}
+            >
+              <div
+                className="interact-item"
+                style={{
+                  zIndex: 0,
+                  backgroundColor: "transparent",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  paddingLeft: isMobile ? "30px" : "60px",
+                  paddingTop: isMobile ? "40px" : "60px",
+                  paddingBottom: isMobile ? "30px" : "60px",
+                  paddingRight: isMobile ? "30px" : "60px",
+                  height: "100%",
+                  boxSizing: "border-box",
+                }}
+              >
+                <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>
+                  Mallas Electrosoldadas
+                </p>
+                <p
+                  style={{
+                    fontSize: "0.95rem",
+                    opacity: 0.7,
+                    fontFamily: "Inter, sans-serif",
+                    fontWeight: 300,
+                    maxWidth: isMobile ? "100%" : "450px",
+                    lineHeight: "1.6",
+                    color: "white",
+                    margin: 0,
+                    textAlign: "left",
+                  }}
+                >
+                  Mallas certificadas bajo norma UNIT 845:1995 que garantizan el refuerzo estructural óptimo. Con medidas estándar en stock permanente y fabricación de medidas especiales, aseguramos la disponibilidad inmediata para su obra con la máxima calidad certificada.
+                </p>
               </div>
             </Box>
-          </Link>
+          </Box>
         </Box>
       </div>
-      <div className="Home">
-        <ParallaxVideoBox
-          videoSrc="/videos/Electro.mp4"
-        />
+      {/* END of home-container */}
 
+      {/* First Parallax Video */}
+      <div className="Home" style={{ marginTop: "60px", marginBottom: "60px" }}>
+        <Suspense fallback={<div style={{ height: "75vh", backgroundColor: "#000" }} />}>
+          <ParallaxVideoBox videoSrc="/videos/Electro.mp4" />
+        </Suspense>
       </div>
 
-        <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"}>
-          <Link to={'/barras-lisas-y-conformadas'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
-            <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
-              <div className="interact-item" style={{ zIndex: 0 }} onClick={() => {handleOpenModal("industrias");}}>
-                <p  style={{ paddingLeft: "5px"}} >Barras Lisas y Conformadas</p>
-              </div>
-            </Box>
-          </Link>
-
-          <Link to={'/mallas-plegadas'} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
-            <Box className="interact" sx={{ height: { xs: '40vh', sm: '70vh', md: '100vh', lg: '100vh', xl: '100vh'}, zIndex: 0 }}>
-              <div className="interact-item" style={{ zIndex: 0 }} onClick={() => {handleOpenModal("industrias");}}>
-                <p  style={{ paddingLeft: "5px"}} >Mallas Plegadas</p>
-              </div>
-            </Box>
-          </Link>
+      {/* Second Product Row */}
+      <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"} sx={{ marginTop: "80px", marginBottom: "80px" }}>
+        <Box onClick={() => handleOpenModal("Barras lisas y Conformadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+          <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
+            <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
+              <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Barras Lisas y Conformadas</p>
+              <p style={{ fontSize: "0.95rem", opacity: 0.7, fontFamily: "Inter, sans-serif", fontWeight: 300, maxWidth: isMobile ? "100%" : "450px", lineHeight: "1.6", color: "white", margin: 0, textAlign: "left" }}>
+                Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995. Procesos de calidad garantizada con barras cortadas a medida para eliminar desperdicios en obra.
+              </p>
+            </div>
+          </Box>
         </Box>
 
-        <ParallaxVideoBox
-          videoSrc="/videos/2.mp4"/>  
+        <Box onClick={() => handleOpenModal("Mallas Plegadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+          <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
+            <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
+              <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Mallas Plegadas</p>
+              <p style={{ fontSize: "0.95rem", opacity: 0.7, fontFamily: "Inter, sans-serif", fontWeight: 300, maxWidth: isMobile ? "100%" : "450px", lineHeight: "1.6", color: "white", margin: 0, textAlign: "left" }}>
+                Combina las ventajas del cortado y doblado + mallas. Tecnología de punta en plegado con plegadora automatizada para optimización total de su proyecto constructivo.
+              </p>
+            </div>
+          </Box>
+        </Box>
+      </Box>
+
+      <Suspense fallback={<div style={{ height: "75vh", backgroundColor: "#000" }} />}>
+        <ParallaxVideoBox videoSrc="/videos/19.mp4" />
+      </Suspense>
+
+      {/* Modal */}
+      {modalOpen && modalProduct && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            backgroundColor: "black",
+            zIndex: 9999,
+            overflow: "auto",
+          }}
+        >
+          <Suspense fallback={<div style={{ height: "100vh", backgroundColor: "#000" }} />}>
+            <HomeModal info={modalProduct} onClose={handleCloseModal} />
+          </Suspense>
+        </Box>
+      )}
+
       <Footer />
     </section>
   );
