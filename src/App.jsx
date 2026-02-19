@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/home/Home";
 import { About } from "./pages/about/About";
@@ -7,6 +7,8 @@ import CatalogueNew from "./pages/catalogue/CatalogueNew";
 import { Contact } from "./pages/contact/Contact";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Lenis from "@studio-freight/lenis";
+import { HomeModal } from "./components/homeComponents/HomeModal";
+import ProductServicePage from "./pages/ProductServicePage/ProductServicePage";
 // import { initBarba, initPageAnimations, setupBarbaExclusions } from "./utils/barbaConfig";
 
 function App() {
@@ -19,31 +21,20 @@ function App() {
       easing: (t) => 1 - Math.pow(1 - t, 4),
     });
 
+    let rafId;
+
     function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+      if (lenis) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
     }
 
-    requestAnimationFrame(raf);
-    window.addEventListener("scroll", lenis.raf);
-
-    // Barba.js temporarily disabled - will be implemented progressively
-    // if (typeof document !== 'undefined') {
-    //   if (document.readyState === 'loading') {
-    //     document.addEventListener('DOMContentLoaded', () => {
-    //       initBarba();
-    //       setupBarbaExclusions();
-    //       initPageAnimations();
-    //     });
-    //   } else {
-    //     initBarba();
-    //     setupBarbaExclusions();
-    //     initPageAnimations();
-    //   }
-    // }
+    rafId = requestAnimationFrame(raf);
 
     return () => {
-      window.removeEventListener("scroll", lenis.raf);
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
     };
   }, []);
 
@@ -71,14 +62,20 @@ function App() {
         <Route path="/productos-y-servicios" element={<CatalogueNew />} />
         <Route path="/contacto" element={<Contact />} />
 
-        {/* Product Detail Pages - Clean URLs */}
-        <Route path="/productos/:slug" element={<ProductDetail />} />
+        {/* Redirects for legacy routes to keep them working with the same design */}
+        <Route path="/mallas-electrosoldadas" element={<ProductServicePage serviceSlug="mallas-electrosoldadas" />} />
+        <Route path="/mallas-plegadas" element={<ProductServicePage serviceSlug="mallas-plegadas" />} />
+        <Route path="/hierro-cortado-y-doblado" element={<ProductServicePage serviceSlug="hierro-cortado-y-doblado" />} />
+        <Route path="/barras-lisas-y-conformadas" element={<ProductServicePage serviceSlug="barras-lisas-y-conformadas" />} />
 
-        {/* Legacy redirects for compatibility */}
-        <Route path="/mallas-electrosoldadas" element={<ProductDetail />} />
-        <Route path="/mallas-plegadas" element={<ProductDetail />} />
-        <Route path="/hierro-cortado-y-doblado" element={<ProductDetail />} />
-        <Route path="/barras-lisas-y-conformadas" element={<ProductDetail />} />
+        {/* Product Service Pages (with modal design) */}
+        <Route path="/productos/mallas-electrosoldadas" element={<ProductDetail serviceSlug="mallas-electrosoldadas" />} />
+        <Route path="/productos/mallas-plegadas" element={<ProductDetail serviceSlug="mallas-plegadas" />} />
+        <Route path="/productos/hierro-cortado-y-doblado" element={<ProductDetail serviceSlug="hierro-cortado-y-doblado" />} />
+        <Route path="/productos/barras-lisas-y-conformadas" element={<ProductDetail serviceSlug="barras-lisas-y-conformadas" />} />
+
+        {/* Generic Product Detail Pages */}
+        <Route path="/productos/:slug" element={<ProductDetail />} />
       </Routes>
     </div>
   );

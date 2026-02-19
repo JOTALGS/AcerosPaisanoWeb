@@ -301,11 +301,10 @@ export const Footer = () => {
             <Typography sx={headingStyle}>
               Productos Principales
             </Typography>
-            <NavLink to="/productos/barras-tratadas">Barras de Acero Tratadas</NavLink>
-            <NavLink to="/productos/perfiles">Perfiles Estructurales</NavLink>
+            <NavLink to="/productos/barras-lisas-y-conformadas">Barras de Acero</NavLink>
             <NavLink to="/productos/mallas-electrosoldadas">Mallas Electrosoldadas</NavLink>
-            <NavLink to="/productos/corte-doblado">Corte y Doblado CNC</NavLink>
-            <NavLink to="/productos/vigas">Vigas de Alta Resistencia</NavLink>
+            <NavLink to="/productos/mallas-plegadas">Mallas Plegadas</NavLink>
+            <NavLink to="/productos/hierro-cortado-y-doblado">Corte y Doblado CNC</NavLink>
 
             {/* Dirección con mapa */}
             <Box

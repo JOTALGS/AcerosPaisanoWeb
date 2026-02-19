@@ -96,7 +96,7 @@ export function CatalogueNew() {
       },
       {
         id: 3,
-        slug: "hierro-cortado-doblado",
+        slug: "hierro-cortado-y-doblado",
         code: "HCD-003",
         category: "Servicios",
         title: "Hierro cortado y doblado",

@@ -7,7 +7,7 @@ import {
   Button
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { NavBar } from '../../components/navbar/NavBar1';
+import { NavBar } from '../../components/navbar/Navbar1';
 import { Footer } from '../../components/footer/Footer';
 import ProductGallery from '../../components/ProductComponents/ProductGallery';
 import gsap from 'gsap';
@@ -100,7 +100,7 @@ const productsData = {
       { src: '/images/plegada6.jpg', alt: 'Mallas Plegadas diseño' }
     ]
   },
-  'hierro-cortado-doblado': {
+  'hierro-cortado-y-doblado': {
     id: '03',
     title: 'Hierro Cortado y Doblado',
     subtitle: 'Sistema industrial de corte y doblado',
@@ -209,23 +209,21 @@ const productsData = {
   }
 };
 
-const ProductDetail = () => {
-  const { slug } = useParams();
+const ProductDetail = ({ serviceSlug }) => {
+
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const productData = productsData[slug];
+    const productData = productsData[serviceSlug];
     if (!productData) {
-      navigate('/productos-y-servicios');
+      navigate('/productos');
       return;
     }
     setProduct(productData);
-
-    // Scroll to top
     window.scrollTo(0, 0);
-  }, [slug, navigate]);
+  }, [serviceSlug, navigate]);
 
   useEffect(() => {
     if (!product) return;
@@ -370,6 +368,7 @@ const ProductDetail = () => {
               </div>
             </div>
           </section>
+
 
           {/* Features Section */}
           {product.features && (

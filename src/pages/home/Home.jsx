@@ -11,7 +11,7 @@ import "./Home.css";
 import "./Home-performance.css";
 import "./Home-improvements.css";
 import "./Home-fixes.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
 import { NavBar } from "../../components/navbar/Navbar1";
 import { Footer } from "../../components/footer/Footer";
@@ -65,20 +65,7 @@ export const Home = () => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalProduct, setModalProduct] = useState(null);
-
-  const handleOpenModal = (product) => {
-    setModalProduct(product);
-    setModalOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setModalProduct(null);
-    document.body.style.overflow = "unset";
-  };
+  const navigate = useNavigate();
 
   const homeText = `Le damos forma al acero: soluciones eficientes para el hormigón armado`;
 
@@ -604,7 +591,7 @@ export const Home = () => {
           width={"100%"}
           sx={{ marginTop: "40px", marginBottom: "40px" }}
         >
-          <Box onClick={() => handleOpenModal("Hierro Cortado y Doblado")} style={{ width: "100%", height: "100%", cursor: "pointer", position: "relative" }}>
+          <Box onClick={() => navigate("/hierro-cortado-y-doblado")} style={{ width: "100%", height: "100%", cursor: "pointer", position: "relative" }}>
             <Box
               className="interact"
               sx={{
@@ -655,7 +642,7 @@ export const Home = () => {
             </Box>
           </Box>
 
-          <Box onClick={() => handleOpenModal("Mallas Electrosoldadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+          <Box onClick={() => navigate("/mallas-electrosoldadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
             <Box
               className="interact"
               sx={{
@@ -717,7 +704,7 @@ export const Home = () => {
 
       {/* Second Product Row */}
       <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"} sx={{ marginTop: "80px", marginBottom: "80px" }}>
-        <Box onClick={() => handleOpenModal("Barras lisas y Conformadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+        <Box onClick={() => navigate("/barras-lisas-y-conformadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
           <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
             <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
               <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Barras Lisas y Conformadas</p>
@@ -728,7 +715,7 @@ export const Home = () => {
           </Box>
         </Box>
 
-        <Box onClick={() => handleOpenModal("Mallas Plegadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+        <Box onClick={() => navigate("/mallas-plegadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
           <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
             <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
               <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Mallas Plegadas</p>
@@ -744,25 +731,7 @@ export const Home = () => {
         <ParallaxVideoBox videoSrc="/videos/19.mp4" />
       </Suspense>
 
-      {/* Modal */}
-      {modalOpen && modalProduct && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100vh",
-            backgroundColor: "black",
-            zIndex: 9999,
-            overflow: "auto",
-          }}
-        >
-          <Suspense fallback={<div style={{ height: "100vh", backgroundColor: "#000" }} />}>
-            <HomeModal info={modalProduct} onClose={handleCloseModal} />
-          </Suspense>
-        </Box>
-      )}
+      {/* Modal and Suspense removed - now using routes */}
 
       <Footer />
     </section>
