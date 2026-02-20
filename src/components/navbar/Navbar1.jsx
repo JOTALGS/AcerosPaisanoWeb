@@ -163,7 +163,7 @@ export const NavBar = () => {
   // ✅ nav items correctos
   const navItems = [
     { title: "Inicio", path: "/" },
-    { title: "Sobre Nosotros", path: "/sobre-nosotros" },
+    { title: "Sobre nosotros", path: "/sobre-nosotros" },
     { title: "Productos", path: "/productos" },
     { title: "Contacto", path: "/contacto" },
   ];
@@ -200,7 +200,7 @@ export const NavBar = () => {
             right: "auto",
             width: "100vw",
             // ✅ márgenes simétricos (mobile/web)
-            padding: isMobile ? "6px 16px" : "6px 16px",
+            padding: isMobile ? "6px 16px" : "3px 23px",
             transition: "transform 0.4s ease-in-out, background-color 0.3s ease-in-out",
             transform: hidden && !menuOpen ? "translateY(-100%)" : "translateY(0)",
             backgroundColor: menuOpen ? "#000000" : "transparent",
@@ -222,7 +222,7 @@ export const NavBar = () => {
                 component="img" 
                 src="/images/logo.png" 
                 alt="Logo" 
-                sx={{ height: isMobile ? 40 : 50 }} 
+                sx={{ height: isMobile ? 40 : 40 }} 
               />
             </Button>
 
@@ -349,7 +349,6 @@ export const NavBar = () => {
           transitionDuration={{ enter: 500, exit: 500 }}
           SlideProps={{ direction: "up" }}
         >
-          {/* Shift5 layout: abajo/izquierda */}
           <Box sx={{ 
             display: "flex",
             flexDirection: "column",

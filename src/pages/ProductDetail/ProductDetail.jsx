@@ -206,6 +206,80 @@ const productsData = {
       { src: '/images/barras3.jpg', alt: 'Optimización en obra' },
       { src: '/images/barras5.jpg', alt: 'Logística optimizada' }
     ]
+  },
+  'clavos': {
+    id: '06',
+    title: 'Clavos de Acero',
+    subtitle: 'Resistencia y calidad garantizada',
+    description: 'Clavos de acero de alta calidad para construcción y carpintería. Fabricados con acero de primera calidad.',
+    specifications: [
+      'Medidas disponibles: 2" y 2 1/2"',
+      'Fabricados con acero de primera calidad',
+      'Cabeza plana para máximo agarre',
+      'Punta afilada para fácil penetración',
+      'Galvanizado disponible bajo pedido',
+      'Empaque en cajas de 25kg',
+    ],
+    features: [
+      'Alta resistencia al cizallamiento',
+      'Durabilidad garantizada',
+      'Fácil penetración en maderas duras',
+      'Resistencia a la corrosión',
+      'Disponibilidad inmediata',
+      'Precios competitivos por volumen',
+      'Entrega a todo el país',
+    ],
+    technicalInfo: {
+      'Material': 'Acero al carbono',
+      'Medidas': '2" y 2 1/2"',
+      'Presentación': 'Cajas 25kg',
+      'Acabado': 'Natural/Galvanizado',
+      'Stock': 'Permanente',
+      'Pedidos especiales': 'Disponibles'
+    },
+    availability: 'Stock permanente',
+    images: [
+      { src: '/images/clavos.jpg', alt: 'Clavos de Acero' },
+      { src: '/images/clavos.jpg', alt: 'Clavos de Acero presentación' },
+      { src: '/images/clavos.jpg', alt: 'Clavos de Acero medidas' }
+    ]
+  },
+  'alambre-recocido': {
+    id: '07',
+    title: 'Alambre Recocido',
+    subtitle: 'Flexibilidad y resistencia',
+    description: 'Alambre recocido de alta calidad para aplicaciones múltiples en construcción. Proceso de recocido que garantiza flexibilidad.',
+    specifications: [
+      'Calibres disponibles: ISWG 14, ISWG 16, ISWG 18',
+      'Proceso de recocido controlado',
+      'Alta flexibilidad y manejabilidad',
+      'Resistencia a la tensión optimizada',
+      'Presentación en rollos de 25kg',
+      'Disponible en negro y galvanizado',
+    ],
+    features: [
+      'Fácil manejo y manipulación',
+      'Ideal para amarres y atados',
+      'Excelente resistencia mecánica',
+      'Proceso de recocido certificado',
+      'Múltiples aplicaciones en obra',
+      'Stock permanente todos los calibres',
+      'Asesoramiento técnico incluido',
+    ],
+    technicalInfo: {
+      'Calibres': 'ISWG 14, 16, 18',
+      'Proceso': 'Recocido controlado',
+      'Presentación': 'Rollos 25kg',
+      'Acabado': 'Negro/Galvanizado',
+      'Aplicaciones': 'Múltiples',
+      'Entrega': 'Inmediata'
+    },
+    availability: 'Stock permanente',
+    images: [
+      { src: '/images/alambrerecocido.jpg', alt: 'Alambre Recocido' },
+      { src: '/images/alambrerecocido1.jpg', alt: 'Alambre Recocido rollos' },
+      { src: '/images/alambrerecocido2.jpg', alt: 'Alambre Recocido aplicación' }
+    ]
   }
 };
 
@@ -218,13 +292,21 @@ const ProductDetail = () => {
   useEffect(() => {
     const productData = productsData[slug];
     if (!productData) {
-      navigate('/productos-y-servicios');
+      navigate('/productos');
       return;
     }
     setProduct(productData);
 
     // Scroll to top
     window.scrollTo(0, 0);
+
+    // Set navbar tone to light for product detail pages
+    document.body.setAttribute('data-nav-tone', 'light');
+
+    return () => {
+      // Clean up navbar tone on unmount
+      document.body.removeAttribute('data-nav-tone');
+    };
   }, [slug, navigate]);
 
   useEffect(() => {
@@ -295,7 +377,7 @@ const ProductDetail = () => {
           <nav className="breadcrumbs">
             <Link to="/">INICIO</Link>
             <span className="separator">/</span>
-            <Link to="/productos-y-servicios">PRODUCTOS</Link>
+            <Link to="/productos">PRODUCTOS</Link>
             <span className="separator">/</span>
             <span className="current">{product.title.toUpperCase()}</span>
           </nav>

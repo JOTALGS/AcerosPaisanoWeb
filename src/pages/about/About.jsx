@@ -1,13 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
 import { NavBar } from "../../components/navbar/Navbar1";
 import { Footer } from "../../components/footer/Footer";
 import { Box, Typography } from "@mui/material";
-import ParallaxBox from "../../components/parallaxBox/ParallaxBox";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,68 +55,101 @@ const sections = [
   { content: content[4], video: "/videos/1.mp4", reverse: false },
 ];
 
-
 export const About = () => {
   const sectionsRef = useRef([]);
+
+  // HERO refs
   const titleRef = useRef(null);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-  
-  // Función para calcular el tamaño de fuente del título según el dispositivo
-  const getHeadingFontSize = () => {
-    if (isMobile) return "50px";
-    if (isTablet) return "70px";
-    return "100px";
-  };
+  const taglineRef = useRef(null);
 
-  // Animación para el título
-  useEffect(() => {
-    // Aplicar animación al título
-    const tl = gsap.timeline({ delay: 0.5 });
-    if (titleRef.current) {
-      tl.fromTo(titleRef.current, 
-        { y: 0, opacity: 0 }, 
-        { y: isMobile ? "50px" : isTablet ? "150px" : "180px", opacity: 1, duration: 1.5, ease: "power3.out" }
-      );
-    }
-  }, [isMobile, isTablet]);
+  // Guardamos SOLO los triggers creados acá, para no matar triggers de otras páginas
+  const pinTriggersRef = useRef([]);
+  const lineTriggersRef = useRef([]);
 
+  // tagline en 2 líneas
+  const heroTaglineLine1 = "Forjamos acero de calidad certificada para impulsar";
+  const heroTaglineLine2 =
+    "la construcción, el agro y la industria en Uruguay.";
+
+  // =========================
+  // HERO animación sutil
+  // =========================
   useEffect(() => {
-    sectionsRef.current.forEach((section, index) => {
-      const tween = gsap.to(section, {
-        scrollTrigger: {
-          trigger: section,
-          start: () => `top bottom-=100`,
-          end: () => `top top+=40`,
-          scrub: true,
-          invalidateOnRefresh: true
-        },
-        ease: "none",
-      });
-  
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top 0%",
-        pin: true,
-        pinSpacing: false,
-        id: 'pin',
-        end: 'max',
-        //end: '.cardStacking',
-        invalidateOnRefresh: true,
-      });
-      
+    const ctx = gsap.context(() => {
+      if (titleRef.current) {
+        gsap.fromTo(
+          titleRef.current,
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.05, ease: "power3.out", delay: 0.12 }
+        );
+      }
+
+      if (taglineRef.current) {
+        gsap.fromTo(
+          taglineRef.current,
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.0, ease: "power3.out", delay: 0.28 }
+        );
+      }
     });
+
+    return () => ctx.revert();
   }, []);
 
+  // =========================
+  // Pin stacking (FIX FOOTER)
+  // Antes estabas usando end:"max" => la última sección quedaba pinneada hasta el final
+  // y el footer “subía”/se superponía. Ahora cada sección se pinnea ~1 viewport.
+  // =========================
   useEffect(() => {
+    // cleanup por si re-monta
+    pinTriggersRef.current.forEach((t) => t?.kill?.());
+    pinTriggersRef.current = [];
+
+    sectionsRef.current.forEach((sectionEl, idx) => {
+      if (!sectionEl) return;
+
+      const isLast = idx === sectionsRef.current.length - 1;
+
+      const trigger = ScrollTrigger.create({
+        trigger: sectionEl,
+        start: "top top",
+        pin: true,
+        pinSpacing: false,
+
+        // ✅ cada sección dura 1 viewport; la última le damos un poquito más
+        end: () =>
+          "+=" + Math.round(window.innerHeight * (isLast ? 1.25 : 1)),
+
+        invalidateOnRefresh: true,
+      });
+
+      pinTriggersRef.current.push(trigger);
+    });
+
+    // refrescamos para que calcule bien alturas
+    ScrollTrigger.refresh();
+
+    return () => {
+      pinTriggersRef.current.forEach((t) => t?.kill?.());
+      pinTriggersRef.current = [];
+    };
+  }, []);
+
+  // =========================
+  // Reveal overlay líneas
+  // =========================
+  useEffect(() => {
+    lineTriggersRef.current.forEach((t) => t?.kill?.());
+    lineTriggersRef.current = [];
+
     const lineWrappers = document.querySelectorAll(".line-wrapper");
 
     lineWrappers.forEach((wrapper) => {
       const overlay = wrapper.querySelector(".line-overlay");
+      if (!overlay) return;
 
-      gsap.to(overlay, {
+      const tween = gsap.to(overlay, {
         scrollTrigger: {
           trigger: wrapper,
           start: "top 100%",
@@ -129,132 +159,171 @@ export const About = () => {
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         ease: "none",
       });
+
+      if (tween.scrollTrigger) lineTriggersRef.current.push(tween.scrollTrigger);
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((instance) => instance.kill());
+      lineTriggersRef.current.forEach((t) => t?.kill?.());
+      lineTriggersRef.current = [];
     };
   }, []);
-
-  let globalIndex = 0;
 
   return (
     <section id="about" className="about">
       <NavBar />
-      <div className="intro-about"></div>
 
-      {/* Contenedor para ParallaxBox con título superpuesto */}
-      <Box 
-        sx={{
-          position: "relative",
-          height: "550px",
-          width: "100%"
-        }}
-      >
-        {/* ParallaxBox de fondo */}
-        <ParallaxBox 
-          image="/images/malla10.jpg"
-          title="" 
-          titleColor="text.primary" 
-          titleLeft="2%" 
-          titleBottom="10%" 
-        />
-        
-        {/* Título Sobre Nosotros superpuesto */}
-        <Box 
-          position="absolute" 
-          zIndex={10}
-          ref={titleRef}
-          sx={{
-            top: 0,
-            left: 0,
-            width: "100%",
-            textAlign: isMobile ? "center" : "left",
-            paddingLeft: isMobile ? 0 : "20px",
-            paddingTop: isMobile ? "20px" : "40px"
-          }}
-        >
-          <Typography 
-            variant="h2" 
-            fontSize={getHeadingFontSize()} 
-            fontFamily="'Archivo', sans-serif" 
-            fontWeight={400} 
-            color="#fff"
+      {/* HERO */}
+      <header className="about-hero">
+        <div className="about-hero__media" aria-hidden="true">
+          <img src="/images/malla10.jpg" alt="" />
+        </div>
+
+        <div className="about-hero__overlay" aria-hidden="true" />
+
+        <div className="about-hero__content">
+          {/* Título grande top-left */}
+          <div className="about-hero__titleWrap">
+            <h1 ref={titleRef} className="about-hero__title">
+              Sobre nosotros
+            </h1>
+          </div>
+
+          {/* ✅ Bloque centrado, texto alineado a la izquierda */}
+          <div className="about-hero__taglineWrap">
+            <div ref={taglineRef} className="about-hero__taglineInner">
+              <p className="about-hero__tagline">
+                <span className="about-hero__taglineLine">
+                  {heroTaglineLine1}
+                </span>
+                <span className="about-hero__taglineLine">
+                  {heroTaglineLine2}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* NO TOCAR: videos abajo */}
+      <div className="about-sub-section">
+        {sections.map((section, index) => (
+          <Box
+            key={index}
+            ref={(el) => (sectionsRef.current[index] = el)}
+            display="flex"
+            flexDirection={{ xs: "column", md: "row" }}
             sx={{
-              textShadow: "0 0 10px rgba(255, 255, 255, 0.2)",
-              letterSpacing: "2px",
-              textTransform: "uppercase"
+              backgroundColor: "black",
+              minHeight: { xs: "100vh", md: "80vh" },
+              justifyContent: "space-between",
             }}
           >
-            Sobre Nosotros
-          </Typography>
-        </Box>
-      </Box>
+            {!section.reverse && (
+              <Box width={{ xs: "100%", md: "50%" }} fontSize={"25px"}>
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={{ xs: "flex-start", md: "space-between" }}
+                  height={{ sm: "60%", md: "70%", xl: "80%" }}
+                  padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px" }}
+                >
+                  <Typography
+                    className="subtitle"
+                    variant="h3"
+                    fontSize={{ xs: "25px", md: "30px", xl: "40px" }}
+                  >
+                    {section.content.title}
+                  </Typography>
 
-      <div className="about-sub-section">
-
-      {sections.map((section, index) => (
-        <Box
-          key={index}
-          ref={(el) => (sectionsRef.current[index] = el)}
-          display="flex"
-          flexDirection={{xs: "column", md: "row"}}
-          sx={{ backgroundColor: "black", minHeight: { xs: "100vh", md: "80vh"}, justifyContent: "space-between" }}
-        >
-          {!section.reverse && (
-            <Box width={{xs: "100%", md: "50%"}} fontSize={"25px"}>
-              <Box
-                display={"flex"}
-                flexDirection={"column"}
-                justifyContent={{ xs: "flex-start", md: "space-between" }}
-                height={{ sm:"60%", md:"70%", xl:"80%"}}
-                padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px"}}
-              >
-                <Typography className="subtitle" variant="h3" fontSize={{ xs: "25px", md: "30px", xl: "40px" }}>{section.content.title}</Typography>
-                <Box>
-                  {section.content.paragraphs.map((item, i) => (
-                    <div key={i} className="line-wrapper">
-                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line" style={{ color: "#3a3a3a" }}>{item}</Typography>
-                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line-overlay">{item}</Typography>
-                    </div>
-                  ))}
+                  <Box>
+                    {section.content.paragraphs.map((item, i) => (
+                      <div key={i} className="line-wrapper">
+                        <Typography
+                          component="p"
+                          fontSize={{ xs: "20px", md: "25px", xl: "30px" }}
+                          className="line"
+                          style={{ color: "#3a3a3a" }}
+                        >
+                          {item}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          fontSize={{ xs: "20px", md: "25px", xl: "30px" }}
+                          className="line-overlay"
+                        >
+                          {item}
+                        </Typography>
+                      </div>
+                    ))}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          )}
+            )}
 
-          <Box width={{ xs: "100%", md: "50%"}} height={{ xs: "350px", md: "760px"}} sx={{ overflow: "hidden" }}>
-            <video autoPlay loop muted playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
-              <source src={section.video} type="video/mp4" />
-              Tu navegador no admite videos.
-            </video>
+            <Box
+              width={{ xs: "100%", md: "50%" }}
+              height={{ xs: "350px", md: "760px" }}
+              sx={{ overflow: "hidden" }}
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              >
+                <source src={section.video} type="video/mp4" />
+                Tu navegador no admite videos.
+              </video>
+            </Box>
+
+            {section.reverse && (
+              <Box width={{ xs: "100%", md: "50%" }} fontSize={"25px"}>
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={{ xs: "flex-start", md: "space-between" }}
+                  height={{ md: "70%", xl: "80%" }}
+                  padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px" }}
+                >
+                  <Typography
+                    className="subtitle"
+                    variant="h3"
+                    fontSize={{ xs: "25px", md: "30px", xl: "40px" }}
+                  >
+                    {section.content.title}
+                  </Typography>
+
+                  <Box>
+                    {section.content.paragraphs.map((item, i) => (
+                      <div key={i} className="line-wrapper">
+                        <Typography
+                          component="p"
+                          fontSize={{ xs: "20px", md: "25px", xl: "30px" }}
+                          className="line"
+                          style={{ color: "#3a3a3a" }}
+                        >
+                          {item}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          fontSize={{ xs: "20px", md: "25px", xl: "30px" }}
+                          className="line-overlay"
+                        >
+                          {item}
+                        </Typography>
+                      </div>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+            )}
           </Box>
-
-          {section.reverse && (
-            <Box width={{xs: "100%", md: "50%"}} fontSize={"25px"}>
-              <Box
-                display={"flex"}
-                flexDirection={"column"}
-                justifyContent={{ xs: "flex-start", md: "space-between" }}
-                height={{ md:"70%", xl:"80%"}}
-                padding={{ xs: "25px", sm: "50px", md: "60px", xl: "80px"}}
-              >
-                <Typography className="subtitle" variant="h3" fontSize={{ xs: "25px", md: "30px", xl: "40px" }}>{section.content.title}</Typography>
-                <Box>
-                  {section.content.paragraphs.map((item, i) => (
-                    <div key={i} className="line-wrapper">
-                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line" style={{ color: "#3a3a3a" }}>{item}</Typography>
-                      <Typography variant="p" fontSize={{ xs: "20px", md: "25px", xl: "30px" }} className="line-overlay">{item}</Typography>
-                    </div>
-                  ))}
-                </Box>
-              </Box>
-            </Box>
-          )}
-        </Box>
-      ))}
-
+        ))}
       </div>
+
+      {/* ✅ el footer ahora no se va a “subir” porque el último pin ya no dura hasta max */}
       <Footer />
     </section>
   );
