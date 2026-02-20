@@ -63,16 +63,17 @@ function App() {
         <Route path="/contacto" element={<Contact />} />
 
         {/* Redirects for legacy routes to keep them working with the same design */}
-        <Route path="/mallas-electrosoldadas" element={<ProductServicePage serviceSlug="mallas-electrosoldadas" />} />
+        {/* <Route path="/mallas-electrosoldadas" element={<ProductServicePage serviceSlug="mallas-electrosoldadas" />} />
         <Route path="/mallas-plegadas" element={<ProductServicePage serviceSlug="mallas-plegadas" />} />
         <Route path="/hierro-cortado-y-doblado" element={<ProductServicePage serviceSlug="hierro-cortado-y-doblado" />} />
-        <Route path="/barras-lisas-y-conformadas" element={<ProductServicePage serviceSlug="barras-lisas-y-conformadas" />} />
+        <Route path="/barras-lisas-y-conformadas" element={<ProductServicePage serviceSlug="barras-lisas-y-conformadas" />} /> */}
 
         {/* Product Service Pages (with modal design) */}
-        <Route path="/productos/mallas-electrosoldadas" element={<ProductDetail serviceSlug="mallas-electrosoldadas" />} />
-        <Route path="/productos/mallas-plegadas" element={<ProductDetail serviceSlug="mallas-plegadas" />} />
-        <Route path="/productos/hierro-cortado-y-doblado" element={<ProductDetail serviceSlug="hierro-cortado-y-doblado" />} />
-        <Route path="/productos/barras-lisas-y-conformadas" element={<ProductDetail serviceSlug="barras-lisas-y-conformadas" />} />
+        <Route path="/mallas-electrosoldadas" element={<ProductDetail serviceSlug="mallas-electrosoldadas" />} />
+        <Route path="/mallas-plegadas" element={<ProductDetail serviceSlug="mallas-plegadas" />} />
+        <Route path="/hierro-cortado-y-doblado" element={<ProductDetail serviceSlug="hierro-cortado-y-doblado" />} />
+        <Route path="/barras-conformadas" element={<ProductDetail serviceSlug="barras-conformadas" />} />
+        <Route path="/barras-lisas" element={<ProductDetail serviceSlug="barras-lisas" />} />
 
         {/* Generic Product Detail Pages */}
         <Route path="/productos/:slug" element={<ProductDetail />} />

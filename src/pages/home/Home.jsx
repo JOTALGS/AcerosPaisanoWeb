@@ -16,6 +16,7 @@ import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
 import { NavBar } from "../../components/navbar/Navbar1";
 import { Footer } from "../../components/footer/Footer";
 import { Box, Typography } from "@mui/material";
+import ProductServicePage from "../ProductServicePage/ProductServicePage";
 
 // Lazy load heavy components
 const SlidingContainers = lazy(() =>
@@ -64,6 +65,8 @@ export const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
+
+  const [selectedService, setSelectedService] = useState(null);
 
   const navigate = useNavigate();
 
@@ -603,7 +606,7 @@ export const Home = () => {
           width={"100%"}
           sx={{ marginTop: "40px", marginBottom: "40px" }}
         >
-          <Box onClick={() => navigate("/hierro-cortado-y-doblado")} style={{ width: "100%", height: "100%", cursor: "pointer", position: "relative" }}>
+          <Box onClick={() => setSelectedService("hierro-cortado-y-doblado")} style={{ width: "100%", height: "100%", cursor: "pointer", position: "relative" }}>
             <Box
               className="interact"
               sx={{
@@ -654,7 +657,7 @@ export const Home = () => {
             </Box>
           </Box>
 
-          <Box onClick={() => navigate("/mallas-electrosoldadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+          <Box onClick={() => setSelectedService("mallas-electrosoldadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
             <Box
               className="interact"
               sx={{
@@ -716,7 +719,7 @@ export const Home = () => {
 
       {/* Second Product Row */}
       <Box display="flex" flexDirection={{ xs: "column", sm: "row", md: "row" }} width={"100%"} sx={{ marginTop: "80px", marginBottom: "80px" }}>
-        <Box onClick={() => navigate("/barras-lisas-y-conformadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+        <Box onClick={() => setSelectedService("barras-conformadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
           <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
             <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
               <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Barras Lisas y Conformadas</p>
@@ -727,7 +730,7 @@ export const Home = () => {
           </Box>
         </Box>
 
-        <Box onClick={() => navigate("/mallas-plegadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
+        <Box onClick={() => setSelectedService("mallas-plegadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
           <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
             <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
               <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Mallas Plegadas</p>
@@ -744,6 +747,14 @@ export const Home = () => {
       </Suspense>
 
       {/* Modal and Suspense removed - now using routes */}
+
+
+      {selectedService && (
+        <ProductServicePage
+          serviceSlug={selectedService}
+          onClose={() => setSelectedService(null)}
+        />
+      )}
 
       <Footer />
     </section>

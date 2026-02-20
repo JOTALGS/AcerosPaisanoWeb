@@ -2,21 +2,34 @@
    PRODUCT DETAIL PAGE - INDUSTRIAL TECH STYLE
    ============================================ */
 
-/* CSS Variables */
+/* Navbar override - White background for product pages */
+
+
+.product-detail-wrapper .MuiAppBar-root * {
+  color: rgba(11, 11, 11, 0.85) !important;
+}
+
+.product-detail-wrapper .MuiButton-root {
+  border-color: rgba(11, 11, 11, 0.16) !important;
+}
+
+/* CSS Variables - Matching Catalogue Style */
 .product-detail-wrapper {
   --font-sans: 'Europa Grotesk', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
   --font-mono: 'Geist Mono', 'SF Mono', 'Courier New', monospace;
-  --bg: #000000;
-  --bg-elevated: #0a0a0a;
-  --bg-subtle: #111111;
-  --ink: #FFFFFF;
-  --muted: rgba(255, 255, 255, 0.7);
-  --tertiary: rgba(255, 255, 255, 0.45);
-  --hair: rgba(255, 255, 255, 0.12);
-  --hair2: rgba(255, 255, 255, 0.06);
-  --red: #dc2626;
-  --red-dark: #b91c1c;
-  --red-glow: rgba(220, 38, 38, 0.2);
+  --page-bg: #E9E5E6;
+  --panel: #f6f2ef;
+  --bg: #E9E5E6;
+  --bg-elevated: #f6f2ef;
+  --bg-subtle: #faf8f6;
+  --ink: #0b0b0b;
+  --muted: rgba(11, 11, 11, 0.62);
+  --tertiary: rgba(11, 11, 11, 0.44);
+  --hair: rgba(11, 11, 11, 0.14);
+  --hair2: rgba(11, 11, 11, 0.08);
+  --red: #d61f1f;
+  --red-dark: #b62129;
+  --red-glow: rgba(214, 31, 31, 0.15);
   --success: #10b981;
 
   background: var(--bg);
@@ -96,21 +109,18 @@
 }
 
 .product-title {
-  font-size: clamp(48px, 8vw, 80px);
-  font-weight: 700;
-  line-height: 0.95;
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 1.05;
+  text-transform: none;
+  letter-spacing: -0.04em;
   margin: 0 0 20px 0;
-  background: linear-gradient(180deg, var(--ink) 0%, var(--muted) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--ink);
 }
 
 .product-subtitle {
-  font-size: 18px;
-  color: var(--muted);
+  font-size: 13px;
+  color: var(--tertiary);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0;
@@ -148,26 +158,11 @@
    ============================================ */
 .info-card {
   background: var(--bg-elevated);
-  border: 1px solid var(--hair);
+  border: 1px solid var(--hair2);
+  border-radius: 6px;
   padding: 32px;
   position: relative;
   overflow: hidden;
-}
-
-.info-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--red), transparent);
-  animation: scanline 3s linear infinite;
-}
-
-@keyframes scanline {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
 }
 
 .info-header {
@@ -243,41 +238,25 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 20px 24px;
-  background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-elevated) 100%);
-  border: 2px solid var(--red);
-  color: var(--ink);
+  padding: 16px 20px;
+  background: var(--red);
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   position: relative;
-  overflow: hidden;
-}
-
-.cta-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, var(--red-glow), transparent);
-  transition: left 0.5s ease;
-}
-
-.cta-button:hover::before {
-  left: 100%;
 }
 
 .cta-button:hover {
-  background: var(--red);
-  border-color: var(--red);
-  box-shadow: 0 0 30px var(--red-glow);
-  transform: translateY(-2px);
+  background: var(--red-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--red-glow);
 }
 
 .cta-button .cta-arrow {
@@ -290,8 +269,9 @@
 }
 
 .cta-button.large {
-  padding: 24px 40px;
-  font-size: 16px;
+  padding: 20px 32px;
+  font-size: 14px;
+  border-radius: 999px;
 }
 
 /* ============================================
@@ -308,53 +288,28 @@
 }
 
 .section-title {
-  font-size: 48px;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: 520;
+  text-transform: none;
   letter-spacing: -0.02em;
   margin: 0 0 8px 0;
-  background: linear-gradient(90deg, var(--ink), var(--muted));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--ink);
 }
 
 .section-subtitle {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--tertiary);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
 
 .tech-specs-container {
   background: var(--bg-elevated);
-  border: 1px solid var(--hair);
-  padding: 48px;
+  border: 1px solid var(--hair2);
+  border-radius: 6px;
+  padding: 32px;
   position: relative;
-}
-
-.tech-specs-container::before,
-.tech-specs-container::after {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--red);
-}
-
-.tech-specs-container::before {
-  top: -1px;
-  left: -1px;
-  border-right: none;
-  border-bottom: none;
-}
-
-.tech-specs-container::after {
-  bottom: -1px;
-  right: -1px;
-  border-left: none;
-  border-top: none;
 }
 
 .specs-grid {
@@ -365,11 +320,11 @@
 
 .spec-row {
   display: grid;
-  grid-template-columns: 50px 1fr 40px 1fr;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  padding: 24px 0;
+  padding: 16px 0;
   border-bottom: 1px solid var(--hair2);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .spec-row:last-child {
@@ -377,40 +332,29 @@
 }
 
 .spec-row:hover {
-  background: rgba(220, 38, 38, 0.03);
-  padding-left: 12px;
-  margin-left: -12px;
-  margin-right: -12px;
-  padding-right: 12px;
+  background: rgba(11, 11, 11, 0.02);
 }
 
 .spec-index {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--red);
-  font-weight: 500;
+  display: none; /* Hide index numbers for cleaner look */
 }
 
 .spec-label {
-  font-size: 14px;
-  color: var(--tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  font-weight: 650;
+  color: rgba(11, 11, 11, 0.82);
 }
 
 .spec-separator {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--hair) 0%, transparent 100%);
-  margin: 0 20px;
+  display: none; /* Hide separator for cleaner look */
 }
 
 .spec-value {
   font-family: var(--font-mono);
-  font-size: 14px;
-  color: var(--ink);
+  font-size: 12px;
+  font-weight: 650;
+  color: rgba(11, 11, 11, 0.8);
   text-align: right;
-  font-weight: 500;
 }
 
 .specs-footer {
@@ -425,14 +369,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: var(--bg);
-  border: 1px solid var(--success);
+  padding: 6px 10px;
+  background: rgba(11, 11, 11, 0.04);
+  border: 1px solid var(--hair2);
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--success);
+  letter-spacing: 0.06em;
+  color: rgba(11, 11, 11, 0.78);
+  font-weight: 750;
 }
 
 .badge-icon {
@@ -457,33 +403,19 @@
 .feature-item {
   display: flex;
   gap: 16px;
-  padding: 24px;
+  padding: 20px;
   background: var(--bg-elevated);
-  border: 1px solid var(--hair);
-  transition: all 0.3s ease;
+  border: 1px solid var(--hair2);
+  border-radius: 6px;
+  transition: all 0.2s ease;
   position: relative;
-}
-
-.feature-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 100%;
-  background: var(--red);
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-
-.feature-item:hover::before {
-  transform: scaleY(1);
 }
 
 .feature-item:hover {
   background: var(--bg-subtle);
-  border-color: var(--red);
-  transform: translateX(4px);
+  border-color: var(--hair);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(11, 11, 11, 0.08);
 }
 
 .feature-icon {
@@ -520,24 +452,28 @@
   gap: 20px;
   padding: 20px;
   background: var(--bg-elevated);
-  border: 1px solid var(--hair);
+  border: 1px solid var(--hair2);
+  border-radius: 6px;
   align-items: flex-start;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .specification-item:hover {
-  border-color: var(--tertiary);
+  border-color: var(--hair);
   background: var(--bg-subtle);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(11, 11, 11, 0.08);
 }
 
 .spec-number {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--red);
-  font-weight: 500;
+  font-weight: 600;
   padding: 4px 8px;
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid var(--red);
+  background: var(--red);
+  color: #fff;
+  border-radius: 3px;
 }
 
 .spec-text {
@@ -552,24 +488,11 @@
    CTA SECTION
    ============================================ */
 .cta-section {
-  margin-top: 120px;
-  padding: 100px 0;
+  margin-top: 80px;
+  padding: 60px 0;
   border-top: 1px solid var(--hair2);
   text-align: center;
   position: relative;
-}
-
-.cta-section::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
-  opacity: 0.3;
-  pointer-events: none;
 }
 
 .cta-content {
@@ -578,18 +501,18 @@
 }
 
 .cta-title {
-  font-size: 36px;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: 520;
+  text-transform: none;
   letter-spacing: -0.02em;
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
   color: var(--ink);
 }
 
 .cta-description {
-  font-size: 18px;
+  font-size: 14px;
   color: var(--muted);
-  margin: 0 0 40px 0;
+  margin: 0 0 32px 0;
 }
 
 .cta-section .cta-button {
@@ -602,39 +525,125 @@
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 @media (max-width: 768px) {
+  .breadcrumbs {
+    padding: 80px 20px 24px;
+    font-size: 10px;
+    gap: 8px;
+  }
+
+  .product-hero {
+    padding-bottom: 24px;
+  }
+
+  .hero-header {
+    margin-bottom: 24px;
+    padding: 0 20px;
+  }
+
+  .product-id {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
   .product-title {
-    font-size: 48px;
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .product-subtitle {
+    font-size: 11px;
+  }
+
+  .main-grid {
+    gap: 24px;
+    margin-top: 0;
+  }
+
+  .gallery-section {
+    padding: 0 20px;
+  }
+
+  .info-section {
+    position: static;
+    padding: 20px;
+    background: var(--bg-elevated);
+    margin: 24px 20px;
+    border: 1px solid var(--hair2);
+    border-radius: 8px;
+  }
+
+  .info-card {
+    border: none;
+    padding: 0;
+    background: transparent;
   }
 
   .section-title {
-    font-size: 32px;
+    font-size: 24px;
+  }
+
+  .tech-specs-section,
+  .features-section,
+  .specifications-section {
+    margin-top: 48px;
+    padding-top: 0;
+  }
+
+  .section-header {
+    margin-bottom: 24px;
+    padding: 0 20px;
   }
 
   .tech-specs-container {
-    padding: 24px;
+    margin: 0 -20px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 20px;
   }
 
   .spec-row {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    padding: 12px 0;
   }
 
-  .spec-index,
-  .spec-separator {
-    display: none;
+  .spec-label {
+    font-size: 12px;
   }
 
   .spec-value {
-    text-align: left;
-    color: var(--muted);
+    font-size: 11px;
   }
 
   .features-grid,
   .specifications-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 20px;
+  }
+
+  .feature-item,
+  .specification-item {
+    padding: 16px;
+    margin: 0;
+  }
+
+  .cta-section {
+    margin-top: 48px;
+    padding: 48px 20px;
+  }
+
+  /* Container max-width for mobile */
+  .MuiContainer-root {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .cta-title {
-    font-size: 28px;
+    font-size: 24px;
+  }
+
+  .cta-section .cta-button {
+    min-width: 100%;
   }
 }

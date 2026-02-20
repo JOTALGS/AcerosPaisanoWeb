@@ -5,33 +5,31 @@ import gsap from 'gsap';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-// Styled components with industrial tech design
+// Main gallery container
 const GalleryContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: '16px',
   width: '100%',
   maxWidth: '100%',
   margin: '0',
+  [theme.breakpoints.down('md')]: {
+    gap: '8px',
+  }
 }));
 
+// Main image container - clean design
 const MainImageContainer = styled(Box)(({ theme }) => ({
   position: 'relative',
   width: '100%',
   aspectRatio: '16 / 10',
-  backgroundColor: '#0a0a0a',
+  backgroundColor: '#f6f2ef',
   overflow: 'hidden',
-  border: '1px solid rgba(255, 255, 255, 0.12)',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'linear-gradient(45deg, transparent 30%, rgba(220, 38, 38, 0.02) 50%, transparent 70%)',
-    pointerEvents: 'none',
-    zIndex: 1
+  borderRadius: '8px',
+  [theme.breakpoints.down('md')]: {
+    aspectRatio: '4 / 3',
+    borderRadius: '0',
+    backgroundColor: '#f6f2ef',
   }
 }));
 
@@ -40,146 +38,192 @@ const MainImage = styled('img')(({ theme }) => ({
   height: '100%',
   objectFit: 'contain',
   opacity: 0,
-  transition: 'opacity 0.3s ease',
+  transition: 'opacity 0.4s ease',
   '&.visible': {
     opacity: 1,
+  },
+  [theme.breakpoints.down('md')]: {
+    objectFit: 'cover',
   }
 }));
 
-// Navigation arrows
+// Minimal navigation arrows
 const NavButton = styled(IconButton)(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
-  backgroundColor: 'rgba(0, 0, 0, 0.8)',
-  border: '1px solid rgba(255, 255, 255, 0.12)',
-  color: 'rgba(255, 255, 255, 0.7)',
-  padding: '12px',
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  color: 'rgba(11, 11, 11, 0.6)',
+  padding: '8px',
   zIndex: 2,
-  transition: 'all 0.3s ease',
+  transition: 'all 0.2s ease',
+  '& svg': {
+    fontSize: '20px',
+  },
   '&:hover': {
-    backgroundColor: '#dc2626',
-    borderColor: '#dc2626',
-    color: '#ffffff',
-    transform: 'translateY(-50%) scale(1.05)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    color: 'rgba(11, 11, 11, 0.9)',
   },
   '&.prev': {
-    left: '20px',
+    left: '12px',
   },
   '&.next': {
-    right: '20px',
+    right: '12px',
+  },
+  [theme.breakpoints.down('md')]: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    color: 'rgba(255, 255, 255, 0.9)',
+    padding: '6px',
+    '& svg': {
+      fontSize: '18px',
+    },
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      color: '#ffffff',
+    },
+    '&.prev': {
+      left: '8px',
+    },
+    '&.next': {
+      right: '8px',
+    }
   }
 }));
 
-// Image counter
-const ImageCounter = styled(Box)(({ theme }) => ({
+// Progress bar for auto-play
+const ProgressContainer = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  bottom: '20px',
-  right: '20px',
-  backgroundColor: 'rgba(0, 0, 0, 0.9)',
-  border: '1px solid rgba(255, 255, 255, 0.12)',
-  padding: '8px 16px',
-  fontFamily: '"Geist Mono", "SF Mono", monospace',
-  fontSize: '12px',
-  color: 'rgba(255, 255, 255, 0.7)',
-  letterSpacing: '0.05em',
-  zIndex: 2
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: '3px',
+  backgroundColor: 'rgba(11, 11, 11, 0.1)',
+  zIndex: 3,
+  [theme.breakpoints.down('md')]: {
+    height: '2px',
+  }
 }));
 
+const ProgressBar = styled(Box)(({ theme }) => ({
+  height: '100%',
+  backgroundColor: '#d61f1f',
+  transition: 'width 0.1s linear',
+}));
+
+// Image counter - minimal style
+const ImageCounter = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  bottom: '16px',
+  right: '16px',
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  borderRadius: '999px',
+  padding: '4px 12px',
+  fontFamily: '"Geist Mono", "SF Mono", monospace',
+  fontSize: '11px',
+  color: 'rgba(11, 11, 11, 0.7)',
+  letterSpacing: '0.05em',
+  zIndex: 2,
+  [theme.breakpoints.down('md')]: {
+    bottom: '12px',
+    right: '12px',
+    fontSize: '10px',
+    padding: '3px 8px',
+  }
+}));
+
+// Thumbnails container
 const ThumbnailsContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: '12px',
-  overflowX: 'auto',
-  padding: '4px 0',
-  scrollBehavior: 'smooth',
-  '&::-webkit-scrollbar': {
-    height: '6px',
-  },
-  '&::-webkit-scrollbar-track': {
-    background: 'rgba(255, 255, 255, 0.03)',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    background: 'rgba(255, 255, 255, 0.15)',
-    '&:hover': {
-      background: 'rgba(255, 255, 255, 0.25)',
-    }
-  },
+  gap: '8px',
+  padding: '0',
+  [theme.breakpoints.down('md')]: {
+    gap: '8px',
+    justifyContent: 'space-between',
+  }
 }));
 
 const Thumbnail = styled(Box)(({ theme, active }) => ({
-  flex: '0 0 120px',
-  height: '80px',
-  backgroundColor: '#0a0a0a',
+  flex: '0 0 100px',
+  height: '70px',
+  backgroundColor: '#f6f2ef',
   overflow: 'hidden',
   cursor: 'pointer',
-  border: active ? '2px solid #dc2626' : '2px solid transparent',
-  outline: active ? 'none' : '1px solid rgba(255, 255, 255, 0.12)',
-  opacity: active ? 1 : 0.5,
-  transition: 'all 0.3s ease',
+  border: active ? '2px solid #d61f1f' : '2px solid rgba(11, 11, 11, 0.08)',
+  borderRadius: '4px',
+  opacity: active ? 1 : 0.7,
+  transition: 'all 0.2s ease',
   position: 'relative',
   '&:hover': {
     opacity: 1,
-    borderColor: active ? '#dc2626' : 'rgba(255, 255, 255, 0.3)',
-    transform: 'translateY(-2px)',
+    borderColor: active ? '#d61f1f' : 'rgba(11, 11, 11, 0.2)',
   },
   '& img': {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   },
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: active ? 'transparent' : 'rgba(0, 0, 0, 0.3)',
-    pointerEvents: 'none',
-    transition: 'background 0.3s ease'
-  },
-  '&:hover::after': {
-    background: 'transparent'
+  [theme.breakpoints.down('md')]: {
+    flex: '1 1 0',
+    minWidth: '0',
+    height: '60px',
+    borderRadius: '4px',
   }
-}));
-
-const ThumbnailIndex = styled('span')(({ theme }) => ({
-  position: 'absolute',
-  top: '4px',
-  left: '4px',
-  backgroundColor: 'rgba(0, 0, 0, 0.8)',
-  color: '#dc2626',
-  padding: '2px 6px',
-  fontFamily: '"Geist Mono", "SF Mono", monospace',
-  fontSize: '10px',
-  letterSpacing: '0.05em',
-  zIndex: 1
 }));
 
 const ProductGallery = ({ images = [], productTitle }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const mainImageRef = useRef(null);
   const containerRef = useRef(null);
   const thumbnailsRef = useRef(null);
+  const progressIntervalRef = useRef(null);
 
   // Default image if none provided
   const galleryImages = images.length > 0 ? images : [
     { src: '/images/placeholder.jpg', alt: productTitle }
   ];
 
+  // Auto-play functionality
+  const SLIDE_DURATION = 5000; // 5 seconds per slide
+  const PROGRESS_INTERVAL = 50; // Update progress every 50ms
+
   useEffect(() => {
-    // Animate image change with GSAP
+    if (galleryImages.length > 1 && !isPaused) {
+      // Start progress animation
+      let currentProgress = 0;
+      progressIntervalRef.current = setInterval(() => {
+        currentProgress += (100 / (SLIDE_DURATION / PROGRESS_INTERVAL));
+        if (currentProgress >= 100) {
+          currentProgress = 0;
+          handleNext();
+        }
+        setProgress(currentProgress);
+      }, PROGRESS_INTERVAL);
+
+      return () => {
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+        }
+      };
+    } else {
+      setProgress(0);
+    }
+  }, [activeIndex, isPaused, galleryImages.length]);
+
+  // Animate image change
+  useEffect(() => {
     if (mainImageRef.current) {
       gsap.fromTo(mainImageRef.current,
-        { opacity: 0, scale: 0.98 },
-        { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' }
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' }
       );
     }
   }, [activeIndex]);
 
   const handleThumbnailClick = (index) => {
     if (index !== activeIndex) {
-      // Fade out current image
+      setProgress(0);
       gsap.to(mainImageRef.current, {
         opacity: 0,
         duration: 0.2,
@@ -200,6 +244,15 @@ const ProductGallery = ({ images = [], productTitle }) => {
     handleThumbnailClick(newIndex);
   };
 
+  // Pause auto-play on hover
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
+
   // Auto-scroll thumbnails to show active
   useEffect(() => {
     if (thumbnailsRef.current && galleryImages.length > 1) {
@@ -214,9 +267,15 @@ const ProductGallery = ({ images = [], productTitle }) => {
     }
   }, [activeIndex, galleryImages.length]);
 
+  // Show only first 4 thumbnails
+  const displayThumbnails = galleryImages.slice(0, 4);
+
   return (
     <GalleryContainer ref={containerRef}>
-      <MainImageContainer>
+      <MainImageContainer
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <MainImage
           ref={mainImageRef}
           src={galleryImages[activeIndex].src}
@@ -234,22 +293,25 @@ const ProductGallery = ({ images = [], productTitle }) => {
               <ChevronRightIcon />
             </NavButton>
             <ImageCounter>
-              [{String(activeIndex + 1).padStart(2, '0')}/{String(galleryImages.length).padStart(2, '0')}]
+              {activeIndex + 1} / {galleryImages.length}
             </ImageCounter>
+            <ProgressContainer>
+              <ProgressBar style={{ width: `${progress}%` }} />
+            </ProgressContainer>
           </>
         )}
       </MainImageContainer>
 
-      {galleryImages.length > 1 && (
+      {/* Thumbnails - show only first 4 */}
+      {displayThumbnails.length > 1 && (
         <ThumbnailsContainer ref={thumbnailsRef}>
-          {galleryImages.map((image, index) => (
+          {displayThumbnails.map((image, index) => (
             <Thumbnail
               key={index}
               active={index === activeIndex}
               onClick={() => handleThumbnailClick(index)}
               className="thumbnail-item"
             >
-              <ThumbnailIndex>[{String(index + 1).padStart(2, '0')}]</ThumbnailIndex>
               <img
                 src={image.src}
                 alt={image.alt || `${productTitle} - Vista ${index + 1}`}

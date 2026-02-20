@@ -1,102 +1,218 @@
 @font-face {
-    font-family: "PPObjectSans";
-    src: url("./fonts/PPObjectSans-Regular.otf") format("opentype");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "PPObjectSans";
+  src: url("./fonts/PPObjectSans-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
 }
 
-.right{
-  align-self: flex-end;
-  justify-self: end;
+/* Si NO tenés el bold real, esto ayuda a que el browser “fabrique” el bold */
+.about,
+.about * {
+  font-synthesis: weight;
 }
 
 .about {
-    background: #000000;
-    color: white;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+  font-family: "PPObjectSans", Arial, sans-serif;
 }
 
+/* =========================
+   HERO
+   ========================= */
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  background: #000;
+  overflow: hidden;
+}
+
+.about-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.about-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  filter: contrast(1.05) saturate(1.02);
+}
+
+/* ✅ Masking MÁS SUAVE (tu pedido) */
+.about-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  /* bajamos opacidades para que se vea más la foto */
+  background:
+    radial-gradient(
+      1200px 650px at 50% 60%,
+      rgba(0,0,0,0.06) 0%,
+      rgba(0,0,0,0.30) 70%,
+      rgba(0,0,0,0.50) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.10) 45%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+}
+
+.about-hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* ---------- TÍTULO top-left ---------- */
+.about-hero__titleWrap {
+  position: absolute;
+  top: clamp(86px, 10vh, 140px);
+  left: clamp(18px, 6vw, 80px);
+  right: clamp(18px, 6vw, 80px);
+}
+
+/* ✅ “Bold” que SE NOTE (aunque solo tengas Regular.otf) */
+.about-hero__title {
+  margin: 0;
+  font-family: "PPObjectSans", Arial, sans-serif;
+
+  /* subimos peso + micro stroke para que se perciba más fuerte */
+  font-weight: 500;
+  -webkit-text-stroke: 0.35px rgba(255,255,255,0.25);
+
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  color: #fff;
+
+  /* si lo ves chico es porque el CSS no está entrando.
+     Este clamp te lo deja tipo "Services" */
+  font-size: clamp(78px, 9vw, 98px);
+
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- TAGLINE: bloque CENTRADO, texto a la IZQUIERDA ---------- */
+.about-hero__taglineWrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(26px, 8vh, 92px);
+
+  /* esto centra el bloque en pantalla */
+  width: min(760px, calc(100% - 80px));
+}
+
+/* contenedor por si querés ajustar ancho fácil */
+.about-hero__taglineInner {
+  width: 100%;
+}
+
+/* ✅ texto alineado a la izquierda, pero el bloque está centrado */
+.about-hero__tagline {
+  margin: 0;
+  text-align: left;
+
+  font-family: "PPObjectSans", Arial, sans-serif;
+  font-weight: 500; /* más “bold” visual */
+  font-size: clamp(16px, 1.55vw, 28px);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+.about-hero__taglineLine {
+  display: block;
+}
+
+/* =========================
+   RESTO (tu layout)
+   ========================= */
 .about-sub-section {
-    margin: 40px 0px;
-    width: 100%;
-    margin-top: 8vh;
-    display: flex;
-    font-family: "PPObjectSans", Arial, sans-serif;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding-top: 0;
 }
 
-.text-content {
-    text-align: justify;
-    font-size: 25px;
-    width: 40%;
-}
-
-.text-content.left {
-    align-self: flex-start;
-}
-
-.text-content.right {
-    align-self: flex-end;
-}
-
+/* Mantengo lo tuyo */
 .subtitle {
-    font-size: 45px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    font-family: "PPObjectSans", Arial, sans-serif;
+  font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-family: "PPObjectSans", Arial, sans-serif;
 }
 
 .line-wrapper {
-    position: relative;
-    margin: 0.5em 0;
-    overflow: hidden;
-  }
+  position: relative;
+  margin: 0.5em 0;
+  overflow: hidden;
+}
 
 .line {
-    display: block;
-    color: #969696;
-    margin: 0;
-  }
-
-  .line-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    color: #ffffff;
-    clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
-  }
-
-.image-content {
-    display: none;
+  display: block;
+  color: #969696;
+  margin: 0;
 }
 
+.line-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  color: #ffffff;
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+  pointer-events: none;
+}
+
+/* navbar transparente (si matchea tu componente) */
 .navbar {
-    background: #000000;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  background: transparent;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: none;
 }
 
-.about-sub-section .highlighted-text.active {
-    color: rgba(255, 255, 255, 1);
-}
+/* =========================
+   Mobile fine-tuning
+   ========================= */
+@media (max-width: 600px) {
+  .about-hero__titleWrap {
+    top: 86px;
+    left: 16px;
+    right: 16px;
+  }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+  .about-hero__title {
+    font-size: clamp(56px, 12vw, 78px);
+    letter-spacing: -0.015em;
+    -webkit-text-stroke: 0.25px rgba(255,255,255,0.22);
+  }
 
-.highlighted-text {
-    animation: fadeIn 0.3s ease-out;
+  .about-hero__taglineWrap {
+    width: calc(100% - 24px);
+    bottom: 22px;
+  }
+
+  .about-hero__tagline {
+    font-size: 16px;
+    line-height: 1.25;
+  }
 }

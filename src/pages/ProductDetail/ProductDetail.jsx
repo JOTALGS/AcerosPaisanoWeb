@@ -219,6 +219,7 @@ const ProductDetail = ({ serviceSlug }) => {
     const productData = productsData[serviceSlug];
     if (!productData) {
       navigate('/productos');
+      navigate('/productos');
       return;
     }
     setProduct(productData);
@@ -293,7 +294,7 @@ const ProductDetail = ({ serviceSlug }) => {
           <nav className="breadcrumbs">
             <Link to="/">INICIO</Link>
             <span className="separator">/</span>
-            <Link to="/productos-y-servicios">PRODUCTOS</Link>
+            <Link to="/productos">PRODUCTOS</Link>
             <span className="separator">/</span>
             <span className="current">{product.title.toUpperCase()}</span>
           </nav>
