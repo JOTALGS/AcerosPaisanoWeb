@@ -145,78 +145,89 @@ export const Home = () => {
   const HERO_LINE_GAP_TIGHT_MOBILE = "0em";  // Sin overlap en móvil
 
   // Initialize scroll animations only when user starts scrolling
+  // Utility to yield to the main thread between tasks
+  const yieldToMain = () => new Promise(resolve => setTimeout(resolve, 0));
+
   const initializeScrollAnimations = useCallback(async () => {
     if (animationsInitialized || prefersReducedMotion) return;
 
+    // Keep your existing delay — gives browser time to paint first
     await new Promise((resolve) => setTimeout(resolve, 500));
     const { gsap } = await loadGSAP();
 
-    requestAnimationFrame(() => {
-      lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
+    // Slice refs before the loop
+    lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
 
-      lineWrapperRef.current.forEach((wrapper) => {
-        if (!wrapper) return;
-        const overlay = wrapper.querySelector(".line-overlay");
-        if (!overlay) return;
+    // ✅ Set up each line's ScrollTrigger in its own task
+    for (const wrapper of lineWrapperRef.current) {
+      if (!wrapper) continue;
+      const overlay = wrapper.querySelector(".line-overlay");
+      if (!overlay) continue;
 
-        overlay.style.willChange = "clip-path";
+      // Yield BEFORE each heavy ScrollTrigger registration
+      await yieldToMain();
 
-        gsap.to(overlay, {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-          ease: "none",
+      overlay.style.willChange = "clip-path";
+
+      gsap.to(overlay, {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top 85%",
+          end: "top 45%",
+          scrub: 3,
+          onComplete: () => {
+            overlay.style.willChange = "auto";
+          },
+        },
+      });
+    }
+
+    // ✅ Yield before setting up descubrir animation
+    if (descubrirRef.current) {
+      await yieldToMain();
+      descubrirRef.current.style.willChange = "opacity, transform";
+      gsap.fromTo(
+        descubrirRef.current,
+        { opacity: 1, y: 0 },
+        {
+          opacity: 0,
+          y: -20,
           scrollTrigger: {
-            trigger: wrapper,
-            start: "top 85%",
-            end: "top 45%",
-            scrub: 3,
+            trigger: descubrirRef.current,
+            start: "top 70%",
+            end: "top 20%",
+            scrub: 1,
             onComplete: () => {
-              overlay.style.willChange = "auto";
+              descubrirRef.current.style.willChange = "auto";
             },
           },
-        });
-      });
+        }
+      );
+    }
 
-      if (descubrirRef.current) {
-        descubrirRef.current.style.willChange = "opacity, transform";
-        gsap.fromTo(
-          descubrirRef.current,
-          { opacity: 1, y: 0 },
-          {
-            opacity: 0,
-            y: -20,
-            scrollTrigger: {
-              trigger: descubrirRef.current,
-              start: "top 70%",
-              end: "top 20%",
-              scrub: 1,
-              onComplete: () => {
-                descubrirRef.current.style.willChange = "auto";
-              },
+    // ✅ Yield before imageRef animation
+    if (imageRef.current) {
+      await yieldToMain();
+      imageRef.current.style.willChange = "opacity";
+      gsap.fromTo(
+        imageRef.current,
+        { opacity: 1 },
+        {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: descubrirRef.current,
+            start: "top 70%",
+            end: "top 20%",
+            scrub: 1,
+            onComplete: () => {
+              imageRef.current.style.willChange = "auto";
             },
-          }
-        );
-      }
-
-      if (imageRef.current) {
-        imageRef.current.style.willChange = "opacity";
-        gsap.fromTo(
-          imageRef.current,
-          { opacity: 1 },
-          {
-            opacity: 0,
-            scrollTrigger: {
-              trigger: descubrirRef.current,
-              start: "top 70%",
-              end: "top 20%",
-              scrub: 1,
-              onComplete: () => {
-                imageRef.current.style.willChange = "auto";
-              },
-            },
-          }
-        );
-      }
-    });
+          },
+        }
+      );
+    }
 
     setAnimationsInitialized(true);
   }, [animationsInitialized, prefersReducedMotion, textParts.length]);
@@ -379,6 +390,7 @@ export const Home = () => {
           component="img"
           src="./images/titulo.jpg"
           alt="title"
+          fetchPriority="high"
           sx={{
             height: "150px",
             width: "auto",
@@ -408,11 +420,12 @@ export const Home = () => {
         <div className="top">
           <div className="home-top-row">
             <div className="home-top-grid">
-              <Box className="image-column image-left" sx={{ paddingLeft: "3vw" }}>
+              <Box className="image-column image-left" sx={{}}>
                 <Box
                   component="img"
-                  src="./images/paisanologowhite.png"
+                  src="./images/paisanologowhite1.png"
                   alt="Left Image"
+                  fetchpriority="high"
                   sx={{ width: "auto", height: { xs: "10vh", xl: "20vh" }, marginTop: "60px" }}
                 />
               </Box>
@@ -453,7 +466,6 @@ export const Home = () => {
             sx={{
               paddingBottom: { xs: "60px", sm: "0px", md: "0px", lg: "0px" },
               width: { xs: "70%", sm: "50%", md: "30%", lg: "20%" },
-              paddingLeft: "3vw",
             }}
             className="catalogue-section"
           >

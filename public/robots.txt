@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Host
+Host: https://acerospaisano.com.uy
+
+# Sitemap
+Sitemap: https://acerospaisano.com.uy/sitemap.xml

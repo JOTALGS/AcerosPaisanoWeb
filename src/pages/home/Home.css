@@ -10,11 +10,12 @@
   min-height: 100vh;
   background-size: cover;
   z-index: 1;
-  animation: changeZIndex 0s ease-in 3s forwards;
+  /* animation: changeZIndex 0s ease-in 3s forwards; */
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
 }
 
+/* 
 @keyframes changeZIndex {
   0% {
     z-index: 1;
@@ -22,7 +23,7 @@
   100% {
     z-index: 0;
   }
-}
+} */
 
 .init-baseline {
   display: flex;
@@ -41,6 +42,7 @@
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-150%);
   }
@@ -56,6 +58,7 @@
   0% {
     transform: translateY(100%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -96,7 +99,7 @@
 
 .home-top-row {
   position: relative;
-  width: 90vw;
+  width: 93%;
   height: 58vh;
   display: flex;
   flex-direction: column;
@@ -114,7 +117,7 @@
 }
 
 .image-column {
-  position: relative; 
+  position: relative;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -152,7 +155,7 @@
 .home-middle-row {
   color: white;
   height: 40vh;
-  width: 90vw;
+  width: 93%;
   display: flex;
   justify-content: space-between;
   text-align: end;
@@ -188,18 +191,18 @@
   cursor: pointer;
 }
 
-.catalogue-button p  {
+.catalogue-button p {
   font-size: 1rem;
 }
 
 .catalogue-button:hover {
   background-color: #00000000;
   border: 1px solid white;
-  transition-delay: 0.3s; 
+  transition-delay: 0.3s;
 }
 
 .scroll-indicator {
-  font-size: 16px; 
+  font-size: 16px;
   color: #ffffff;
   display: grid;
   text-align: end;
@@ -291,7 +294,7 @@
 }
 
 .about-link-button:hover {
-  transition-delay: 0.3s; 
+  transition-delay: 0.3s;
 }
 
 .Home-video {

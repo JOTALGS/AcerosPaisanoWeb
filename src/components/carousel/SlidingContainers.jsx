@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
 import './SlidingContainers.css';
@@ -21,7 +21,7 @@ const SlidingContainers = () => {
     },
     {
       title: "Conócenos",
-      description:"Conoce quiénes somos, nuestra visión y nuestro compromiso con la excelencia.",
+      description: "Conoce quiénes somos, nuestra visión y nuestro compromiso con la excelencia.",
       buttonText: "Sobre Nosotros",
       link: "/sobre-nosotros",
       external: false
@@ -35,46 +35,13 @@ const SlidingContainers = () => {
     }
   ];
 
-  const containerRef = useRef(null);
-  const positionRef = useRef(0);
-  const [isPaused, setIsPaused] = React.useState(false);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    let animationFrameId;
-
-    const animate = () => {
-      if (!isPaused) {
-        positionRef.current -= 2;
-
-        if (positionRef.current <= -(container.scrollWidth / 2)) {
-          positionRef.current = 0;
-        }
-
-        container.style.transform = `translateX(${positionRef.current}px)`;
-      }
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    animationFrameId = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [isPaused]);
-
   const allItems = [...items, ...items];
 
   return (
     <div className="fatherContainer">
-      <div
-        ref={containerRef}
-        className="sliderContainer"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
+      <div className="sliderContainer">
         {allItems.map((item, index) => (
-          <Box key={index} sx={{ width: { xs: '60%', md: '33%'}}} className="sliderItem">
+          <Box key={index} sx={{ width: { xs: '60%', md: '33%' } }} className="sliderItem">
             <div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>

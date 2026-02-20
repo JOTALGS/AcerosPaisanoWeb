@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
   IconButton,
-  Box, 
+  Box,
   Drawer,
   useMediaQuery,
   useTheme,
@@ -22,7 +22,7 @@ const fontImportStyles = `
 `;
 
 const AnimatedMenuIcon = ({ isOpen }) => (
-  <Box sx={{ 
+  <Box sx={{
     width: '36px',
     height: '36px',
     position: 'relative',
@@ -30,7 +30,7 @@ const AnimatedMenuIcon = ({ isOpen }) => (
     alignItems: 'center',
     justifyContent: 'center'
   }}>
-    <Box sx={{ 
+    <Box sx={{
       width: '30px',
       height: '3px',
       backgroundColor: isOpen ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
@@ -39,7 +39,7 @@ const AnimatedMenuIcon = ({ isOpen }) => (
       transform: isOpen ? 'rotate(45deg)' : 'translateY(-6px)',
       boxShadow: isOpen ? '0 0 5px #FFFFFF' : 'none',
     }} />
-    <Box sx={{ 
+    <Box sx={{
       width: '30px',
       height: '3px',
       backgroundColor: isOpen ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
@@ -55,7 +55,7 @@ export const NavBar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const isTablet = useMediaQuery(theme.breakpoints.between('md', 'lg'));
-  
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -182,7 +182,7 @@ export const NavBar = () => {
           'a, button': { WebkitTapHighlightColor: 'transparent' }
         }}
       />
-      
+
       {/* Wrapper original, pero cuando menuOpen: zIndex alto para que navbar quede arriba */}
       <Box
         sx={{
@@ -211,52 +211,53 @@ export const NavBar = () => {
         >
           {/* Toolbar sin padding extra para que quede igual a ambos lados */}
           <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: 0 }}>
-            <Button 
-              component={Link} 
-              to="/" 
-              onClick={() => {window.scrollTo(0, 0);}} 
+            <Button
+              component={Link}
+              to="/"
+              onClick={() => { window.scrollTo(0, 0); }}
               color="inherit"
               sx={{ padding: isMobile ? "4px" : "8px" }}
             >
-              <Box 
-                component="img" 
-                src="/images/logo.png" 
-                alt="Logo" 
-                sx={{ height: isMobile ? 40 : 50 }} 
+              <Box
+                component="img"
+                src="/images/logo.png"
+                alt="Logo"
+                fetchpriority="high"
+                sx={{ height: isMobile ? 40 : 50 }}
               />
             </Button>
 
             {!isMobile && (
-              <Box 
-                sx={{ 
-                  display: "flex", 
-                  justifyContent: "space-between", 
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
                   width: isTablet ? "65%" : "45%",
                   flexWrap: isTablet ? "wrap" : "nowrap",
                 }}
               >
-                <Box 
-                  sx={{ 
-                    display: "flex", 
-                    justifyContent: isTablet ? "space-around" : "space-between", 
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: isTablet ? "space-around" : "space-between",
                     width: isTablet ? "100%" : "70%",
                     mb: isTablet ? 1 : 0
                   }}
                 >
                   {navItems.slice(0, 3).map((item, index) => (
-                    <Button 
+                    <Button
                       key={index}
-                      component={Link} 
-                      to={item.path} 
-                      onClick={() => {window.scrollTo(0, 0);}} 
-                      color="inherit" 
-                      sx={{ 
+                      component={Link}
+                      to={item.path}
+                      onClick={() => { window.scrollTo(0, 0); }}
+                      color="inherit"
+                      sx={{
                         textTransform: "none",
                         fontSize: isTablet ? "0.9rem" : "inherit"
-                      }} 
+                      }}
                     >
-                      <Typography 
-                        fontSize={isTablet ? "1rem" : "1.2rem"} 
+                      <Typography
+                        fontSize={isTablet ? "1rem" : "1.2rem"}
                         color="rgba(255, 255, 255, 0.75)"
                         sx={{
                           transition: "color 0.3s ease",
@@ -270,15 +271,15 @@ export const NavBar = () => {
                 </Box>
 
                 {!isTablet && (
-                  <Button 
-                    component={Link} 
-                    to="/contacto" 
-                    onClick={() => {window.scrollTo(0, 0);}} 
-                    color="inherit" 
-                    sx={{ textTransform: "none" }} 
+                  <Button
+                    component={Link}
+                    to="/contacto"
+                    onClick={() => { window.scrollTo(0, 0); }}
+                    color="inherit"
+                    sx={{ textTransform: "none" }}
                   >
-                    <Typography 
-                      fontSize={"1.2rem"} 
+                    <Typography
+                      fontSize={"1.2rem"}
                       color="rgba(255, 255, 255, 0.75)"
                       sx={{
                         transition: "color 0.3s ease",
@@ -293,12 +294,12 @@ export const NavBar = () => {
             )}
 
             {isMobile && (
-              <IconButton 
-                edge="end" 
-                color="inherit" 
-                aria-label="menu" 
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="menu"
                 onClick={toggleMenu}
-                sx={{ 
+                sx={{
                   color: "white",
                   padding: 1,
                   '&:hover': { backgroundColor: 'transparent' }
@@ -329,13 +330,13 @@ export const NavBar = () => {
             }
           }}
           PaperProps={{
-            sx: { 
-              width: "100%", 
+            sx: {
+              width: "100%",
               top: `${navHeight}px`,
               height: `calc(100vh - ${navHeight}px)`,
-              backgroundColor: "#000000", 
+              backgroundColor: "#000000",
               backgroundImage: "none",
-              color: "white", 
+              color: "white",
               overflow: "hidden",
               overscrollBehavior: "none",
               WebkitTapHighlightColor: "transparent",
@@ -350,7 +351,7 @@ export const NavBar = () => {
           SlideProps={{ direction: "up" }}
         >
           {/* Shift5 layout: abajo/izquierda */}
-          <Box sx={{ 
+          <Box sx={{
             display: "flex",
             flexDirection: "column",
             height: "100%",
@@ -363,7 +364,7 @@ export const NavBar = () => {
           }}>
             <List sx={{ width: "100%", padding: 0, margin: 0 }}>
               {navItems.map((item, index) => (
-                <ListItem 
+                <ListItem
                   key={index}
                   sx={{
                     padding: "10px 0",
@@ -371,14 +372,14 @@ export const NavBar = () => {
                     width: "auto"
                   }}
                 >
-                  <ListItemText 
+                  <ListItemText
                     primary={
                       <Button
                         component={Link}
                         to={item.path}
                         color="inherit"
                         onClick={() => handleNavClick(item.path)}
-                        sx={{ 
+                        sx={{
                           padding: 0,
                           minWidth: "auto",
                           justifyContent: "flex-start",

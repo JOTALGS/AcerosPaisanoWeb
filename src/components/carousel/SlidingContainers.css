@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* SlidingContainers.css */
+/* 
+  Move this <link> to your index.html <head> instead of @import here.
+  This way the font loads in parallel rather than in a chain.
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+*/
+
+@keyframes slider-scroll {
+    to {
+        transform: translateX(-50%);
+    }
+}
 
 .fatherContainer {
     width: 100vw;
@@ -11,8 +25,14 @@
 
 .sliderContainer {
     display: flex;
-    margin-top: 0;
-    margin-bottom: 0;
+    /* CSS animation runs on the compositor thread — no JS, no main-thread style recalcs */
+    animation: slider-scroll 20s linear infinite;
+    will-change: transform;
+}
+
+/* Pause on hover — no React state, no re-render */
+.sliderContainer:hover {
+    animation-play-state: paused;
 }
 
 .sliderItem {
@@ -25,14 +45,63 @@
     background-color: rgb(27, 27, 27);
     color: white;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.2s;
+    transition: background-color 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
 }
 
-/* Mobile adjustments */
+.sliderItem:hover {
+    background-color: #991923;
+}
+
+.sliderItem div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.sliderItem h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+}
+
+.sliderItem p {
+    margin-bottom: 1.5rem;
+    text-align: start;
+    font-weight: 400;
+    line-height: 1.4;
+    font-size: 1rem;
+    opacity: 0.9;
+    max-width: 90%;
+}
+
+.sliderItem button {
+    padding: 16px 32px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #727171;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
+.sliderItem button:hover {
+    border: 1px solid #fff;
+    background-color: #fff;
+    color: #000;
+}
+
 @media (max-width: 768px) {
     .sliderItem {
         width: 80%;
@@ -60,54 +129,4 @@
         font-size: 0.9rem;
         width: 100%;
     }
-}
-
-.sliderItem:hover {
-    background-color: #991923;
-}
-
-.sliderItem div {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.sliderItem h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.4rem; /* Aumentado ligeramente */
-    line-height: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-}
-
-.sliderItem p {
-    margin-bottom: 1.5rem;
-    text-align: start;
-    font-weight: 400;
-    line-height: 1.4;
-    font-size: 1rem;
-    opacity: 0.9;
-    max-width: 90%; /* Limita el ancho del texto */
-}
-
-.sliderItem button {
-    padding: 16px 32px; /* Botones más grandes */
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #727171;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 500;
-    font-size: 1rem; /* Texto del botón más grande */
-    letter-spacing: 0.01em;
-    text-transform: uppercase; /* Añadido para mayor similitud */
-}
-
-.sliderItem button:hover {
-    border: 1px solid #fff;
-    background-color: #fff;
-    color: #000;
 }
