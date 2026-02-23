@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Container, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { NavBar } from "../../components/navbar/NavBar1";
+import { NavBar } from "../../components/navbar/NavBar";
 import { Footer } from "../../components/footer/Footer";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";

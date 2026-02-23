@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
-import { NavBar } from "../../components/navbar/Navbar1";
+import { NavBar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
 import { Box, Typography } from "@mui/material";
 
