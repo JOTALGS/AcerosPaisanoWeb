@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./About.css";
-import { NavBar } from "../../components/navbar/Navbar.jsx";
-import { Footer } from "../../components/footer/Footer.jsx";
+import { NavBar } from "../../components/navbar/navbar.jsx";
+import { Footer } from "../../components/footer/footer.jsx";
 import { Box, Typography } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);

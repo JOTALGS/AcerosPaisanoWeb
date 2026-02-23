@@ -121,16 +121,16 @@ const ContactComponent = () => {
   const labelStyle = {
     fontFamily: "'Geist Mono', monospace",
     color: "#8a8a8a",
-    fontSize: { xs: "0.58rem", md: "0.66rem" }, // + tamaño
+    fontSize: { xs: "0.62rem", md: "0.72rem" }, // aumentado
     textTransform: "uppercase",
     letterSpacing: "0.13em",
-    mb: 0.35, // + aire
+    mb: 0.45, // más aire
     display: "block",
-    lineHeight: 1.15,
+    lineHeight: 1.4, // más espaciado entre líneas
   };
 
   const textFieldStyle = {
-    mb: { xs: 0.95, md: 1.05 }, // + separación
+    mb: { xs: 1.15, md: 1.3 }, // más separación
     "& .MuiInput-underline:before": { borderColor: "#232323" },
     "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
       borderColor: "#343434",
@@ -138,9 +138,9 @@ const ContactComponent = () => {
     "& .MuiInput-underline:after": { borderColor: "#EE2737" },
     "& input, & textarea": {
       color: "#fff",
-      fontSize: { xs: "0.86rem", md: "0.98rem" }, // + tamaño
-      py: 0.35,
-      lineHeight: 1.25,
+      fontSize: { xs: "0.92rem", md: "1.04rem" }, // aumentado
+      py: 0.4,
+      lineHeight: 1.5, // más espaciado
     },
     "& input::placeholder, & textarea::placeholder": {
       color: "#5f5f5f",
@@ -165,6 +165,7 @@ const ContactComponent = () => {
     >
       <style>
         {`
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
           @import url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/mono.css');
           footer, .footer, #footer { display: none !important; }
           html, body, #root { height: 100%; overflow: hidden !important; }
@@ -210,6 +211,7 @@ const ContactComponent = () => {
             <Typography
               component="h1"
               sx={{
+                fontFamily: "'Inter', sans-serif",
                 fontSize: {
                   xs: "1.72rem",
                   sm: "2.1rem",
@@ -245,9 +247,10 @@ const ContactComponent = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      mb: 1.0,
-                      fontSize: { xs: "0.84rem", md: "0.94rem" },
-                      lineHeight: 1.25,
+                      fontFamily: "'Inter', sans-serif",
+                      mb: 1.2,
+                      fontSize: { xs: "0.88rem", md: "0.98rem" },
+                      lineHeight: 1.5,
                     }}
                   >
                     ventas@acerospaisano.com.uy
@@ -257,8 +260,9 @@ const ContactComponent = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: { xs: "0.84rem", md: "0.94rem" },
-                      lineHeight: 1.25,
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: { xs: "0.88rem", md: "0.98rem" },
+                      lineHeight: 1.5,
                     }}
                   >
                     +598 99 914 939 / 2365 0000
@@ -270,8 +274,9 @@ const ContactComponent = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: { xs: "0.84rem", md: "0.94rem" },
-                      lineHeight: 1.25,
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: { xs: "0.88rem", md: "0.98rem" },
+                      lineHeight: 1.5,
                     }}
                   >
                     Ruta 5 Km 25.500
@@ -279,8 +284,9 @@ const ContactComponent = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: { xs: "0.84rem", md: "0.94rem" },
-                      lineHeight: 1.25,
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: { xs: "0.88rem", md: "0.98rem" },
+                      lineHeight: 1.5,
                     }}
                   >
                     Las Piedras, Canelones, Uruguay
