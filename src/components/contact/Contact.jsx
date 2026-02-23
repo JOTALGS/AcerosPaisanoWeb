@@ -1,17 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import { TextField, Button, Typography, Box, Grid, FormControlLabel, Checkbox, Alert, Input, FormHelperText } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Grid,
+  FormControlLabel,
+  Checkbox,
+  Alert,
+  useMediaQuery,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import gsap from "gsap";
 import * as emailjs from "emailjs-com";
 
-const ContactComponent = ({ isPage = false }) => {
+const ContactComponent = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  // Estado para los datos del formulario
+  // Ajustá si tu navbar mide distinto (esto es CLAVE para matar scroll)
+  const navOffset = isMobile ? 68 : 88;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,7 +29,6 @@ const ContactComponent = ({ isPage = false }) => {
     agree: false,
   });
 
-  // Estado para los errores de validación
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -29,484 +36,571 @@ const ContactComponent = ({ isPage = false }) => {
     agree: "",
   });
 
-  // Estado para controlar si se ha intentado enviar el formulario
-  const [submitted, setSubmitted] = useState(false);
-  const [formError, setFormError] = useState("");
-  const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
-  const servicesList = ["Estribos a Medida", "Barras Lisas", "Barras Conformadas", "Mallas Electrosoldadas", "Otros Productos"];
 
-  // Inicializar EmailJS
+  const servicesList = [
+    "Estribos a Medida",
+    "Barras Lisas",
+    "Barras Conformadas",
+    "Mallas Electrosoldadas",
+    "Mallas Plegadas",
+    "Otros",
+  ];
+
   useEffect(() => {
     emailjs.init("mG1zb3WhQquVBDEy5");
   }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
-    // Actualizar los datos del formulario
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-
-    // Si el campo ha sido editado y hay errores, validar en tiempo real
-    if (submitted) {
-      validateField(name, type === "checkbox" ? checked : value);
-    }
   };
 
   const handleServiceSelect = (service) => {
     const updatedServices = formData.services.includes(service)
       ? formData.services.filter((s) => s !== service)
       : [...formData.services, service];
-    
-    setFormData((prev) => ({
-      ...prev,
-      services: updatedServices,
-    }));
 
-    // Validar servicios si ya se intentó enviar el formulario
-    if (submitted) {
-      validateField('services', updatedServices);
-    }
+    setFormData((prev) => ({ ...prev, services: updatedServices }));
   };
 
-  // Función para validar un campo específico
-  const validateField = (fieldName, value) => {
-    let newErrors = { ...errors };
-
-    switch (fieldName) {
-      case 'name':
-        newErrors.name = value.trim() === "" ? "El nombre es requerido" : "";
-        break;
-      case 'email':
-        if (value.trim() === "") {
-          newErrors.email = "El email es requerido";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          newErrors.email = "Email inválido";
-        } else {
-          newErrors.email = "";
-        }
-        break;
-      case 'services':
-        newErrors.services = value.length === 0 ? "Seleccione al menos un servicio" : "";
-        break;
-      case 'agree':
-        newErrors.agree = !value ? "Debe aceptar el procesamiento de datos" : "";
-        break;
-      default:
-        break;
-    }
+  const validateForm = () => {
+    const newErrors = {
+      name: formData.name.trim() === "" ? "Requerido" : "",
+      email: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+        ? "Email inválido"
+        : "",
+      services: formData.services.length === 0 ? "Seleccione uno" : "",
+      agree: !formData.agree ? "Debe aceptar" : "",
+    };
 
     setErrors(newErrors);
-    return newErrors[fieldName] === "";
-  };
-
-  // Función para validar todo el formulario
-  const validateForm = () => {
-    const nameValid = validateField('name', formData.name);
-    const emailValid = validateField('email', formData.email);
-    const servicesValid = validateField('services', formData.services);
-    const agreeValid = validateField('agree', formData.agree);
-
-    return nameValid && emailValid && servicesValid && agreeValid;
+    return !Object.values(newErrors).some((x) => x !== "");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setFormError(""); // Limpiar errores anteriores
 
-    if (validateForm()) {
-      try {
-        const templateParams = {
-          from_name: formData.name,         // Nombre del usuario
-          email: formData.email,            // Email del usuario para responder
-          company: formData.company || "No especificada",
-          to_name: "Ventas Aceros Paisano",
-          services: formData.services.join(", "), // Convertir array a string
-          message: formData.message || "No se proporcionó un mensaje.",
-          agree: formData.agree ? "Sí" : "No",
-        };
+    if (!validateForm()) return;
 
-        console.log("Enviando formulario con parámetros:", templateParams);
+    const templateParams = {
+      from_name: formData.name,
+      email: formData.email,
+      company: formData.company || "No especificada",
+      to_name: "Ventas Aceros Paisano",
+      services: formData.services.join(", "),
+      message: formData.message || "Sin mensaje",
+      agree: formData.agree ? "Sí" : "No",
+    };
 
-        emailjs
-          .send(
-            "service_u25ou8s",
-            "template_t3qai7e",
-            templateParams,
-            "mG1zb3WhQquVBDEy5"
-          )
-          .then(
-            (result) => {
-              console.log("Respuesta del servidor:", result.text);
-              setSuccess(true);
-              setFormData({ 
-                name: "", 
-                email: "", 
-                company: "", 
-                services: [], 
-                message: "", 
-                agree: false 
-              });
-              setSubmitted(false); // Resetear el estado de envío
-            },
-            (error) => {
-              console.error("Error de EmailJS:", error);
-              setFormError("Hubo un problema al enviar tu solicitud. Por favor intenta nuevamente.");
-            }
-          );
-      } catch (error) {
-        console.error("Error inesperado:", error);
-        setFormError("Ocurrió un error al procesar tu solicitud. Por favor intenta más tarde.");
-      }
-    } else {
-      console.log("El formulario tiene errores de validación");
-    }
+    emailjs
+      .send(
+        "service_u25ou8s",
+        "template_t3qai7e",
+        templateParams,
+        "mG1zb3WhQquVBDEy5"
+      )
+      .then(() => {
+        setSuccess(true);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          services: [],
+          message: "",
+          agree: false,
+        });
+        setErrors({ name: "", email: "", services: "", agree: "" });
+      })
+      .catch(() => alert("Error al enviar."));
   };
 
-  useEffect(() => {
-    // Apply animation on all screen sizes
-    const tl = gsap.timeline({ delay: 0.5 });
-    tl.fromTo(formRef.current, { y: "0" }, { y: isMobile ? "50px" : isTablet ? "150px" : "180px", duration: 1.5, ease: "power3.out" });
-  }, [isMobile, isTablet]);
+  const labelStyle = {
+    fontFamily: "'Geist Mono', monospace",
+    color: "#8a8a8a",
+    fontSize: { xs: "0.58rem", md: "0.66rem" }, // + tamaño
+    textTransform: "uppercase",
+    letterSpacing: "0.13em",
+    mb: 0.35, // + aire
+    display: "block",
+    lineHeight: 1.15,
+  };
 
-  const redIntensity = "#EE2737";
-  const errorColor = "#f44336";
-
-  // Calculate responsive font size for the heading
-  const getHeadingFontSize = () => {
-    if (isMobile) return "50px";
-    if (isTablet) return "70px";
-    return "100px";
+  const textFieldStyle = {
+    mb: { xs: 0.95, md: 1.05 }, // + separación
+    "& .MuiInput-underline:before": { borderColor: "#232323" },
+    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+      borderColor: "#343434",
+    },
+    "& .MuiInput-underline:after": { borderColor: "#EE2737" },
+    "& input, & textarea": {
+      color: "#fff",
+      fontSize: { xs: "0.86rem", md: "0.98rem" }, // + tamaño
+      py: 0.35,
+      lineHeight: 1.25,
+    },
+    "& input::placeholder, & textarea::placeholder": {
+      color: "#5f5f5f",
+      opacity: 1,
+    },
   };
 
   return (
-    <Box 
-      paddingBottom={isMobile ? "70px" : "100px"}
+    <Box
       sx={{
-        position: "relative",
+        height: `calc(100dvh - ${navOffset}px)`,
+        width: "100%",
+        boxSizing: "border-box",
+        bgcolor: "#000",
+        color: "#fff",
         overflow: "hidden",
-        width: "100%"
+        px: { xs: "16px", sm: "22px", md: "43px" }, // web exacto 43px
+        py: { xs: "10px", sm: "12px", md: "10px" }, // bajo para evitar scroll
+        display: "flex",
+        alignItems: "stretch",
       }}
     >
-      <Box 
-        position="absolute" 
-        zIndex={0}
-        sx={{
-          top: isMobile ? "2%" : "10%",
-          left: 0,
-          width: "100%",
-          textAlign: isMobile ? "center" : "left",
-          paddingLeft: isMobile ? 0 : "20px"
-        }}
-      >
-       <Typography 
-        variant="h2" 
-        fontSize={getHeadingFontSize()} 
-        fontFamily="'DM Sans', sans-serif" 
-        fontWeight={400} 
-        color="#fff"
-      >
-          CONTACTO
-        </Typography>
-      </Box>
+      <style>
+        {`
+          @import url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/mono.css');
+          footer, .footer, #footer { display: none !important; }
+          html, body, #root { height: 100%; overflow: hidden !important; }
+          body { margin: 0; padding: 0; background: #000; }
+        `}
+      </style>
 
-      <Box
-        ref={formRef}
+      <Grid
+        container
         sx={{
           width: "100%",
-          maxWidth: "100vw",
-          color: "#fff",
-          p: 0,
-          borderRadius: 0,
-          boxShadow: 0,
-          bgcolor: "#000",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: isMobile ? "center" : "end",
-          justifyContent: "space-between",
-          alignContent: "center",
-          marginTop: isMobile ? "120px" : isTablet ? "100px" : "120px",
+          height: "100%",
+          margin: 0,
+          minHeight: 0,
+          overflow: "hidden",
         }}
+        columnSpacing={{ xs: 0, md: 3.5 }}
+        rowSpacing={{ xs: 1.2, md: 0 }}
       >
-        {success && 
-          <Alert 
-            severity="success"
-            sx={{
-              width: isMobile ? "90%" : "75%",
-              margin: "0 auto"
-            }}
-          >
-            ¡Gracias! Tu solicitud ha sido enviada correctamente.
-          </Alert>
-        }
-        
-        {formError && 
-          <Alert 
-            severity="error"
-            sx={{
-              width: isMobile ? "90%" : "75%",
-              margin: "0 auto"
-            }}
-          >
-            {formError}
-          </Alert>
-        }
-        
-        <Box 
-          component="form" 
-          onSubmit={handleSubmit} 
-          padding={isMobile ? "30px 0" : "50px 0"} 
-          sx={{ 
-            width: isMobile ? "95%" : isTablet ? "85%" : "75%",
-            margin: isMobile ? "0 auto" : "0",
-            position: "relative",
-            zIndex: 2,
-            paddingBottom: isMobile ? "50px" : "30px"
+        {/* IZQUIERDA */}
+        <Grid
+          item
+          xs={12}
+          md={7}
+          sx={{
+            display: "flex",
+            alignItems: { xs: "flex-start", md: "center" },
+            minHeight: 0,
+            pr: { xs: 0, md: 1.5 },
           }}
         >
-          <Grid 
-            container
-            padding={isMobile ? "20px" : "40px"} 
-            display="flex" 
-            flexDirection="column" 
-            alignItems="start" 
-            spacing={isMobile ? 1 : 2}
+          <Box
+            sx={{
+              width: "100%",
+              height: { xs: "auto", md: "min(560px, 100%)" },
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: { xs: "flex-start", md: "space-between" },
+              transform: { xs: "none", md: "translateY(18px)" }, // baja visual sin sumar altura
+            }}
           >
-            <Grid item xs={12} paddingTop="20px">
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                NOMBRE
-              </Typography>
-            </Grid>
-            
-            <Grid item xs={12} width={isMobile ? "100%" : "90%"} padding="10px 0">
-              <Input
-                type="text"
-                name="name"
-                placeholder="Nombre Completo"
-                value={formData.name}
-                onChange={handleChange}
-                error={!!errors.name}
-                sx={{
-                  width: "100%",
-                  color: errors.name ? errorColor : "#991923",
-                  input: { color: "#fff", borderRadius: 0 },
-                  "& textarea": { color: "#fff", borderRadius: 0 },
-                  "&:before": { borderBottom: `1px solid ${errors.name ? errorColor : "#d3d3d3"}` },
-                  "&:hover:before": { borderBottom: errors.name ? errorColor : redIntensity },
-                  "&:after": { borderBottom: `2px solid ${errors.name ? errorColor : "#991923"}` },
-                }}
-              />
-              {errors.name && (
-                <FormHelperText error={true} sx={{ marginLeft: "3px", fontWeight: "500" }}>
-                  {errors.name}
-                </FormHelperText>
-              )}
-            </Grid>
-
-            <Grid item xs={12} paddingTop="20px">
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                EMAIL
-              </Typography>
-            </Grid>
-            
-            <Grid item xs={12} width={isMobile ? "100%" : "90%"} padding="10px 0">
-              <Input
-                type="email"
-                name="email"
-                placeholder="Tu Email"
-                value={formData.email}
-                onChange={handleChange}
-                error={!!errors.email}
-                sx={{
-                  width: "100%",
-                  color: errors.email ? errorColor : "#991923",
-                  input: { color: "#fff", borderRadius: 0 },
-                  "& textarea": { color: "#fff", borderRadius: 0 },
-                  "&:before": { borderBottom: `1px solid ${errors.email ? errorColor : "#d3d3d3"}` },
-                  "&:hover:before": { borderBottom: errors.email ? errorColor : redIntensity },
-                  "&:after": { borderBottom: `2px solid ${errors.email ? errorColor : "#991923"}` },
-                }}
-              />
-              {errors.email && (
-                <FormHelperText error={true} sx={{ marginLeft: "3px", fontWeight: "500" }}>
-                  {errors.email}
-                </FormHelperText>
-              )}
-            </Grid>
-
-            <Grid item xs={12} paddingTop="20px">
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                EMPRESA
-              </Typography>
-            </Grid>
-            
-            <Grid item xs={12} width={isMobile ? "100%" : "90%"} padding="10px 0">
-              <Input
-                type="text"
-                placeholder="Empresa (Opcional)"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                disableUnderline={false}
-                sx={{
-                  width: "100%",
-                  color: "#991923",
-                  input: { color: "#fff", borderRadius: 0 },
-                  "& textarea": { color: "#fff", borderRadius: 0 },
-                  "&:before": { borderBottom: "1px solid #d3d3d3" },
-                  "&:hover:before": { borderBottom: redIntensity },
-                  "&:after": { borderBottom: "2px solid #991923" },
-                }}
-              />
-            </Grid>
-            
-            <Grid item xs={12} paddingTop="20px">
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                PRODUCTOS Y SERVICIOS
-              </Typography>
-            </Grid>
-            
-            <Grid 
-              item 
-              xs={12} 
-              width={isMobile ? "100%" : "90%"} 
-              padding="10px 0" 
+            <Typography
+              component="h1"
               sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 1,
-                justifyContent: isMobile ? "center" : "flex-start"
+                fontSize: {
+                  xs: "1.72rem",
+                  sm: "2.1rem",
+                  md: "4.35rem",
+                  lg: "5rem",
+                },
+                fontWeight: 400,
+                lineHeight: { xs: 1.0, md: 0.94 },
+                letterSpacing: "-0.045em",
+                mt: 0,
+                mb: { xs: 1.35, md: 0 },
+                maxWidth: { xs: "100%", md: "95%" },
               }}
             >
-              {servicesList.map((service) => {
-                const isSelected = formData.services.includes(service);
-                return (
-                  <Button
-                    key={service}
-                    variant={isSelected ? "contained" : "outlined"}
-                    onClick={() => handleServiceSelect(service)}
+              Construyendo el futuro del acero en Uruguay.
+            </Typography>
+
+            {/* más separado de la frase */}
+            <Box
+              sx={{
+                pt: { xs: 0.25, md: 1.1 },
+                mt: { xs: 0.2, md: 0 },
+                maxWidth: { xs: "100%", md: "96%" },
+              }}
+            >
+              <Grid
+                container
+                columnSpacing={{ xs: 2, sm: 3, md: 5 }}
+                rowSpacing={{ xs: 1.1, md: 0.9 }}
+              >
+                <Grid item xs={12} sm={6}>
+                  <Typography sx={labelStyle}>EMPRESA</Typography>
+                  <Typography
+                    variant="body2"
                     sx={{
-                      m: 0.5,
-                      borderRadius: "5px",
-                      color: "#fff",
-                      borderColor: errors.services && !isSelected ? errorColor : "#fff",
-                      bgcolor: isSelected ? "#991923" : "transparent",
-                      "&:hover": {
-                        bgcolor: redIntensity,
-                        color: "#fff",
-                      },
-                      fontSize: isMobile ? "0.7rem" : "0.875rem",
-                      padding: isMobile ? "3px 8px" : "6px 16px"
+                      mb: 1.0,
+                      fontSize: { xs: "0.84rem", md: "0.94rem" },
+                      lineHeight: 1.25,
                     }}
                   >
-                    {service}
-                  </Button>
-                );
-              })}
-              {errors.services && (
-                <FormHelperText error={true} sx={{ width: "100%", textAlign: "left", marginLeft: "8px", fontWeight: "500" }}>
-                  {errors.services}
-                </FormHelperText>
-              )}
-            </Grid>
-            
-            <Grid item xs={12} paddingTop="20px">
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                MENSAJE
-              </Typography>
-            </Grid>
-            
-            <Grid item xs={12} width={isMobile ? "100%" : "90%"} padding="10px 0">
-              <Input
-                type="text"
-                placeholder={isMobile ? "¿Cuáles son los objetivos de tu proyecto? (Opcional)" : "¿Cuáles son los objetivos de tu proyecto, requisitos o plazo específico...? (Opcional)"}
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                multiline
-                rows={4}
-                sx={{
-                  width: "100%",
-                  color: "#991923",
-                  input: { color: "#fff", borderRadius: 0 },
-                  "& textarea": { color: "#fff", borderRadius: 0 },
-                  "&:before": { borderBottom: "1px solid #d3d3d3" },
-                  "&:hover:before": { borderBottom: redIntensity },
-                  "&:after": { borderBottom: "2px solid #991923" },
-                }}
-              />
-            </Grid>
+                    ventas@acerospaisano.com.uy
+                  </Typography>
 
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="agree"
-                    checked={formData.agree}
+                  <Typography sx={labelStyle}>TELÉFONOS</Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontSize: { xs: "0.84rem", md: "0.94rem" },
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    +598 99 914 939 / 2365 0000
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Typography sx={labelStyle}>DIRECCIÓN</Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontSize: { xs: "0.84rem", md: "0.94rem" },
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    Ruta 5 Km 25.500
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontSize: { xs: "0.84rem", md: "0.94rem" },
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    Las Piedras, Canelones, Uruguay
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+
+        {/* DERECHA */}
+        <Grid
+          item
+          xs={12}
+          md={5}
+          sx={{
+            display: "flex",
+            alignItems: { xs: "flex-start", md: "center" },
+            minHeight: 0,
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: { xs: "auto", md: "min(560px, 100%)" },
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              transform: { xs: "none", md: "translateY(18px)" }, // baja visual
+            }}
+          >
+            <Box
+              component="img"
+              src="/images/doblado6.jpg"
+              alt="Aceros"
+              sx={{
+                width: "100%",
+                height: { xs: "78px", sm: "92px", md: "136px", lg: "156px" },
+                objectFit: "cover",
+                borderRadius: "2px",
+                filter: "brightness(0.84)",
+                mb: { xs: 1.25, md: 1.5 }, // + aire
+                flexShrink: 0,
+              }}
+            />
+
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{
+                flex: 1,
+                minHeight: 0,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+              }}
+            >
+              {success && (
+                <Alert
+                  severity="success"
+                  sx={{
+                    mb: 1,
+                    bgcolor: "transparent",
+                    color: "#EE2737",
+                    border: "1px solid #EE2737",
+                    borderRadius: 0,
+                    py: 0.2,
+                    "& .MuiAlert-message": {
+                      fontFamily: "'Geist Mono', monospace",
+                      fontSize: "0.74rem",
+                      letterSpacing: "0.05em",
+                    },
+                  }}
+                >
+                  ¡ENVIADO!
+                </Alert>
+              )}
+
+              <Grid
+                container
+                columnSpacing={{ xs: 1.2, md: 1.6 }}
+                rowSpacing={{ xs: 0.55, md: 0.75 }} // DESAPRETADO
+                sx={{ minHeight: 0 }}
+              >
+                <Grid item xs={6}>
+                  <Typography sx={labelStyle}>NOMBRE</Typography>
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    placeholder="Nombre"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    error={!!errors.name}
+                    sx={textFieldStyle}
+                  />
+                  {!!errors.name && (
+                    <Typography
+                      sx={{
+                        color: "#EE2737",
+                        fontSize: "0.68rem",
+                        mt: -0.35,
+                        mb: 0.2,
+                        fontFamily: "'Geist Mono', monospace",
+                      }}
+                    >
+                      {errors.name}
+                    </Typography>
+                  )}
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Typography sx={labelStyle}>EMAIL</Typography>
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    placeholder="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    error={!!errors.email}
+                    sx={textFieldStyle}
+                  />
+                  {!!errors.email && (
+                    <Typography
+                      sx={{
+                        color: "#EE2737",
+                        fontSize: "0.68rem",
+                        mt: -0.35,
+                        mb: 0.2,
+                        fontFamily: "'Geist Mono', monospace",
+                      }}
+                    >
+                      {errors.email}
+                    </Typography>
+                  )}
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography sx={labelStyle}>EMPRESA</Typography>
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    placeholder="Opcional"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    sx={textFieldStyle}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography sx={labelStyle}>PRODUCTOS Y SERVICIOS</Typography>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      columnGap: { xs: 0.65, md: 0.75 },
+                      rowGap: { xs: 0.6, md: 0.7 },
+                      mt: 0.45,
+                      mb: 0.4,
+                    }}
+                  >
+                    {servicesList.map((s) => {
+                      const selected = formData.services.includes(s);
+                      return (
+                        <Button
+                          key={s}
+                          type="button"
+                          onClick={() => handleServiceSelect(s)}
+                          sx={{
+                            fontFamily: "'Geist Mono', monospace",
+                            fontSize: { xs: "0.56rem", md: "0.66rem" }, // + tamaño
+                            lineHeight: 1.08,
+                            color: selected ? "#fff" : "#7d7d7d",
+                            bgcolor: selected ? "#EE2737" : "transparent",
+                            border: selected
+                              ? "1px solid #EE2737"
+                              : "1px solid #2a2a2a",
+                            borderRadius: "2px",
+                            px: { xs: 0.95, md: 1.35 },
+                            py: { xs: 0.22, md: 0.28 }, // + alto
+                            minWidth: "unset",
+                            minHeight: "unset",
+                            textTransform: "none",
+                            whiteSpace: "nowrap",
+                            "&:hover": {
+                              bgcolor: selected ? "#EE2737" : "#111",
+                              color: "#fff",
+                            },
+                          }}
+                        >
+                          {s}
+                        </Button>
+                      );
+                    })}
+                  </Box>
+
+                  {!!errors.services && (
+                    <Typography
+                      sx={{
+                        color: "#EE2737",
+                        fontSize: "0.68rem",
+                        mt: 0.15,
+                        fontFamily: "'Geist Mono', monospace",
+                      }}
+                    >
+                      {errors.services}
+                    </Typography>
+                  )}
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography sx={labelStyle}>MENSAJE</Typography>
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    placeholder="Descripción del proyecto..."
+                    name="message"
+                    multiline
+                    rows={1}
+                    value={formData.message}
                     onChange={handleChange}
                     sx={{
-                      color: errors.agree ? errorColor : redIntensity,
-                      "& .MuiSvgIcon-root": { color: errors.agree ? errorColor : "#fff" },
-                      "& .MuiCheckbox.Mui-checked": { color: errors.agree ? errorColor : redIntensity },
+                      ...textFieldStyle,
+                      mb: { xs: 0.8, md: 0.95 },
+                      "& textarea": {
+                        minHeight: "24px !important",
+                        resize: "none",
+                      },
                     }}
                   />
-                }
-                label={
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
-                      color: errors.agree ? errorColor : "#fff",
-                      fontSize: isMobile ? "0.75rem" : "0.875rem" 
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      mt: { xs: 0.65, md: 0.9 }, // + separación arriba del row final
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: { xs: "stretch", md: "center" },
+                      flexDirection: { xs: "column", md: "row" },
+                      gap: { xs: 1, md: 1.4 },
                     }}
                   >
-                    Acepto el procesamiento de datos personales
-                  </Typography>
-                }
-              />
-              {errors.agree && (
-                <FormHelperText error={true} sx={{ marginLeft: "32px", fontWeight: "500" }}>
-                  {errors.agree}
-                </FormHelperText>
-              )}
-            </Grid>
+                    <Box sx={{ alignSelf: "flex-start" }}>
+                      <FormControlLabel
+                        sx={{ ml: -0.45, mr: 0 }}
+                        control={
+                          <Checkbox
+                            size="small"
+                            sx={{
+                              color: "#333",
+                              p: 0.5,
+                              "&.Mui-checked": { color: "#EE2737" },
+                            }}
+                            checked={formData.agree}
+                            onChange={handleChange}
+                            name="agree"
+                          />
+                        }
+                        label={
+                          <Typography
+                            sx={{
+                              color: errors.agree ? "#EE2737" : "#555",
+                              fontFamily: "'Geist Mono', monospace",
+                              fontSize: { xs: "0.52rem", md: "0.58rem" }, // + tamaño
+                              lineHeight: 1.15,
+                              letterSpacing: "0.03em",
+                            }}
+                          >
+                            ACEPTO EL PROCESAMIENTO DE DATOS
+                          </Typography>
+                        }
+                      />
+                      {!!errors.agree && (
+                        <Typography
+                          sx={{
+                            color: "#EE2737",
+                            fontSize: "0.68rem",
+                            mt: -0.2,
+                            ml: 0.2,
+                            fontFamily: "'Geist Mono', monospace",
+                          }}
+                        >
+                          {errors.agree}
+                        </Typography>
+                      )}
+                    </Box>
 
-            <Grid 
-              item 
-              xs={12} 
-              sx={{ 
-                textAlign: "left",
-                marginTop: "20px",
-                marginBottom: isMobile ? "30px" : "20px",
-                position: "relative",
-                zIndex: 5
-              }}
-            >
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  width: "auto",
-                  borderRadius: "5px",
-                  bgcolor: redIntensity,
-                  color: "#fff",
-                  "&:hover": { bgcolor: redIntensity, color: "#fff" },
-                  padding: isMobile ? "5px 15px" : "6px 20px",
-                  textTransform: "none",
-                  fontSize: isMobile ? "0.875rem" : "1rem",
-                  position: "relative",
-                  zIndex: 10
-                }}
-              >
-                Enviar Solicitud
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{
+                        bgcolor: "#fff",
+                        color: "#000",
+                        px: { xs: 3.2, md: 5.2 },
+                        py: { xs: 0.9, md: 1.02 },
+                        borderRadius: 0,
+                        fontFamily: "'Geist Mono', monospace",
+                        fontWeight: 700,
+                        fontSize: { xs: "0.66rem", md: "0.75rem" }, // + tamaño
+                        letterSpacing: "0.05em",
+                        width: { xs: "100%", md: "auto" },
+                        minWidth: { md: "190px" },
+                        "&:hover": { bgcolor: "#EE2737", color: "#fff" },
+                      }}
+                    >
+                      ENVIAR CONSULTA
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

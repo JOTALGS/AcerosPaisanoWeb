@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Typography, Grid, Container } from "@mui/material";
 
 const mapUrl =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3277.648787543024!2d-56.22233792426595!3d-34.76496757288514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a1d2c0507031bd%3A0x3200638708617154!2sRuta%205%20Gral.%20Fructuoso%20Rivera%2025500%2C%2090200%20Las%20Piedras%2C%20Departamento%20de%20Canelones!5e0!3m2!1ses-419!2suy!4v1708363561594!5m2!1ses-419!2suy";
 
+/* ✅ Fuente directamente en este archivo (sin tocar index.css) */
+const geistMonoImport = `
+  @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap');
+`;
+
 export const Footer = () => {
   const location = useLocation();
 
-  // Lógica Camaleónica
+  useEffect(() => {
+    // Evita duplicar el style si el componente remonta
+    const existing = document.querySelector('style[data-footer-geist-mono="true"]');
+    if (existing) return;
+
+    const styleEl = document.createElement("style");
+    styleEl.setAttribute("data-footer-geist-mono", "true");
+    styleEl.textContent = geistMonoImport;
+    document.head.appendChild(styleEl);
+
+    return () => {
+      // opcional: si querés mantenerlo siempre cargado, comentá esto
+      if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl);
+    };
+  }, []);
+
   const isLightView =
     location.pathname.includes("productos") ||
     location.pathname.includes("catalogo") ||
@@ -24,14 +44,45 @@ export const Footer = () => {
     border: isLightView ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.1)",
   };
 
+  const monoFontFamily =
+    '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+
   const monoStyle = {
-    fontFamily: "'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace",
+    fontFamily: monoFontFamily,
     fontSize: "14px",
     textTransform: "uppercase",
     letterSpacing: "0.15em",
-    fontWeight: 600,
+    fontWeight: 500,
     color: COLORS.textPrimary,
-    transition: "color 0.4s ease",
+    transition: "color 0.3s ease",
+  };
+
+  /* ✅ mismos títulos (grisecitos, mismo tamaño) */
+  const sectionTitleMonoSx = {
+    ...monoStyle,
+    color: COLORS.textSecondary,
+    mb: 3,
+    fontSize: "14px",
+    fontWeight: 500,
+    letterSpacing: "0.14em",
+  };
+
+  /* ✅ hover rojo / active rojo */
+  const footerLinkHover = {
+    transition: "color 0.2s ease, opacity 0.2s ease",
+    "&:hover": {
+      color: COLORS.accentRed,
+      opacity: 1,
+    },
+    "&:focus-visible": {
+      color: COLORS.accentRed,
+      outline: "none",
+      opacity: 1,
+    },
+    "&:active": {
+      color: COLORS.accentRed,
+      opacity: 1,
+    },
   };
 
   const NavLink = ({ to, children }) => (
@@ -45,21 +96,13 @@ export const Footer = () => {
         mb: 1.2,
         fontSize: "15px",
         fontWeight: 400,
-        transition: "all 0.2s ease",
-        "&:hover": { opacity: 0.5 },
+        ...footerLinkHover,
       }}
     >
       {children}
     </Typography>
   );
 
-  /**
-   * ✅ Video:
-   * - Light: invert + multiply (para “matar” negro sobre blanco) + máscara suave.
-   * - Dark: NO invert. Usamos mixBlendMode: "lighten" para que el negro del video se
-   *         vuelva el fondo del wrapper (#121212) y no se note el cuadrado.
-   *         + bajamos opacidad para que no grite.
-   */
   const videoWrapSx = {
     width: "220px",
     height: "220px",
@@ -68,30 +111,23 @@ export const Footer = () => {
     isolation: "isolate",
     borderRadius: "26px",
     backgroundColor: COLORS.cardBg,
-
-    // En light, una máscara suave para esconder bordes de compresión sin tocar el archivo
     ...(isLightView
       ? {
-        WebkitMaskImage:
-          "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
-        maskImage:
-          "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
-      }
-      : {}),
-
-    // En dark, un overlay MUY sutil para integrarlo aún más
-    ...(isLightView
-      ? {}
+          WebkitMaskImage:
+            "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
+          maskImage:
+            "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
+        }
       : {
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(18,18,18,0) 55%, rgba(18,18,18,0.85) 100%)",
-        },
-      }),
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background:
+              "radial-gradient(circle at 50% 50%, rgba(18,18,18,0) 55%, rgba(18,18,18,0.85) 100%)",
+          },
+        }),
   };
 
   const videoSx = {
@@ -101,21 +137,27 @@ export const Footer = () => {
     backgroundColor: "transparent",
     transform: "translateZ(0)",
     willChange: "filter, opacity",
-
-    // Light: key visual del negro sin alpha real
     ...(isLightView
       ? {
-        mixBlendMode: "multiply",
-        filter: "invert(1) grayscale(1) contrast(3.2) brightness(1.08)",
-        opacity: 0.999,
-      }
+          mixBlendMode: "multiply",
+          filter: "invert(1) grayscale(1) contrast(3.2) brightness(1.08)",
+          opacity: 0.999,
+        }
       : {
-        // Dark: “lighten” hace que el negro del video sea reemplazado por el fondo del wrapper
-        // y no se note el cuadrado. Bajamos opacidad para que no se sienta “video”.
-        mixBlendMode: "lighten",
-        filter: "grayscale(1) contrast(1.05) brightness(0.98)",
-        opacity: 0.72,
-      }),
+          mixBlendMode: "lighten",
+          filter: "grayscale(1) contrast(1.05) brightness(0.98)",
+          opacity: 0.72,
+        }),
+  };
+
+  /* ✅ contactos con hover rojo y SIN negrita */
+  const contactLinkSx = {
+    display: "block",
+    fontSize: "14px",
+    color: COLORS.textPrimary,
+    textDecoration: "none",
+    fontWeight: 400,
+    ...footerLinkHover,
   };
 
   return (
@@ -123,17 +165,16 @@ export const Footer = () => {
       component="footer"
       sx={{
         bgcolor: COLORS.canvasBg,
-        py: { xs: 2, md: 2 }, // un poco de aire alrededor
+        py: { xs: 2, md: 2 },
         transition: "background-color 0.6s ease",
       }}
     >
-      {/* ✅ MÁS MARGEN EN MOBILE (ya no toca el borde) */}
       <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Box
           sx={{
             bgcolor: COLORS.cardBg,
-            borderRadius: { xs: "28px", md: "40px" }, // ✅ redondeado en mobile también
-            p: { xs: 3, sm: 4, md: 8, lg: 10 }, // padding más fino en mobile
+            borderRadius: { xs: "28px", md: "40px" },
+            p: { xs: 3, sm: 4, md: 8, lg: 10 },
             boxShadow: isLightView
               ? "0 10px 40px rgba(0,0,0,0.03)"
               : "0 10px 40px rgba(0,0,0,0.5)",
@@ -142,7 +183,7 @@ export const Footer = () => {
             transition: "all 0.6s ease",
           }}
         >
-          {/* TOP HEADER - PUNTO ROJO */}
+          {/* TOP HEADER */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 8 }}>
             <Box
               sx={{
@@ -200,16 +241,7 @@ export const Footer = () => {
             <Grid item xs={12} md={6}>
               <Grid container spacing={4} sx={{ mb: 8 }}>
                 <Grid item xs={6}>
-                  <Typography
-                    sx={{
-                      ...monoStyle,
-                      color: COLORS.textSecondary,
-                      mb: 3,
-                      fontSize: "12px",
-                    }}
-                  >
-                    Navegación
-                  </Typography>
+                  <Typography sx={sectionTitleMonoSx}>Navegación</Typography>
                   <NavLink to="/">Inicio</NavLink>
                   <NavLink to="/sobre-nosotros">Sobre Nosotros</NavLink>
                   <NavLink to="/productos">Productos</NavLink>
@@ -217,36 +249,53 @@ export const Footer = () => {
                 </Grid>
 
                 <Grid item xs={6}>
-                  <Typography
-                    sx={{
-                      ...monoStyle,
-                      color: COLORS.textSecondary,
-                      mb: 3,
-                      fontSize: "12px",
-                    }}
-                  >
-                    Catálogo
-                  </Typography>
-                  <NavLink to="/productos/barras">Barras de Acero</NavLink>
-                  <NavLink to="/productos/perfiles">Perfiles</NavLink>
-                  <NavLink to="/productos/mallas">Mallas</NavLink>
-                  <NavLink to="/productos/corte">Corte CNC</NavLink>
+                  <Typography sx={sectionTitleMonoSx}>Catálogo</Typography>
+                  <NavLink to="/productos/mallas-electrosoldadas">
+                    Mallas Electrosoldadas
+                  </NavLink>
+                  <NavLink to="/productos/mallas-plegadas">
+                    Mallas Plegadas
+                  </NavLink>
+                  <NavLink to="/productos">Varillas de Acero</NavLink>
+                  <NavLink to="/productos/hierro-cortado-y-doblado">
+                    Hierro cortado y doblado
+                  </NavLink>
                 </Grid>
               </Grid>
 
-              {/* INFO CON MAPA POP-UP */}
+              {/* INFO CON LINKS DE CONTACTO */}
               <Grid
                 container
                 spacing={2}
                 sx={{ pt: 4, borderTop: `1px solid ${COLORS.border}` }}
               >
                 <Grid item xs={6}>
-                  <Typography sx={{ ...monoStyle, mb: 1 }}>Consultas</Typography>
-                  <Typography sx={{ fontSize: "14px", color: COLORS.textPrimary }}>
-                    info@aceros.uy
+                  <Typography sx={sectionTitleMonoSx}>Contactos</Typography>
+
+                  <Typography
+                    component="a"
+                    href="mailto:ventas@acerospaisano.com.uy"
+                    sx={contactLinkSx}
+                  >
+                    ventas@acerospaisano.com.uy
                   </Typography>
-                  <Typography sx={{ fontSize: "14px", color: COLORS.textPrimary }}>
-                    +598 2365 0000
+
+                  <Typography
+                    component="a"
+                    href="https://wa.me/59899914939"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ ...contactLinkSx, mt: 0.5 }}
+                  >
+                    +598 99 914 939
+                  </Typography>
+
+                  <Typography
+                    component="a"
+                    href="tel:23650000"
+                    sx={contactLinkSx}
+                  >
+                    2365 0000
                   </Typography>
                 </Grid>
 
@@ -264,8 +313,18 @@ export const Footer = () => {
                     },
                   }}
                 >
-                  <Typography sx={{ ...monoStyle, mb: 1 }}>Planta Industrial</Typography>
-                  <Typography sx={{ fontSize: "13px", color: COLORS.textSecondary }}>
+                  <Typography sx={{ ...sectionTitleMonoSx, textAlign: "right" }}>
+                    Planta Industrial
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      color: COLORS.textSecondary,
+                      transition: "color 0.2s ease",
+                      "&:hover": { color: COLORS.accentRed },
+                    }}
+                  >
                     Ruta 5 Km 25.500
                     <br />
                     Las Piedras, Canelones
@@ -288,6 +347,7 @@ export const Footer = () => {
                       transform: "translateY(10px)",
                       transition: "all 0.4s ease",
                       border: `1px solid ${COLORS.border}`,
+                      zIndex: 3,
                     }}
                   >
                     <iframe
@@ -317,6 +377,8 @@ export const Footer = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-end",
+              gap: 2,
+              flexWrap: { xs: "wrap", sm: "nowrap" },
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
@@ -327,6 +389,7 @@ export const Footer = () => {
                   backgroundImage:
                     "url(https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg)",
                   backgroundSize: "cover",
+                  backgroundPosition: "center",
                   filter: isLightView
                     ? "grayscale(1) opacity(0.2)"
                     : "grayscale(1) brightness(2) opacity(0.3)",
@@ -349,7 +412,13 @@ export const Footer = () => {
             </Box>
 
             <Box sx={{ textAlign: "right", display: { xs: "none", sm: "block" } }}>
-              <Typography sx={{ ...monoStyle, fontSize: "11px", color: COLORS.textSecondary }}>
+              <Typography
+                sx={{
+                  ...monoStyle,
+                  fontSize: "11px",
+                  color: COLORS.textSecondary,
+                }}
+              >
                 ©2026 ACEROS PAISANO S.A.
               </Typography>
             </Box>

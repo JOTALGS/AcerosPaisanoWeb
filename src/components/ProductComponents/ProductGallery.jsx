@@ -71,22 +71,7 @@ const NavButton = styled(IconButton)(({ theme }) => ({
     right: '12px',
   },
   [theme.breakpoints.down('md')]: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    color: 'rgba(255, 255, 255, 0.9)',
-    padding: '6px',
-    '& svg': {
-      fontSize: '18px',
-    },
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      color: '#ffffff',
-    },
-    '&.prev': {
-      left: '8px',
-    },
-    '&.next': {
-      right: '8px',
-    }
+    display: 'none',
   }
 }));
 
@@ -190,13 +175,17 @@ const ProductGallery = ({ images = [], productTitle }) => {
 
   useEffect(() => {
     if (galleryImages.length > 1 && !isPaused) {
+      // Reset progress when index changes
+      setProgress(0);
+
       // Start progress animation
       let currentProgress = 0;
       progressIntervalRef.current = setInterval(() => {
         currentProgress += (100 / (SLIDE_DURATION / PROGRESS_INTERVAL));
         if (currentProgress >= 100) {
           currentProgress = 0;
-          handleNext();
+          const newIndex = activeIndex === galleryImages.length - 1 ? 0 : activeIndex + 1;
+          setActiveIndex(newIndex);
         }
         setProgress(currentProgress);
       }, PROGRESS_INTERVAL);
@@ -241,7 +230,8 @@ const ProductGallery = ({ images = [], productTitle }) => {
 
   const handleNext = () => {
     const newIndex = activeIndex === galleryImages.length - 1 ? 0 : activeIndex + 1;
-    handleThumbnailClick(newIndex);
+    setActiveIndex(newIndex);
+    setProgress(0);
   };
 
   // Pause auto-play on hover

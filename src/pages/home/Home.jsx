@@ -423,43 +423,43 @@ export const Home = () => {
         <div className="top">
           <div className="home-top-row">
             <div className="home-top-grid">
-              <Box className="image-column image-left" sx={{}}>
+              <Box className="image-column image-left" sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "flex-start" },
+                alignItems: "center",
+                width: "100%",
+                position: { xs: "absolute", md: "relative" },
+                top: { xs: "12vh", md: "auto" }
+              }}>
                 <Box
                   component="img"
                   src="./images/paisanologowhite1.png"
                   alt="Left Image"
                   fetchpriority="high"
-                  sx={{ width: "auto", height: { xs: "10vh", xl: "20vh" }, marginTop: "60px" }}
+                  sx={{
+                    width: "auto",
+                    height: { xs: "12vh", md: "10vh", xl: "20vh" },
+                    marginTop: { xs: "0", md: "60px" },
+                    paddingLeft: { xs: "20px", md: "0" },
+                    paddingRight: { xs: "20px", md: "0" }
+                  }}
                 />
               </Box>
             </div>
           </div>
 
           <div className="Portada-video" ref={heroVideoRef}>
-            {isMobile || prefersReducedMotion ? (
-              <Box
-                component="img"
-                src="/images/hero-poster.jpg"
-                alt="Hero background"
-                sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  const video = document.createElement("video");
-                  video.src = "/14-optimized.mp4";
-                  video.muted = true;
-                  video.style.width = "100%";
-                  video.style.height = "100%";
-                  video.style.objectFit = "cover";
-                  e.target.parentElement.appendChild(video);
-                }}
-              />
-            ) : (
-              <video autoPlay loop muted playsInline preload="metadata" poster="/images/hero-poster.jpg">
-                {videoLoaded && <source src="/14-optimized.mp4" type="video/mp4" />}
-                {videoLoaded && <source src="/14.mp4" type="video/mp4" />}
-                Tu navegador no admite videos.
-              </video>
-            )}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            >
+              <source src="/14-optimized.mp4" type="video/mp4" />
+              <source src="/14.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
 

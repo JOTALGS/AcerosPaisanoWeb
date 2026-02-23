@@ -2,6 +2,9 @@
    FOOTER - ESTILO REFERENCIA (ES)
    ================================ */
 
+/* ✅ Geist Mono */
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap');
+
 /* 🎨 Cambiá acá el rojo custom */
 .apFooter {
   --brand-red: #EE2737;   /* tu rojo */
@@ -10,6 +13,9 @@
   --muted-on-red: rgba(255, 255, 255, 0.70);
   --muted-on-card: rgba(255, 255, 255, 0.72);
   --radius: 28px;
+
+  /* ✅ variable mono */
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* ✅ Fondo rojo continuo (soluciona el “partido”) */
@@ -72,7 +78,9 @@
   align-items: flex-start;
 }
 
+/* ✅ mono */
 .apFooter__kicker {
+  font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -102,7 +110,9 @@
   margin-top: 6px;
 }
 
+/* ✅ mono */
 .apFooter__quickLink {
+  font-family: var(--font-mono);
   color: rgba(255,255,255,0.88);
   text-decoration: none;
   font-size: 14px;
@@ -159,7 +169,9 @@
   line-height: 1.75;
 }
 
+/* ✅ mono (detalle técnico) */
 .apFooter__arrow {
+  font-family: var(--font-mono);
   color: var(--brand-red);
   margin-right: 10px;
   font-weight: 600;
@@ -184,7 +196,7 @@
   border-top: 1px solid rgba(255,255,255,0.08);
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* ✅ “tercera columna” a la derecha */
+  grid-template-columns: 1fr 1fr 1fr;
   gap: clamp(12px, 2vw, 24px);
   align-items: end;
 }
@@ -196,7 +208,9 @@
   align-items: flex-start;
 }
 
+/* ✅ mono */
 .apFooter__brandText {
+  font-family: var(--font-mono);
   color: var(--brand-red);
   font-size: 12px;
   letter-spacing: 0.18em;
@@ -221,8 +235,9 @@
 
 .apFooter__spacer {}
 
-/* Dirección derecha */
+/* ✅ Dirección derecha en mono */
 .apFooter__address {
+  font-family: var(--font-mono);
   justify-self: end;
   text-align: left;
   color: var(--brand-red);
@@ -239,7 +254,10 @@
 /* ======================
    LEGAL
    ====================== */
+
+/* ✅ legal en mono */
 .apFooter__legalBar {
+  font-family: var(--font-mono);
   margin-top: 18px;
   padding-top: 14px;
   border-top: 1px solid rgba(0,0,0,0.18);
@@ -248,6 +266,8 @@
   gap: 18px;
   color: rgba(255,255,255,0.75);
   font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* ======================

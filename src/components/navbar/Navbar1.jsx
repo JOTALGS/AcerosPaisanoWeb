@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,63 +12,83 @@ import {
   List,
   ListItem,
   ListItemText,
-  GlobalStyles
+  GlobalStyles,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+/* ✅ Geist Mono */
 const fontImportStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Urbanist:wght@300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap');
 `;
 
-const AnimatedMenuIcon = ({ isOpen }) => (
-  <Box sx={{
-    width: '36px',
-    height: '36px',
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }}>
-    <Box sx={{
-      width: '30px',
-      height: '3px',
-      backgroundColor: isOpen ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
-      position: 'absolute',
-      transition: 'all 0.3s ease',
-      transform: isOpen ? 'rotate(45deg)' : 'translateY(-6px)',
-      boxShadow: isOpen ? '0 0 5px #FFFFFF' : 'none',
-    }} />
-    <Box sx={{
-      width: '30px',
-      height: '3px',
-      backgroundColor: isOpen ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
-      position: 'absolute',
-      transition: 'all 0.3s ease',
-      transform: isOpen ? 'rotate(-45deg)' : 'translateY(6px)',
-      boxShadow: isOpen ? '0 0 5px #FFFFFF' : 'none',
-    }} />
+const AnimatedMenuIcon = ({ isOpen, isDark = false }) => (
+  <Box
+    sx={{
+      width: "36px",
+      height: "36px",
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <Box
+      sx={{
+        width: "30px",
+        height: "3px",
+        backgroundColor: isOpen
+          ? "#FFFFFF"
+          : isDark
+          ? "rgba(11, 11, 11, 0.85)"
+          : "rgba(255, 255, 255, 0.9)",
+        position: "absolute",
+        transition: "all 0.3s ease",
+        transform: isOpen ? "rotate(45deg)" : "translateY(-6px)",
+        boxShadow: isOpen ? "0 0 5px #FFFFFF" : "none",
+      }}
+    />
+    <Box
+      sx={{
+        width: "30px",
+        height: "3px",
+        backgroundColor: isOpen
+          ? "#FFFFFF"
+          : isDark
+          ? "rgba(11, 11, 11, 0.85)"
+          : "rgba(255, 255, 255, 0.9)",
+        position: "absolute",
+        transition: "all 0.3s ease",
+        transform: isOpen ? "rotate(-45deg)" : "translateY(6px)",
+        boxShadow: isOpen ? "0 0 5px #FFFFFF" : "none",
+      }}
+    />
   </Box>
 );
 
-export const NavBar = () => {
+export const NavBar = ({ whiteBackground = false }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('md', 'lg'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("md", "lg"));
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate();
   const [delayedHidden, setDelayedHidden] = useState(hidden);
 
-  // ✅ medir altura real de la navbar para que el Drawer entre “apenas debajo”
   const appBarRef = useRef(null);
   const [navHeight, setNavHeight] = useState(76);
-
-  // ✅ lock scroll pro (incluye iOS) para que NO se vea nada atrás ni haya scroll
   const scrollYRef = useRef(0);
+
+  // ✅ Geist Mono stack
+  const navMono = useMemo(
+    () =>
+      `"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
+    []
+  );
+
+  // tamaños
+  const webNavFontSize = useMemo(() => (isTablet ? "0.74rem" : "0.8rem"), [isTablet]);
+  const mobileDrawerFontSize = useMemo(() => "clamp(20px, 6.2vw, 26px)", []);
 
   useEffect(() => {
     if (hidden) {
@@ -90,7 +110,6 @@ export const NavBar = () => {
     const handleScroll = () => {
       if (menuOpen) return;
       const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 0);
 
       if (currentScrollY > lastScrollY && currentScrollY > 50) setHidden(true);
       else setHidden(false);
@@ -98,13 +117,14 @@ export const NavBar = () => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY, menuOpen]);
 
+  // ✅ inject Geist Mono
   useEffect(() => {
-    const styleElement = document.createElement('style');
-    styleElement.type = 'text/css';
+    const styleElement = document.createElement("style");
+    styleElement.type = "text/css";
     styleElement.appendChild(document.createTextNode(fontImportStyles));
     document.head.appendChild(styleElement);
     return () => document.head.removeChild(styleElement);
@@ -114,7 +134,7 @@ export const NavBar = () => {
     if (menuOpen) setHidden(false);
   }, [menuOpen]);
 
-  // ✅ medir altura navbar (en mount, resize, y al abrir menú)
+  // medir altura navbar
   useEffect(() => {
     const measure = () => {
       if (!appBarRef.current) return;
@@ -127,7 +147,7 @@ export const NavBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, menuOpen]);
 
-  // ✅ lock scroll (no scroll, no overscroll “verde”, no ver fondo)
+  // lock scroll (iOS friendly)
   useEffect(() => {
     const html = document.documentElement;
 
@@ -160,7 +180,6 @@ export const NavBar = () => {
     }
   }, [menuOpen]);
 
-  // ✅ nav items correctos
   const navItems = [
     { title: "Inicio", path: "/" },
     { title: "Sobre nosotros", path: "/sobre-nosotros" },
@@ -168,7 +187,7 @@ export const NavBar = () => {
     { title: "Contacto", path: "/contacto" },
   ];
 
-  const handleNavClick = (path) => {
+  const handleNavClick = () => {
     window.scrollTo(0, 0);
     if (isMobile) toggleMenu();
   };
@@ -177,20 +196,18 @@ export const NavBar = () => {
     <>
       <GlobalStyles
         styles={{
-          '@import': 'url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Urbanist:wght@300;400;500;700&display=swap")',
-          'button:focus, a:focus': { outline: 'none' },
-          'a, button': { WebkitTapHighlightColor: 'transparent' }
+          "button:focus, a:focus": { outline: "none" },
+          "a, button": { WebkitTapHighlightColor: "transparent" },
         }}
       />
 
-      {/* Wrapper original, pero cuando menuOpen: zIndex alto para que navbar quede arriba */}
       <Box
         sx={{
           position: "fixed",
           right: "auto",
-          zIndex: menuOpen ? 2200 : (delayedHidden ? -1 : 100),
+          zIndex: menuOpen ? 2200 : delayedHidden ? -1 : 100,
           width: "100vw",
-          height: "100px"
+          height: "100px",
         }}
       >
         <AppBar
@@ -199,34 +216,52 @@ export const NavBar = () => {
           sx={{
             right: "auto",
             width: "100vw",
-            // ✅ márgenes simétricos (mobile/web)
             padding: isMobile ? "6px 16px" : "3px 23px",
             transition: "transform 0.4s ease-in-out, background-color 0.3s ease-in-out",
             transform: hidden && !menuOpen ? "translateY(-100%)" : "translateY(0)",
-            backgroundColor: menuOpen ? "#000000" : "transparent",
-            backdropFilter: menuOpen ? "none" : "blur(10px)",
+
+            /* ✅ SIN glass en secciones oscuras/transparente
+               ✅ SOLO blanco en vistas whiteBackground */
+            backgroundColor: menuOpen
+              ? "#000000"
+              : whiteBackground
+              ? "rgba(255, 255, 255, 0.96)"
+              : "transparent",
+
+            /* ✅ blur solo para fondos blancos */
+            backdropFilter: menuOpen ? "none" : whiteBackground ? "blur(10px)" : "none",
+            WebkitBackdropFilter: menuOpen ? "none" : whiteBackground ? "blur(10px)" : "none",
+
             boxShadow: "none",
+            borderBottom: whiteBackground && !menuOpen ? "1px solid rgba(11, 11, 11, 0.06)" : "none",
             zIndex: 2201,
           }}
         >
-          {/* Toolbar sin padding extra para que quede igual a ambos lados */}
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: 0 }}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: 0,
+              minHeight: isMobile ? "60px" : "70px",
+            }}
+          >
             <Button
               component={Link}
               to="/"
-              onClick={() => { window.scrollTo(0, 0); }}
+              onClick={() => window.scrollTo(0, 0)}
               color="inherit"
-              sx={{ padding: isMobile ? "4px" : "8px" }}
+              sx={{ padding: isMobile ? "4px" : "8px", minWidth: "auto" }}
             >
               <Box
                 component="img"
                 src="/images/logo.png"
                 alt="Logo"
-                fetchpriority="high"
+                fetchPriority="high"
                 sx={{ height: isMobile ? 40 : 50 }}
               />
             </Button>
 
+            {/* WEB NAV */}
             {!isMobile && (
               <Box
                 sx={{
@@ -241,7 +276,7 @@ export const NavBar = () => {
                     display: "flex",
                     justifyContent: isTablet ? "space-around" : "space-between",
                     width: isTablet ? "100%" : "70%",
-                    mb: isTablet ? 1 : 0
+                    mb: isTablet ? 1 : 0,
                   }}
                 >
                   {navItems.slice(0, 3).map((item, index) => (
@@ -249,19 +284,28 @@ export const NavBar = () => {
                       key={index}
                       component={Link}
                       to={item.path}
-                      onClick={() => { window.scrollTo(0, 0); }}
+                      onClick={() => window.scrollTo(0, 0)}
                       color="inherit"
                       sx={{
                         textTransform: "none",
-                        fontSize: isTablet ? "0.9rem" : "inherit"
+                        padding: "6px 10px",
+                        minWidth: "auto",
                       }}
                     >
                       <Typography
-                        fontSize={isTablet ? "1rem" : "1.2rem"}
-                        color="rgba(255, 255, 255, 0.75)"
                         sx={{
+                          fontFamily: navMono, // ✅ Geist Mono
+                          fontSize: webNavFontSize,
+                          fontWeight: 500,
+                          letterSpacing: "0.08em",
+                          color: whiteBackground
+                            ? "rgba(11, 11, 11, 0.7)"
+                            : "rgba(255, 255, 255, 0.75)",
                           transition: "color 0.3s ease",
-                          "&:hover": { color: "white" }
+                          "&:hover": {
+                            color: whiteBackground ? "rgba(11, 11, 11, 0.95)" : "white",
+                          },
+                          lineHeight: 1,
                         }}
                       >
                         {item.title}
@@ -274,16 +318,28 @@ export const NavBar = () => {
                   <Button
                     component={Link}
                     to="/contacto"
-                    onClick={() => { window.scrollTo(0, 0); }}
+                    onClick={() => window.scrollTo(0, 0)}
                     color="inherit"
-                    sx={{ textTransform: "none" }}
+                    sx={{
+                      textTransform: "none",
+                      padding: "6px 10px",
+                      minWidth: "auto",
+                    }}
                   >
                     <Typography
-                      fontSize={"1.2rem"}
-                      color="rgba(255, 255, 255, 0.75)"
                       sx={{
+                        fontFamily: navMono, // ✅ Geist Mono
+                        fontSize: webNavFontSize,
+                        fontWeight: 500,
+                        letterSpacing: "0.08em",
+                        color: whiteBackground
+                          ? "rgba(11, 11, 11, 0.7)"
+                          : "rgba(255, 255, 255, 0.75)",
                         transition: "color 0.3s ease",
-                        "&:hover": { color: "white" }
+                        "&:hover": {
+                          color: whiteBackground ? "rgba(11, 11, 11, 0.95)" : "white",
+                        },
+                        lineHeight: 1,
                       }}
                     >
                       Contacto
@@ -293,6 +349,7 @@ export const NavBar = () => {
               </Box>
             )}
 
+            {/* MOBILE HAMBURGER */}
             {isMobile && (
               <IconButton
                 edge="end"
@@ -300,18 +357,18 @@ export const NavBar = () => {
                 aria-label="menu"
                 onClick={toggleMenu}
                 sx={{
-                  color: "white",
+                  color: whiteBackground ? "rgba(11, 11, 11, 0.85)" : "white",
                   padding: 1,
-                  '&:hover': { backgroundColor: 'transparent' }
+                  "&:hover": { backgroundColor: "transparent" },
                 }}
               >
-                <AnimatedMenuIcon isOpen={menuOpen} />
+                <AnimatedMenuIcon isOpen={menuOpen} isDark={whiteBackground} />
               </IconButton>
             )}
           </Toolbar>
         </AppBar>
 
-        {/* ✅ Menú: entra debajo de la navbar + NO bloquea clicks a la navbar */}
+        {/* Drawer debajo de navbar */}
         <Drawer
           anchor="bottom"
           open={menuOpen}
@@ -319,15 +376,12 @@ export const NavBar = () => {
           hideBackdrop
           ModalProps={{
             keepMounted: true,
-            disableScrollLock: true
+            disableScrollLock: true,
           }}
           sx={{
             zIndex: 2190,
-            // ✅ clave: el root del Drawer no captura clicks (deja clickeable la navbar)
             pointerEvents: "none",
-            "& .MuiDrawer-paper": {
-              pointerEvents: "auto"
-            }
+            "& .MuiDrawer-paper": { pointerEvents: "auto" },
           }}
           PaperProps={{
             sx: {
@@ -350,18 +404,19 @@ export const NavBar = () => {
           transitionDuration={{ enter: 500, exit: 500 }}
           SlideProps={{ direction: "up" }}
         >
-          {/* Shift5 layout: abajo/izquierda */}
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            width: "100%",
-            alignItems: "flex-start",
-            justifyContent: "flex-end",
-            paddingLeft: "16px",
-            paddingRight: "16px",
-            paddingBottom: "12vh"
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              width: "100%",
+              alignItems: "flex-start",
+              justifyContent: "flex-end",
+              paddingLeft: "16px",
+              paddingRight: "16px",
+              paddingBottom: "12vh",
+            }}
+          >
             <List sx={{ width: "100%", padding: 0, margin: 0 }}>
               {navItems.map((item, index) => (
                 <ListItem
@@ -369,7 +424,7 @@ export const NavBar = () => {
                   sx={{
                     padding: "10px 0",
                     justifyContent: "flex-start",
-                    width: "auto"
+                    width: "auto",
                   }}
                 >
                   <ListItemText
@@ -378,23 +433,23 @@ export const NavBar = () => {
                         component={Link}
                         to={item.path}
                         color="inherit"
-                        onClick={() => handleNavClick(item.path)}
+                        onClick={handleNavClick}
                         sx={{
                           padding: 0,
                           minWidth: "auto",
                           justifyContent: "flex-start",
-                          "&:hover": { backgroundColor: "transparent" }
+                          "&:hover": { backgroundColor: "transparent" },
                         }}
                       >
                         <Typography
-                          fontFamily="Archivo"
-                          fontWeight={500} // ✅ medium real
                           sx={{
-                            fontSize: "clamp(26px, 7.2vw, 34px)", // ✅ más chica
-                            letterSpacing: "-0.03em",
+                            fontFamily: navMono, // ✅ Geist Mono
+                            fontWeight: 500,
+                            fontSize: mobileDrawerFontSize,
+                            letterSpacing: "0.06em",
                             lineHeight: 0.98,
                             textTransform: "none",
-                            textShadow: "none"
+                            textShadow: "none",
                           }}
                         >
                           {item.title}
@@ -414,3 +469,5 @@ export const NavBar = () => {
     </>
   );
 };
+
+export default NavBar;

@@ -62,18 +62,10 @@ export const About = () => {
   const titleRef = useRef(null);
   const taglineRef = useRef(null);
 
-  // Guardamos SOLO los triggers creados acá, para no matar triggers de otras páginas
+  // Guardamos SOLO los triggers creados acá
   const pinTriggersRef = useRef([]);
   const lineTriggersRef = useRef([]);
 
-  // tagline en 2 líneas
-  const heroTaglineLine1 = "Forjamos acero de calidad certificada para impulsar";
-  const heroTaglineLine2 =
-    "la construcción, el agro y la industria en Uruguay.";
-
-  // =========================
-  // HERO animación sutil
-  // =========================
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (titleRef.current) {
@@ -96,13 +88,8 @@ export const About = () => {
     return () => ctx.revert();
   }, []);
 
-  // =========================
-  // Pin stacking (FIX FOOTER)
-  // Antes estabas usando end:"max" => la última sección quedaba pinneada hasta el final
-  // y el footer “subía”/se superponía. Ahora cada sección se pinnea ~1 viewport.
-  // =========================
+  // Pin stacking (fix footer)
   useEffect(() => {
-    // cleanup por si re-monta
     pinTriggersRef.current.forEach((t) => t?.kill?.());
     pinTriggersRef.current = [];
 
@@ -116,18 +103,14 @@ export const About = () => {
         start: "top top",
         pin: true,
         pinSpacing: false,
-
-        // ✅ cada sección dura 1 viewport; la última le damos un poquito más
         end: () =>
           "+=" + Math.round(window.innerHeight * (isLast ? 1.25 : 1)),
-
         invalidateOnRefresh: true,
       });
 
       pinTriggersRef.current.push(trigger);
     });
 
-    // refrescamos para que calcule bien alturas
     ScrollTrigger.refresh();
 
     return () => {
@@ -136,9 +119,7 @@ export const About = () => {
     };
   }, []);
 
-  // =========================
   // Reveal overlay líneas
-  // =========================
   useEffect(() => {
     lineTriggersRef.current.forEach((t) => t?.kill?.());
     lineTriggersRef.current = [];
@@ -189,15 +170,29 @@ export const About = () => {
             </h1>
           </div>
 
-          {/* ✅ Bloque centrado, texto alineado a la izquierda */}
+          {/* Frase inferior */}
           <div className="about-hero__taglineWrap">
             <div ref={taglineRef} className="about-hero__taglineInner">
-              <p className="about-hero__tagline">
+              {/* Desktop / tablet */}
+              <p className="about-hero__tagline about-hero__tagline--desktop">
                 <span className="about-hero__taglineLine">
-                  {heroTaglineLine1}
+                  Forjamos <strong>acero de calidad certificada</strong> para impulsar
                 </span>
                 <span className="about-hero__taglineLine">
-                  {heroTaglineLine2}
+                  la construcción, el agro y la industria en <strong>Uruguay</strong>.
+                </span>
+              </p>
+
+              {/* Mobile (3 líneas balanceadas para evitar corte raro) */}
+              <p className="about-hero__tagline about-hero__tagline--mobile">
+                <span className="about-hero__taglineLine">
+                  Forjamos <strong>acero de calidad certificada</strong>
+                </span>
+                <span className="about-hero__taglineLine">
+                  para impulsar la construcción, el agro y
+                </span>
+                <span className="about-hero__taglineLine">
+                  la industria en <strong>Uruguay</strong>.
                 </span>
               </p>
             </div>
@@ -323,7 +318,6 @@ export const About = () => {
         ))}
       </div>
 
-      {/* ✅ el footer ahora no se va a “subir” porque el último pin ya no dura hasta max */}
       <Footer />
     </section>
   );

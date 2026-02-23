@@ -45,13 +45,11 @@
   filter: contrast(1.05) saturate(1.02);
 }
 
-/* ✅ Masking MÁS SUAVE (tu pedido) */
+/* Masking suave */
 .about-hero__overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-
-  /* bajamos opacidades para que se vea más la foto */
   background:
     radial-gradient(
       1200px 650px at 50% 60%,
@@ -76,64 +74,70 @@
 /* ---------- TÍTULO top-left ---------- */
 .about-hero__titleWrap {
   position: absolute;
-  top: clamp(86px, 10vh, 140px);
+  /* desktop/web: un poco más abajo */
+  top: clamp(116px, 13vh, 172px);
   left: clamp(18px, 6vw, 80px);
   right: clamp(18px, 6vw, 80px);
 }
 
-/* ✅ “Bold” que SE NOTE (aunque solo tengas Regular.otf) */
 .about-hero__title {
   margin: 0;
-  font-family: "PPObjectSans", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  /* subimos peso + micro stroke para que se perciba más fuerte */
-  font-weight: 500;
-  -webkit-text-stroke: 0.35px rgba(255,255,255,0.25);
+  /* ✅ sin bold */
+  font-weight: 400;
+  -webkit-text-stroke: 0.22px rgba(255, 255, 255, 0.14);
 
   letter-spacing: -0.02em;
   line-height: 0.92;
   color: #fff;
-
-  /* si lo ves chico es porque el CSS no está entrando.
-     Este clamp te lo deja tipo "Services" */
   font-size: clamp(78px, 9vw, 98px);
 
   text-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
 }
 
-/* ---------- TAGLINE: bloque CENTRADO, texto a la IZQUIERDA ---------- */
+/* ---------- TAGLINE: bloque centrado, texto alineado a la izquierda ---------- */
 .about-hero__taglineWrap {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   bottom: clamp(26px, 8vh, 92px);
-
-  /* esto centra el bloque en pantalla */
   width: min(760px, calc(100% - 80px));
 }
 
-/* contenedor por si querés ajustar ancho fácil */
 .about-hero__taglineInner {
   width: 100%;
 }
 
-/* ✅ texto alineado a la izquierda, pero el bloque está centrado */
 .about-hero__tagline {
   margin: 0;
   text-align: left;
-
-  font-family: "PPObjectSans", Arial, sans-serif;
-  font-weight: 500; /* más “bold” visual */
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
   font-size: clamp(16px, 1.55vw, 28px);
   line-height: 1.25;
   letter-spacing: 0.01em;
-
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
 }
 
 .about-hero__taglineLine {
   display: block;
+  text-wrap: balance;
+}
+
+.about-hero__tagline strong,
+.about-hero__tagline b {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Desktop/mobile variants de frase */
+.about-hero__tagline--desktop {
+  display: block;
+}
+.about-hero__tagline--mobile {
+  display: none;
 }
 
 /* =========================
@@ -147,7 +151,6 @@
   padding-top: 0;
 }
 
-/* Mantengo lo tuyo */
 .subtitle {
   font-size: 45px;
   font-weight: bold;
@@ -195,24 +198,45 @@
    ========================= */
 @media (max-width: 600px) {
   .about-hero__titleWrap {
-    top: 86px;
+    /* mobile: un poco abajo también */
+    top: 110px;
     left: 16px;
     right: 16px;
   }
 
   .about-hero__title {
-    font-size: clamp(56px, 12vw, 78px);
+    font-size: clamp(52px, 11vw, 70px);
     letter-spacing: -0.015em;
-    -webkit-text-stroke: 0.25px rgba(255,255,255,0.22);
+    -webkit-text-stroke: 0.18px rgba(255,255,255,0.12);
+    line-height: 0.98;
+    font-weight: 400;
   }
 
   .about-hero__taglineWrap {
-    width: calc(100% - 24px);
-    bottom: 22px;
+    width: calc(100% - 28px);
+
+    /* subimos apenas la frase */
+    bottom: 38px;
   }
 
+  /* ✅ más grande + mejor lectura en mobile */
   .about-hero__tagline {
-    font-size: 16px;
-    line-height: 1.25;
+    font-size: 17px;
+    line-height: 1.18;
+    letter-spacing: 0;
+  }
+
+  /* mostrar versión mobile balanceada */
+  .about-hero__tagline--desktop {
+    display: none;
+  }
+
+  .about-hero__tagline--mobile {
+    display: block;
+    max-width: 100%;
+  }
+
+  .about-hero__tagline--mobile .about-hero__taglineLine {
+    display: block;
   }
 }

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 .catalogue-wrapper.is-light {
   --page-bg: #EBEBEB;
@@ -10,7 +11,7 @@
   --hair2: rgba(11, 11, 11, 0.08);
   --red: #d61f1f;
 
-  --font-sans: "Europa Grotesk", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  --font-sans: "Roboto", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
 
@@ -460,8 +461,18 @@ body[data-nav-tone="dark"] .nav-bar {
 }
 
 @media (max-width: 768px) {
+  /* Fuerza 16px laterales en todo el layout de esta vista (header + contenido) */
+  .catalogue-header .MuiContainer-root,
+  .catalogue-container.MuiContainer-root {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
   .catalogue-container {
-    padding: 10px 12px 44px;
+    padding-top: 10px;
+    padding-bottom: 44px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .products-container.grid {
