@@ -208,7 +208,7 @@
     margin-bottom: 40px;
   }
 
-  /* Home Container Mobile - Maintain Structure */
+  /* Home Container Mobile */
   .home-container {
     min-height: auto !important;
     padding: 20px 0;
@@ -220,10 +220,14 @@
     margin-bottom: 40px;
   }
 
+  /* =====================================
+     HERO / PARALLAX WRAPPERS (MOBILE)
+     Fix espacio negro antes de la frase
+     ===================================== */
   .home-top-row {
     width: 90vw !important;
     height: auto !important;
-    min-height: 50vh;
+    min-height: 42vh; /* antes 50vh */
     padding: 20px;
     margin: 0 auto;
   }
@@ -234,9 +238,15 @@
     width: 90vw !important;
     padding: 20px 20px;
     gap: 20px;
-    top: -120px !important;
-    margin: 20px auto;
+
+    /* ✅ FIX REAL del hueco:
+       NO top negativo (deja espacio fantasma)
+       SÍ margin-top negativo (colapsa layout) */
     position: relative !important;
+    top: 0 !important;
+    margin: -220px auto 10px auto !important; /* AJUSTABLE: -240 / -260 / -280 */
+
+    z-index: 3;
   }
 
   .catalogue-section {
@@ -274,10 +284,13 @@
   }
 
   .home-bottom-row {
-    margin-top: 60px;
+    /* acercamos la frase luego del bloque superior */
+    margin-top: 12px !important;
     margin-right: 0;
     padding: 0 20px;
     width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .about-intro {

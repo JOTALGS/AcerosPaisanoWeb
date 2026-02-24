@@ -5,26 +5,28 @@ import { Box, Typography, Grid, Container } from "@mui/material";
 const mapUrl =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3277.648787543024!2d-56.22233792426595!3d-34.76496757288514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a1d2c0507031bd%3A0x3200638708617154!2sRuta%205%20Gral.%20Fructuoso%20Rivera%2025500%2C%2090200%20Las%20Piedras%2C%20Departamento%20de%20Canelones!5e0!3m2!1ses-419!2suy!4v1708363561594!5m2!1ses-419!2suy";
 
-/* ✅ Fuente directamente en este archivo (sin tocar index.css) */
-const geistMonoImport = `
-  @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap');
+/* ✅ Fuentes directamente en este archivo (sin tocar index.css)
+   - Inter para textos normales
+   - Geist Mono para labels / monospace
+*/
+const footerFontsImport = `
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap');
 `;
 
 export const Footer = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Evita duplicar el style si el componente remonta
-    const existing = document.querySelector('style[data-footer-geist-mono="true"]');
+    const existing = document.querySelector('style[data-footer-fonts="true"]');
     if (existing) return;
 
     const styleEl = document.createElement("style");
-    styleEl.setAttribute("data-footer-geist-mono", "true");
-    styleEl.textContent = geistMonoImport;
+    styleEl.setAttribute("data-footer-fonts", "true");
+    styleEl.textContent = footerFontsImport;
     document.head.appendChild(styleEl);
 
     return () => {
-      // opcional: si querés mantenerlo siempre cargado, comentá esto
+      // Si querés que quede cargado siempre aunque desmonte, comentá esto
       if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl);
     };
   }, []);
@@ -44,6 +46,11 @@ export const Footer = () => {
     border: isLightView ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.1)",
   };
 
+  // ✅ Inter para todos los textos normales (reemplaza Roboto)
+  const sansFontFamily =
+    '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+
+  // ✅ Geist Mono se mantiene SOLO para labels / monospace
   const monoFontFamily =
     '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
 
@@ -55,6 +62,11 @@ export const Footer = () => {
     fontWeight: 500,
     color: COLORS.textPrimary,
     transition: "color 0.3s ease",
+  };
+
+  const interBaseText = {
+    fontFamily: sansFontFamily,
+    color: COLORS.textPrimary,
   };
 
   /* ✅ mismos títulos (grisecitos, mismo tamaño) */
@@ -90,12 +102,13 @@ export const Footer = () => {
       component={Link}
       to={to}
       sx={{
+        ...interBaseText, // ✅ Inter
         display: "block",
-        color: COLORS.textPrimary,
         textDecoration: "none",
         mb: 1.2,
         fontSize: "15px",
         fontWeight: 400,
+        lineHeight: 1.25,
         ...footerLinkHover,
       }}
     >
@@ -150,13 +163,14 @@ export const Footer = () => {
         }),
   };
 
-  /* ✅ contactos con hover rojo y SIN negrita */
+  /* ✅ contactos con hover rojo y SIN negrita + Inter */
   const contactLinkSx = {
+    ...interBaseText, // ✅ Inter
     display: "block",
     fontSize: "14px",
-    color: COLORS.textPrimary,
     textDecoration: "none",
     fontWeight: 400,
+    lineHeight: 1.35,
     ...footerLinkHover,
   };
 
@@ -195,7 +209,7 @@ export const Footer = () => {
             />
             <Typography
               sx={{
-                ...monoStyle,
+                ...monoStyle, // ✅ Geist Mono
                 fontSize: "12px",
                 color: COLORS.textSecondary,
               }}
@@ -207,19 +221,19 @@ export const Footer = () => {
           <Grid container spacing={4}>
             {/* LADO IZQUIERDO */}
             <Grid item xs={12} md={6}>
-              <Typography
-                sx={{
-                  fontSize: { xs: "2.35rem", sm: "2.6rem", md: "4.2rem" },
-                  fontWeight: 400,
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.05em",
-                  color: COLORS.textPrimary,
-                  mb: 6,
-                  transition: "color 0.4s ease",
-                }}
-              >
-                Construyendo el futuro <br /> del acero en Uruguay.
-              </Typography>
+            <Typography
+              sx={{
+                ...interBaseText,
+                fontSize: { xs: "2.05rem", sm: "2.55rem", md: "4.2rem" }, // 👈 achicado en mobile
+                fontWeight: 400,
+                lineHeight: { xs: 0.96, sm: 0.95, md: 0.95 },
+                letterSpacing: { xs: "-0.035em", md: "-0.05em" }, // 👈 menos agresivo en mobile
+                mb: { xs: 5, md: 6 },
+                transition: "color 0.4s ease",
+              }}
+            >
+              Construyendo el futuro <br /> del acero en Uruguay.
+            </Typography>
 
               <Box sx={videoWrapSx}>
                 <Box
@@ -319,8 +333,10 @@ export const Footer = () => {
 
                   <Typography
                     sx={{
+                      ...interBaseText, // ✅ Inter
                       fontSize: "13px",
                       color: COLORS.textSecondary,
+                      lineHeight: 1.35,
                       transition: "color 0.2s ease",
                       "&:hover": { color: COLORS.accentRed },
                     }}
@@ -356,7 +372,9 @@ export const Footer = () => {
                       height="100%"
                       style={{
                         border: 0,
-                        filter: isLightView ? "grayscale(1)" : "invert(1) grayscale(1)",
+                        filter: isLightView
+                          ? "grayscale(1)"
+                          : "invert(1) grayscale(1)",
                       }}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
@@ -398,7 +416,7 @@ export const Footer = () => {
               <Box>
                 <Typography
                   sx={{
-                    ...monoStyle,
+                    ...monoStyle, // ✅ Geist Mono
                     color: COLORS.accentOrange,
                     fontSize: "13px",
                     lineHeight: 1.2,
@@ -414,7 +432,7 @@ export const Footer = () => {
             <Box sx={{ textAlign: "right", display: { xs: "none", sm: "block" } }}>
               <Typography
                 sx={{
-                  ...monoStyle,
+                  ...monoStyle, // ✅ Geist Mono
                   fontSize: "11px",
                   color: COLORS.textSecondary,
                 }}

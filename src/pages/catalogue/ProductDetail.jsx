@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { useTheme, styled } from "@mui/material/styles";
-import { NavBar } from "../../components/navbar/navbar.jsx";
+import { NavBar } from "../../../components/navbar/navbar.jsx";
 import { Footer } from "../../components/footer/footer.jsx";
 import { products } from "../../data/productsData";
 import gsap from "gsap";

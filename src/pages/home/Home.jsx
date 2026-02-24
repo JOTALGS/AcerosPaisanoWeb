@@ -13,7 +13,7 @@ import "./Home-improvements.css";
 import "./Home-fixes.css";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
-import { NavBar } from "../../components/navbar/navbar.jsx";
+import { NavBar } from "../../components/navbar/Navbar.jsx";
 import { Footer } from "../../components/footer/footer.jsx";
 import { Box, Typography } from "@mui/material";
 import ProductServicePage from "../ProductServicePage/ProductServicePage";
@@ -120,8 +120,8 @@ export const Home = () => {
       // ✅ Tamaño más grande en móvil
       fontSize: { xs: "36px", sm: "42px", md: "60px", lg: "96px" },
 
-      // ✅ Line-height más apretado para móvil
-      lineHeight: { xs: 0.9, sm: 1.0, md: 1.05, lg: 1.0 },
+      // ✅ Line-height aumentado para evitar cortes en letras como "g"
+      lineHeight: { xs: 1.1, sm: 1.15, md: 1.2, lg: 1.15 },
 
       textAlign: "left",
       fontFamily: "Inter, sans-serif",
@@ -143,9 +143,9 @@ export const Home = () => {
 
   // ✅ Ajuste fino extra: espaciado adecuado ENTRE líneas
   // (porque cada línea es un <div> separado)
-  // Ajustado para evitar cortes en las letras
-  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.05em"; // Espacio mínimo para evitar cortes
-  const HERO_LINE_GAP_TIGHT_MOBILE = "0em";  // Sin overlap en móvil
+  // Interlineado mucho más apretado
+  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.6em"; // Interlineado muy apretado
+  const HERO_LINE_GAP_TIGHT_MOBILE = "-0.45em";  // Interlineado muy apretado en móvil
 
   // Initialize scroll animations only when user starts scrolling
   // Utility to yield to the main thread between tasks
@@ -161,7 +161,7 @@ export const Home = () => {
     // Slice refs before the loop
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
 
-    // ✅ Set up each line's ScrollTrigger in its own task
+    // Sin animación - texto blanco directo
     for (const wrapper of lineWrapperRef.current) {
       if (!wrapper) continue;
       const overlay = wrapper.querySelector(".line-overlay");
@@ -170,20 +170,9 @@ export const Home = () => {
       // Yield BEFORE each heavy ScrollTrigger registration
       await yieldToMain();
 
-      overlay.style.willChange = "clip-path";
-
-      gsap.to(overlay, {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        ease: "none",
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top 85%",
-          end: "top 45%",
-          scrub: 3,
-          onComplete: () => {
-            overlay.style.willChange = "auto";
-          },
-        },
+      // Establecer directamente sin animación
+      gsap.set(overlay, {
+        opacity: 1
       });
     }
 
@@ -576,24 +565,70 @@ export const Home = () => {
           sx={{
             position: "relative",
             width: "100%",
+            boxSizing: "border-box",
             display: "flex",
-            gap: { xs: "20px", md: "40px" },
-            padding: { xs: "40px 20px", md: "80px 40px" },
+
+            /* ✅ MENOS separación entre imágenes */
+            gap: { xs: "12px", md: "18px" },
+
+            /* ✅ MENOS márgenes laterales (mobile y web) */
+            px: { xs: "12px", md: "16px" },
+            py: { xs: "32px", md: "64px" },
+
             justifyContent: "center",
             alignItems: "center",
             flexDirection: { xs: "column", md: "row" },
-            marginTop: "60px",
-            marginBottom: "60px",
+
+            marginTop: "40px",
+            marginBottom: "40px",
           }}
         >
-          <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
-            <Suspense fallback={<div style={{ height: "60vh", backgroundColor: "#f0f0f0", borderRadius: "8px" }} />}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "auto" },
+              flex: { xs: "none", md: 1 },   // ✅ reparte mejor el ancho
+              minWidth: 0,
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "8px",
+            }}
+          >
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "60vh",
+                    backgroundColor: "#f0f0f0",
+                    borderRadius: "8px",
+                  }}
+                />
+              }
+            >
               <ParallaxBoxColumn image="/images/malla10.jpg" />
             </Suspense>
           </Box>
 
-          <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
-            <Suspense fallback={<div style={{ height: "60vh", backgroundColor: "#f0f0f0", borderRadius: "8px" }} />}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "auto" },
+              flex: { xs: "none", md: 1 },
+              minWidth: 0,
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "8px",
+            }}
+          >
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "60vh",
+                    backgroundColor: "#f0f0f0",
+                    borderRadius: "8px",
+                  }}
+                />
+              }
+            >
               <ParallaxBoxColumn image="/images/barras.jpg" />
             </Suspense>
           </Box>
@@ -747,8 +782,6 @@ export const Home = () => {
       </Suspense>
 
       {/* Modal and Suspense removed - now using routes */}
-
-
       {selectedService && (
         <ProductServicePage
           serviceSlug={selectedService}

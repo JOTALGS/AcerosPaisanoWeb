@@ -213,7 +213,7 @@ const ContactComponent = () => {
               sx={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: {
-                  xs: "1.72rem",
+                  xs: "1.96rem",
                   sm: "2.1rem",
                   md: "4.35rem",
                   lg: "5rem",
@@ -246,11 +246,19 @@ const ContactComponent = () => {
                   <Typography sx={labelStyle}>EMPRESA</Typography>
                   <Typography
                     variant="body2"
+                    component="a"
+                    href="mailto:ventas@acerospaisano.com.uy"
                     sx={{
                       fontFamily: "'Inter', sans-serif",
                       mb: 1.2,
                       fontSize: { xs: "0.88rem", md: "0.98rem" },
                       lineHeight: 1.5,
+                      color: "#fff",
+                      textDecoration: "none",
+                      transition: "color 0.2s",
+                      "&:hover": {
+                        color: "#EE2737",
+                      },
                     }}
                   >
                     ventas@acerospaisano.com.uy
@@ -259,10 +267,20 @@ const ContactComponent = () => {
                   <Typography sx={labelStyle}>TELÉFONOS</Typography>
                   <Typography
                     variant="body2"
+                    component="a"
+                    href="https://wa.me/59899914939"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     sx={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: { xs: "0.88rem", md: "0.98rem" },
                       lineHeight: 1.5,
+                      color: "#fff",
+                      textDecoration: "none",
+                      transition: "color 0.2s",
+                      "&:hover": {
+                        color: "#EE2737",
+                      },
                     }}
                   >
                     +598 99 914 939 / 2365 0000

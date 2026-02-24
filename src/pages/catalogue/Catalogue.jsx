@@ -11,7 +11,7 @@ import {
   Button
 } from "@mui/material";
 import { useTheme, styled, alpha } from '@mui/material/styles';
-import { NavBar } from "../../components/navbar/NavBar1";
+import { NavBar } from "../../components/navbar/navbar.jsx";
 import { Footer } from '../../components/footer/footer.jsx';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
