@@ -13,8 +13,8 @@ import "./Home-improvements.css";
 import "./Home-fixes.css";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
-import { NavBar } from "../../components/navbar/Navbar1";
-import { Footer } from "../../components/footer/Footer";
+import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { Footer } from "../../components/footer/Footer.jsx";
 import { Box, Typography } from "@mui/material";
 import ProductServicePage from "../ProductServicePage/ProductServicePage";
 
@@ -120,8 +120,8 @@ export const Home = () => {
       // ✅ Tamaño más grande en móvil
       fontSize: { xs: "36px", sm: "42px", md: "60px", lg: "96px" },
 
-      // ✅ Line-height más apretado para móvil
-      lineHeight: { xs: 0.9, sm: 1.0, md: 1.05, lg: 1.0 },
+      // ✅ Line-height aumentado para evitar cortes en letras como "g"
+      lineHeight: { xs: 1.1, sm: 1.15, md: 1.2, lg: 1.15 },
 
       textAlign: "left",
       fontFamily: "Inter, sans-serif",
@@ -143,9 +143,9 @@ export const Home = () => {
 
   // ✅ Ajuste fino extra: espaciado adecuado ENTRE líneas
   // (porque cada línea es un <div> separado)
-  // Ajustado para evitar cortes en las letras
-  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.05em"; // Espacio mínimo para evitar cortes
-  const HERO_LINE_GAP_TIGHT_MOBILE = "0em";  // Sin overlap en móvil
+  // Interlineado mucho más apretado
+  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.6em"; // Interlineado muy apretado
+  const HERO_LINE_GAP_TIGHT_MOBILE = "-0.45em";  // Interlineado muy apretado en móvil
 
   // Initialize scroll animations only when user starts scrolling
   // Utility to yield to the main thread between tasks
@@ -161,7 +161,7 @@ export const Home = () => {
     // Slice refs before the loop
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
 
-    // ✅ Set up each line's ScrollTrigger in its own task
+    // Sin animación - texto blanco directo
     for (const wrapper of lineWrapperRef.current) {
       if (!wrapper) continue;
       const overlay = wrapper.querySelector(".line-overlay");
@@ -170,20 +170,9 @@ export const Home = () => {
       // Yield BEFORE each heavy ScrollTrigger registration
       await yieldToMain();
 
-      overlay.style.willChange = "clip-path";
-
-      gsap.to(overlay, {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        ease: "none",
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top 85%",
-          end: "top 45%",
-          scrub: 3,
-          onComplete: () => {
-            overlay.style.willChange = "auto";
-          },
-        },
+      // Establecer directamente sin animación
+      gsap.set(overlay, {
+        opacity: 1
       });
     }
 
@@ -423,43 +412,43 @@ export const Home = () => {
         <div className="top">
           <div className="home-top-row">
             <div className="home-top-grid">
-              <Box className="image-column image-left" sx={{}}>
+              <Box className="image-column image-left" sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "flex-start" },
+                alignItems: "center",
+                width: "100%",
+                position: { xs: "absolute", md: "relative" },
+                top: { xs: "12vh", md: "auto" }
+              }}>
                 <Box
                   component="img"
                   src="./images/paisanologowhite1.png"
                   alt="Left Image"
                   fetchpriority="high"
-                  sx={{ width: "auto", height: { xs: "10vh", xl: "20vh" }, marginTop: "60px" }}
+                  sx={{
+                    width: "auto",
+                    height: { xs: "12vh", md: "10vh", xl: "20vh" },
+                    marginTop: { xs: "0", md: "60px" },
+                    paddingLeft: { xs: "20px", md: "0" },
+                    paddingRight: { xs: "20px", md: "0" }
+                  }}
                 />
               </Box>
             </div>
           </div>
 
           <div className="Portada-video" ref={heroVideoRef}>
-            {isMobile || prefersReducedMotion ? (
-              <Box
-                component="img"
-                src="/images/hero-poster.jpg"
-                alt="Hero background"
-                sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  const video = document.createElement("video");
-                  video.src = "/14-optimized.mp4";
-                  video.muted = true;
-                  video.style.width = "100%";
-                  video.style.height = "100%";
-                  video.style.objectFit = "cover";
-                  e.target.parentElement.appendChild(video);
-                }}
-              />
-            ) : (
-              <video autoPlay loop muted playsInline preload="metadata" poster="/images/hero-poster.jpg">
-                {videoLoaded && <source src="/14-optimized.mp4" type="video/mp4" />}
-                {videoLoaded && <source src="/14.mp4" type="video/mp4" />}
-                Tu navegador no admite videos.
-              </video>
-            )}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            >
+              <source src="/14-optimized.mp4" type="video/mp4" />
+              <source src="/14.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
 
@@ -576,24 +565,70 @@ export const Home = () => {
           sx={{
             position: "relative",
             width: "100%",
+            boxSizing: "border-box",
             display: "flex",
-            gap: { xs: "20px", md: "40px" },
-            padding: { xs: "40px 20px", md: "80px 40px" },
+
+            /* ✅ MENOS separación entre imágenes */
+            gap: { xs: "12px", md: "18px" },
+
+            /* ✅ MENOS márgenes laterales (mobile y web) */
+            px: { xs: "12px", md: "16px" },
+            py: { xs: "32px", md: "64px" },
+
             justifyContent: "center",
             alignItems: "center",
             flexDirection: { xs: "column", md: "row" },
-            marginTop: "60px",
-            marginBottom: "60px",
+
+            marginTop: "40px",
+            marginBottom: "40px",
           }}
         >
-          <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
-            <Suspense fallback={<div style={{ height: "60vh", backgroundColor: "#f0f0f0", borderRadius: "8px" }} />}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "auto" },
+              flex: { xs: "none", md: 1 },   // ✅ reparte mejor el ancho
+              minWidth: 0,
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "8px",
+            }}
+          >
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "60vh",
+                    backgroundColor: "#f0f0f0",
+                    borderRadius: "8px",
+                  }}
+                />
+              }
+            >
               <ParallaxBoxColumn image="/images/malla10.jpg" />
             </Suspense>
           </Box>
 
-          <Box sx={{ width: { xs: "100%", md: "50%" }, position: "relative" }}>
-            <Suspense fallback={<div style={{ height: "60vh", backgroundColor: "#f0f0f0", borderRadius: "8px" }} />}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "auto" },
+              flex: { xs: "none", md: 1 },
+              minWidth: 0,
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "8px",
+            }}
+          >
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "60vh",
+                    backgroundColor: "#f0f0f0",
+                    borderRadius: "8px",
+                  }}
+                />
+              }
+            >
               <ParallaxBoxColumn image="/images/barras.jpg" />
             </Suspense>
           </Box>
@@ -747,8 +782,6 @@ export const Home = () => {
       </Suspense>
 
       {/* Modal and Suspense removed - now using routes */}
-
-
       {selectedService && (
         <ProductServicePage
           serviceSlug={selectedService}

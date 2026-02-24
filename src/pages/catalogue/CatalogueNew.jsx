@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Container, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { NavBar } from "../../components/navbar/NavBar1";
-import { Footer } from "../../components/footer/Footer";
+import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { Footer } from "../../components/footer/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -52,7 +52,6 @@ const PdfIcon = () => (
 export function CatalogueNew() {
   const [viewMode, setViewMode] = useState("list");
   const [openExtended, setOpenExtended] = useState({});
-  const [navTone, setNavTone] = useState("light"); // light | dark
 
   const navigate = useNavigate();
   const titleRef = useRef(null);
@@ -162,44 +161,6 @@ export function CatalogueNew() {
     if (isMobile) setViewMode("grid");
   }, [isMobile]);
 
-  // Set nav tone attribute on body (para CSS de la NavBar)
-  useEffect(() => {
-    document.body.dataset.navTone = navTone;
-    return () => {
-      // no lo borro para no parpadear si navegan rápido, pero si querés:
-      // delete document.body.dataset.navTone;
-    };
-  }, [navTone]);
-
-  // Observer para alternar navTone según sección (light/dark)
-  useEffect(() => {
-    const sentinels = Array.from(document.querySelectorAll("[data-nav-tone]"));
-    if (!sentinels.length) return;
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        // elegimos el que está más "activo" en la zona superior
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
-
-        if (visible?.target) {
-          const tone = visible.target.getAttribute("data-nav-tone");
-          if (tone && tone !== navTone) setNavTone(tone);
-        }
-      },
-      {
-        // zona de decisión cerca del top (donde vive la nav)
-        root: null,
-        rootMargin: "-72px 0px -80% 0px",
-        threshold: [0, 0.15, 0.3, 0.6],
-      }
-    );
-
-    sentinels.forEach((s) => obs.observe(s));
-    return () => obs.disconnect();
-  }, [navTone]);
-
   // Animaciones clean
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -258,10 +219,7 @@ export function CatalogueNew() {
 
   return (
     <div className="catalogue-wrapper is-light" ref={containerRef}>
-      {/* Sentinel: arriba es LIGHT */}
-      <div className="nav-tone-sentinel" data-nav-tone="light" aria-hidden="true" />
-
-      <NavBar />
+      <NavBar whiteBackground={true} />
 
       <section className="catalogue-header">
         <Container maxWidth="xl">
@@ -387,9 +345,6 @@ export function CatalogueNew() {
           })}
         </div>
       </Container>
-
-      {/* Sentinel: antes del footer asumimos DARK (si tu footer es negro) */}
-      <div className="nav-tone-sentinel" data-nav-tone="dark" aria-hidden="true" />
 
       <Footer />
     </div>

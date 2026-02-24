@@ -6,8 +6,8 @@ import {
   Button
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { NavBar } from "../../components/navbar/NavBar1";
-import { Footer } from '../../components/footer/Footer';
+import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { Footer } from '../../components/footer/Footer.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';

@@ -1,14 +1,8 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Typography,
-  Button
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { NavBar } from '../../components/navbar/Navbar1';
-import { Footer } from '../../components/footer/Footer';
+import { Container } from '@mui/material';
+import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { Footer } from '../../components/footer/Footer.jsx';
 import ProductGallery from '../../components/ProductComponents/ProductGallery';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -17,13 +11,29 @@ import './ProductDetail.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const PdfIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M7 2.75h7.2L19.25 7.8V20a1.25 1.25 0 0 1-1.25 1.25H7A1.25 1.25 0 0 1 5.75 20V4A1.25 1.25 0 0 1 7 2.75Z"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+    />
+    <path d="M14 2.9V8h5.1" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    <path d="M8.25 16.25h7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    <path d="M8.25 13.25h5.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
 // Products data
 const productsData = {
   'mallas-electrosoldadas': {
     id: '01',
     title: 'Mallas Electrosoldadas',
     subtitle: 'Refuerzo estructural certificado',
-    description: 'Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995. Solución integral para el refuerzo de estructuras de hormigón con la más alta calidad.',
+    description:
+      'Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995. Solución integral para el refuerzo de estructuras de hormigón con la más alta calidad.',
+    datasheetPdf: '/pdf/mallas-electrosoldadas.pdf',
     specifications: [
       'Certificadas bajo norma UNIT 845:1995',
       'Medidas estándar de 600x240cm en stock permanente',
@@ -47,12 +57,12 @@ const productsData = {
       'Asistencia técnica permanente',
     ],
     technicalInfo: {
-      'Norma': 'UNIT 845:1995',
-      'Formato': 'Paños y rollos',
-      'Medidas': '600x240cm',
-      'Stock': 'Permanente',
-      'Diámetros': 'Hasta 12+12mm',
-      'Entrega': 'Programada'
+      Norma: 'UNIT 845:1995',
+      Formato: 'Paños y rollos',
+      Medidas: '600x240cm',
+      Stock: 'Permanente',
+      Diámetros: 'Hasta 12+12mm',
+      Entrega: 'Programada',
     },
     availability: 'Entregas a todo el país',
     images: [
@@ -60,14 +70,19 @@ const productsData = {
       { src: '/images/mallas2.jpg', alt: 'Mallas Electrosoldadas detalle' },
       { src: '/images/mallas3.jpg', alt: 'Mallas Electrosoldadas proceso' },
       { src: '/images/mallas4.jpg', alt: 'Mallas Electrosoldadas medidas' },
-      { src: '/images/mallas6.jpg', alt: 'Mallas Electrosoldadas aplicación' }
-    ]
+      { src: '/images/mallas6.jpg', alt: 'Mallas Electrosoldadas aplicación' },
+    ],
+    // ✅ sin 3D acá
+    threeDImage: null,
   },
+
   'mallas-plegadas': {
     id: '02',
     title: 'Mallas Plegadas',
     subtitle: 'Innovación en prefabricación de armaduras',
-    description: 'Combina las ventajas del cortado y doblado con las mallas tradicionales. Proceso industrializado con plegadora automatizada.',
+    description:
+      'Combina las ventajas del cortado y doblado con las mallas tradicionales. Proceso industrializado con plegadora automatizada.',
+    datasheetPdf: '/pdf/mallas-plegadas.pdf',
     specifications: [
       'Diseños a medida con alta precisión dimensional',
       'Proceso industrializado con plegadora automatizada',
@@ -85,11 +100,11 @@ const productsData = {
       'Trazabilidad completa del material',
     ],
     technicalInfo: {
-      'Proceso': 'Automatizado',
+      Proceso: 'Automatizado',
       'Reducción MO': '60%',
-      'Entrega': 'Programada',
-      'Geometría': 'Adaptable',
-      'Trazabilidad': 'Completa'
+      Entrega: 'Programada',
+      Geometría: 'Adaptable',
+      Trazabilidad: 'Completa',
     },
     availability: 'Entregas a todo el país',
     images: [
@@ -97,14 +112,22 @@ const productsData = {
       { src: '/images/plegada1.jpg', alt: 'Mallas Plegadas proceso' },
       { src: '/images/plegada2.jpg', alt: 'Mallas Plegadas optimización' },
       { src: '/images/plegada3.jpg', alt: 'Mallas Plegadas formatos' },
-      { src: '/images/plegada6.jpg', alt: 'Mallas Plegadas diseño' }
-    ]
+      { src: '/images/plegada6.jpg', alt: 'Mallas Plegadas diseño' },
+    ],
+    // ✅ 3D se mueve a mallas plegadas
+    threeDImage: {
+      src: '/images/Frame 112 (1).png',
+      alt: 'Plano 3D Mallas Plegadas',
+    },
   },
+
   'hierro-cortado-y-doblado': {
     id: '03',
     title: 'Hierro Cortado y Doblado',
     subtitle: 'Sistema industrial de corte y doblado',
-    description: 'Sistema industrial de corte y doblado de varillas de acero que permite cumplir con las especificaciones exactas del proyecto.',
+    description:
+      'Sistema industrial de corte y doblado de varillas de acero que permite cumplir con las especificaciones exactas del proyecto.',
+    datasheetPdf: null,
     specifications: [
       'Procesos de calidad garantizada ISO 9001',
       'Pedidos diseñados y validados en software especializado',
@@ -123,11 +146,11 @@ const productsData = {
       'Asistencia técnica permanente',
     ],
     technicalInfo: {
-      'Calidad': 'ISO 9001',
-      'Desperdicio': '0%',
-      'Diámetros': '6-32mm',
-      'Software': 'Especializado',
-      'Identificación': 'Por colores'
+      Calidad: 'ISO 9001',
+      Desperdicio: '0%',
+      Diámetros: '6-32mm',
+      Software: 'Especializado',
+      Identificación: 'Por colores',
     },
     availability: 'Entregas a todo el país',
     images: [
@@ -136,14 +159,18 @@ const productsData = {
       { src: '/images/doblado4.jpg', alt: 'Cero desperdicio' },
       { src: '/images/doblado5.jpg', alt: 'Asistencia técnica' },
       { src: '/images/doblado6.jpg', alt: 'Control de calidad' },
-      { src: '/images/doblado7.jpg', alt: 'Economía de tiempo' }
-    ]
+      { src: '/images/doblado7.jpg', alt: 'Economía de tiempo' },
+    ],
+    threeDImage: null,
   },
+
   'barras-lisas': {
     id: '04',
     title: 'Barras Lisas',
     subtitle: 'Calidad certificada para construcción',
-    description: 'Barras de acero de alta calidad con superficie lisa, certificadas bajo normas UNIT 34:1995 y UNIT 845:1995.',
+    description:
+      'Barras de acero de alta calidad con superficie lisa, certificadas bajo normas UNIT 34:1995 y UNIT 845:1995.',
+    datasheetPdf: null,
     specifications: [
       'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
       'Diámetros disponibles: 6, 8, 10, 12, 16, 20, 25mm',
@@ -158,25 +185,29 @@ const productsData = {
       'Stock permanente',
     ],
     technicalInfo: {
-      'Norma': 'UNIT 34:1995',
-      'Calidad': 'AL-220',
-      'Diámetros': '6-25mm',
-      'Longitud': '12m',
-      'Stock': 'Permanente'
+      Norma: 'UNIT 34:1995',
+      Calidad: 'AL-220',
+      Diámetros: '6-25mm',
+      Longitud: '12m',
+      Stock: 'Permanente',
     },
     availability: 'Entregas a todo el país',
     images: [
       { src: '/images/barrasLisas.jpg', alt: 'Barras Lisas' },
       { src: '/images/barras1.jpg', alt: 'Barras de calidad' },
       { src: '/images/barras2.jpg', alt: 'Medidas precisas' },
-      { src: '/images/barras3.jpg', alt: 'Optimización de recursos' }
-    ]
+      { src: '/images/barras3.jpg', alt: 'Optimización de recursos' },
+    ],
+    threeDImage: null,
   },
+
   'barras-conformadas': {
     id: '05',
     title: 'Barras Conformadas',
     subtitle: 'Máxima adherencia para hormigón armado',
-    description: 'Barras de acero de alta calidad con superficie corrugada para máxima adherencia al hormigón.',
+    description:
+      'Barras de acero de alta calidad con superficie corrugada para máxima adherencia al hormigón.',
+    datasheetPdf: null,
     specifications: [
       'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
       'Diámetros disponibles: 6, 8, 10, 12, 16, 20, 25, 32mm',
@@ -192,11 +223,11 @@ const productsData = {
       'Stock permanente',
     ],
     technicalInfo: {
-      'Norma': 'UNIT 34:1995',
-      'Calidad': 'ADN-420',
-      'Diámetros': '6-32mm',
-      'Longitud': '12m',
-      'Stock': 'Permanente'
+      Norma: 'UNIT 34:1995',
+      Calidad: 'ADN-420',
+      Diámetros: '6-32mm',
+      Longitud: '12m',
+      Stock: 'Permanente',
     },
     availability: 'Entregas a todo el país',
     images: [
@@ -204,70 +235,77 @@ const productsData = {
       { src: '/images/barras1.jpg', alt: 'Alta adherencia' },
       { src: '/images/barras2.jpg', alt: 'Certificación garantizada' },
       { src: '/images/barras3.jpg', alt: 'Optimización en obra' },
-      { src: '/images/barras5.jpg', alt: 'Logística optimizada' }
-    ]
-  }
+      { src: '/images/barras5.jpg', alt: 'Logística optimizada' },
+    ],
+    threeDImage: null,
+  },
 };
 
 const ProductDetail = ({ serviceSlug }) => {
+  const params = useParams();
+  const resolvedSlug =
+    serviceSlug || params.serviceSlug || params.slug || params.productSlug || null;
 
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const productData = productsData[serviceSlug];
+    const productData = productsData[resolvedSlug];
+
     if (!productData) {
-      navigate('/productos');
       navigate('/productos');
       return;
     }
+
     setProduct(productData);
     window.scrollTo(0, 0);
-  }, [serviceSlug, navigate]);
+  }, [resolvedSlug, navigate]);
 
   useEffect(() => {
     if (!product) return;
 
-    // GSAP animations
     const ctx = gsap.context(() => {
-      // Animate hero section
-      gsap.fromTo('.product-hero',
+      gsap.fromTo(
+        '.product-hero',
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
       );
 
-      // Animate content sections
-      gsap.fromTo('.product-content-section',
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.product-content-section',
-            start: 'top 80%',
-            once: true
+      const sections = gsap.utils.toArray('.product-content-section');
+      sections.forEach((section, i) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: i * 0.03,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 82%',
+              once: true,
+            },
           }
-        }
-      );
+        );
+      });
 
-      // Animate tech specs
-      gsap.fromTo('.spec-row',
-        { opacity: 0, x: -20 },
+      gsap.fromTo(
+        '.spec-row',
+        { opacity: 0, x: -16 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.4,
-          stagger: 0.1,
+          duration: 0.35,
+          stagger: 0.06,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: '.tech-specs-container',
-            start: 'top 80%',
-            once: true
-          }
+            start: 'top 85%',
+            once: true,
+          },
         }
       );
     }, containerRef);
@@ -275,7 +313,15 @@ const ProductDetail = ({ serviceSlug }) => {
     return () => ctx.revert();
   }, [product]);
 
+  const handleOpenDatasheet = () => {
+    if (!product?.datasheetPdf) return;
+    window.open(product.datasheetPdf, '_blank', 'noopener,noreferrer');
+  };
+
   if (!product) return null;
+
+  const technicalEntries = Object.entries(product.technicalInfo || {});
+  const hasTechnicalInfo = technicalEntries.length > 0;
 
   return (
     <>
@@ -287,11 +333,11 @@ const ProductDetail = ({ serviceSlug }) => {
       </Helmet>
 
       <div className="product-detail-wrapper" ref={containerRef}>
-        <NavBar />
+        <NavBar whiteBackground={true} />
 
         <Container maxWidth="xl">
           {/* Breadcrumbs */}
-          <nav className="breadcrumbs">
+          <nav className="breadcrumbs" aria-label="Breadcrumb">
             <Link to="/">INICIO</Link>
             <span className="separator">/</span>
             <Link to="/productos">PRODUCTOS</Link>
@@ -333,6 +379,35 @@ const ProductDetail = ({ serviceSlug }) => {
                     <span className="availability-text">{product.availability}</span>
                   </div>
 
+                  {/* Ficha técnica compacta */}
+                  <button
+                    type="button"
+                    className={`datasheet-row ${!product.datasheetPdf ? 'is-disabled' : ''}`}
+                    onClick={handleOpenDatasheet}
+                    disabled={!product.datasheetPdf}
+                    aria-label={
+                      product.datasheetPdf
+                        ? 'Abrir ficha técnica PDF'
+                        : 'Ficha técnica no disponible'
+                    }
+                  >
+                    <span className="datasheet-icon" aria-hidden="true">
+                      <PdfIcon />
+                    </span>
+
+                    <span className="datasheet-text">Ficha técnica</span>
+
+                    <span className="datasheet-meta">
+                      {product.datasheetPdf ? 'PDF' : 'No disponible'}
+                    </span>
+
+                    <span className="datasheet-right-lines" aria-hidden="true">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+                  </button>
+
                   {/* Single CTA Button */}
                   <button className="cta-button primary" onClick={() => navigate('/contacto')}>
                     <span className="cta-text">SOLICITAR INFORMACIÓN</span>
@@ -350,26 +425,49 @@ const ProductDetail = ({ serviceSlug }) => {
               <span className="section-subtitle">ESPECIFICACIONES TÉCNICAS</span>
             </div>
 
-            <div className="tech-specs-container">
-              <div className="specs-grid">
-                {Object.entries(product.technicalInfo).map(([key, value], index) => (
-                  <div className="spec-row" key={key}>
-                    <span className="spec-index">[{String(index + 1).padStart(2, '0')}]</span>
-                    <span className="spec-label">{key}</span>
-                    <span className="spec-separator"></span>
-                    <span className="spec-value">{value}</span>
+            <div className={product.threeDImage ? 'tech-specs-with-3d' : ''}>
+              <div className="tech-specs-container">
+                {hasTechnicalInfo ? (
+                  <>
+                    <div className="specs-grid">
+                      {technicalEntries.map(([key, value], index) => (
+                        <div className="spec-row" key={key}>
+                          <span className="spec-index">[{String(index + 1).padStart(2, '0')}]</span>
+                          <span className="spec-label">{key}</span>
+                          <span className="spec-separator"></span>
+                          <span className="spec-value">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="specs-footer">
+                      <span className="certification-badge">
+                        <span className="badge-icon">✓</span>
+                        <span className="badge-text">CERTIFICADO</span>
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="specs-grid">
+                    <div className="spec-row">
+                      <span className="spec-label">Ficha técnica</span>
+                      <span className="spec-value">No disponible</span>
+                    </div>
                   </div>
-                ))}
+                )}
               </div>
-              <div className="specs-footer">
-                <span className="certification-badge">
-                  <span className="badge-icon">✓</span>
-                  <span className="badge-text">CERTIFICADO</span>
-                </span>
-              </div>
+
+              {product.threeDImage && (
+                <div className="tech-3d-container">
+                  <img
+                    src={product.threeDImage.src}
+                    alt={product.threeDImage.alt || `Plano 3D ${product.title}`}
+                    className="tech-3d-image is-dark-lines"
+                  />
+                </div>
+              )}
             </div>
           </section>
-
 
           {/* Features Section */}
           {product.features && (

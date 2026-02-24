@@ -55,11 +55,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: none;
 }
 
 .interact-item:hover .interact-item-img img {
-  transform: scale(1.05);
+  transform: none;
 }
 
 /* Product Content Area */
@@ -208,7 +208,7 @@
     margin-bottom: 40px;
   }
 
-  /* Home Container Mobile - Maintain Structure */
+  /* Home Container Mobile */
   .home-container {
     min-height: auto !important;
     padding: 20px 0;
@@ -220,10 +220,14 @@
     margin-bottom: 40px;
   }
 
+  /* =====================================
+     HERO / PARALLAX WRAPPERS (MOBILE)
+     Fix espacio negro antes de la frase
+     ===================================== */
   .home-top-row {
     width: 90vw !important;
     height: auto !important;
-    min-height: 50vh;
+    min-height: 42vh; /* antes 50vh */
     padding: 20px;
     margin: 0 auto;
   }
@@ -234,9 +238,15 @@
     width: 90vw !important;
     padding: 20px 20px;
     gap: 20px;
-    top: -120px !important;
-    margin: 20px auto;
+
+    /* ✅ FIX REAL del hueco:
+       NO top negativo (deja espacio fantasma)
+       SÍ margin-top negativo (colapsa layout) */
     position: relative !important;
+    top: 0 !important;
+    margin: -220px auto 10px auto !important; /* AJUSTABLE: -240 / -260 / -280 */
+
+    z-index: 3;
   }
 
   .catalogue-section {
@@ -255,33 +265,32 @@
   }
 
   .catalogue-button {
-    padding: 16px 24px !important;
-    font-size: 15px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    text-align: left !important;
+    padding: 14px 20px !important;
+    font-size: 14px !important;
+    width: auto !important;
+    max-width: 250px !important;
+    text-align: center !important;
     margin: 0 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
+    justify-content: center !important;
     background-color: #EE2737 !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     position: relative !important;
   }
 
-  .catalogue-button::after {
-    content: "→" !important;
-    position: absolute !important;
-    right: 24px !important;
-    font-size: 20px !important;
-    color: white !important;
+  .catalogue-button-wrapper a {
+    text-decoration: none !important;
   }
 
   .home-bottom-row {
-    margin-top: 60px;
+    /* acercamos la frase luego del bloque superior */
+    margin-top: 12px !important;
     margin-right: 0;
     padding: 0 20px;
     width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .about-intro {

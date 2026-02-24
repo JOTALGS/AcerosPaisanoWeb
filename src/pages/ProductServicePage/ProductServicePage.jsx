@@ -51,8 +51,20 @@ const ProductServicePage = ({ serviceSlug, onClose }) => {
   const effectiveSlug = serviceSlug || slug;
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const productInfo = modalInfo[effectiveSlug];
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 960);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (!productInfo && !onClose) {
@@ -63,10 +75,12 @@ const ProductServicePage = ({ serviceSlug, onClose }) => {
     // Scroll to top only if it's not a modal (or maybe always if it's full screen)
     if (!onClose) window.scrollTo(0, 0);
 
-    // Initial image state
-    const firstImage = document.querySelector(`.images.image-0`);
-    if (firstImage) {
-      firstImage.style.opacity = "1";
+    if (!isMobile) {
+      // Initial image state (only for desktop)
+      const firstImage = document.querySelector(`.images.image-0`);
+      if (firstImage) {
+        firstImage.style.opacity = "1";
+      }
     }
 
     // Manage body scroll
@@ -75,7 +89,7 @@ const ProductServicePage = ({ serviceSlug, onClose }) => {
     return () => {
       document.body.classList.remove('no-scroll');
     };
-  }, [effectiveSlug, navigate, productInfo, onClose]);
+  }, [effectiveSlug, navigate, productInfo, onClose, isMobile]);
 
   if (!productInfo) return null;
 
@@ -87,6 +101,131 @@ const ProductServicePage = ({ serviceSlug, onClose }) => {
     }
   };
 
+  // Mobile version
+  if (isMobile) {
+    return (
+      <Box
+        width={"100%"}
+        height={"100vh"}
+        sx={{
+          overflow: 'auto',
+          overflowX: 'hidden',
+          backgroundColor: 'rgba(0, 0, 0, 0.98)',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 9999
+        }}
+      >
+        {/* X Close Button */}
+        <Box
+          onClick={handleClose}
+          sx={{
+            position: "fixed",
+            top: "16px",
+            left: "16px",
+            cursor: "pointer",
+            color: "#999",
+            fontSize: "2.5rem",
+            fontWeight: "100",
+            zIndex: 10001,
+            transition: "all 0.3s ease",
+            "&:hover": {
+              transform: "rotate(90deg)",
+              color: "#fff",
+            }
+          }}
+        >
+          ×
+        </Box>
+
+        {/* Product Title */}
+        <Box sx={{
+          paddingTop: "70px",
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          paddingBottom: "20px"
+        }}>
+          <Typography sx={{
+            fontSize: "2rem",
+            fontWeight: 500,
+            color: "#fff",
+            lineHeight: 1.2
+          }}>
+            {productInfo.name}
+          </Typography>
+        </Box>
+
+        {/* Scrollable Content - imagen, texto con número, imagen, texto con número... */}
+        <Box sx={{ paddingBottom: "20px", width: "100%", overflowX: "hidden" }}>
+          {productInfo.items.map((item, index) => (
+            <Box key={index} sx={{ marginBottom: "32px", width: "100%" }}>
+              {/* Image */}
+              <Box sx={{ paddingLeft: "16px", paddingRight: "16px", width: "100%", boxSizing: "border-box" }}>
+                <Box
+                  component="img"
+                  src={item.image}
+                  alt={item.alt}
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: "400px",
+                    objectFit: "cover",
+                    borderRadius: "12px",
+                    marginBottom: "20px",
+                    display: "block"
+                  }}
+                />
+              </Box>
+
+              {/* Número y texto principal */}
+              <Box sx={{ paddingLeft: "16px", paddingRight: "16px", width: "100%", boxSizing: "border-box" }}>
+                <Typography sx={{
+                  fontSize: "1.4rem",
+                  color: "#fff",
+                  lineHeight: 1.4,
+                  fontWeight: 500
+                }}>
+                  {`0${index + 1}. ${item.content}`}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+
+          {/* Go to Product Button at the end */}
+          <Box sx={{
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            paddingTop: "20px",
+            paddingBottom: "40px"
+          }}>
+            <Box
+              sx={{
+                width: "100%",
+                padding: "14px",
+                backgroundColor: "#EE2737",
+                color: "#fff",
+                textAlign: "center",
+                borderRadius: "6px",
+                fontSize: "0.95rem",
+                fontWeight: 500,
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "#d61f1f",
+                }
+              }}
+              onClick={() => navigate(`/${effectiveSlug}`)}
+            >
+              Ir al Producto
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    );
+  }
+
+  // Desktop version
   return (
     <Box width={"100%"} height={"100vh"} sx={{ overflow: 'hidden', backgroundColor: 'rgba(0, 0, 0, 0.98)', position: 'fixed', top: 0, left: 0, zIndex: 9999 }}>
       <div style={{ zIndex: 1000, position: 'relative', height: '100%' }}>
@@ -123,9 +262,8 @@ const ProductServicePage = ({ serviceSlug, onClose }) => {
             fontSize: "3rem",
             fontWeight: "100",
             zIndex: 1001,
-            transition: "all 0.3s ease",
+            transition: "color 0.3s ease",
             "&:hover": {
-              transform: "scaleX(1.1)",
               color: "#fff",
             }
           }}
