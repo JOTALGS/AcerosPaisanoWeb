@@ -13,7 +13,7 @@ import "./Home-improvements.css";
 import "./Home-fixes.css";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonHoverBg from "../../components/CustomButton/ButtonHoverBg";
-import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { NavBar } from "../../components/navbar/navbar.jsx";
 import { Footer } from "../../components/footer/Footer.jsx";
 import { Box, Typography } from "@mui/material";
 import ProductServicePage from "../ProductServicePage/ProductServicePage";

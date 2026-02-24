@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { 
-  Typography, 
-  Box, 
-  Modal, 
-  Container, 
+import {
+  Typography,
+  Box,
+  Modal,
+  Container,
   useMediaQuery,
   IconButton,
   Fade,
@@ -11,7 +11,7 @@ import {
   Button
 } from "@mui/material";
 import { useTheme, styled, alpha } from '@mui/material/styles';
-import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { NavBar } from "../../components/navbar/navbar.jsx";
 import { Footer } from '../../components/footer/Footer.jsx';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
@@ -22,25 +22,25 @@ gsap.registerPlugin(ScrollTrigger);
 // Styled components
 const GridViewIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" stroke="currentColor" strokeWidth="0">
-    <rect x="3" y="3" width="7" height="7" rx="1"/>
-    <rect x="14" y="3" width="7" height="7" rx="1"/>
-    <rect x="3" y="14" width="7" height="7" rx="1"/>
-    <rect x="14" y="14" width="7" height="7" rx="1"/>
+    <rect x="3" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="3" width="7" height="7" rx="1" />
+    <rect x="3" y="14" width="7" height="7" rx="1" />
+    <rect x="14" y="14" width="7" height="7" rx="1" />
   </svg>
 );
 
 const ListViewIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <line x1="3" y1="6" x2="21" y2="6"/>
-    <line x1="3" y1="12" x2="21" y2="12"/>
-    <line x1="3" y1="18" x2="21" y2="18"/>
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
   </svg>
 );
 
 const CloseIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <line x1="18" y1="6" x2="6" y2="18"/>
-    <line x1="6" y1="6" x2="18" y2="18"/>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
 
@@ -375,165 +375,165 @@ const ModalFooter = styled(Box)(({ theme }) => ({
 
 // Main component
 export function Catalogue() {
-    const [viewMode, setViewMode] = useState('list');
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [modalOpen, setModalOpen] = useState(false);
-    const filtersRef = useRef(null);
-    const titleRef = useRef(null);
-    const containerRef = useRef(null);
-    
-    // Responsive hooks
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-    const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const [viewMode, setViewMode] = useState('list');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const filtersRef = useRef(null);
+  const titleRef = useRef(null);
+  const containerRef = useRef(null);
 
-    // Products data
-    const products = [
-        {
-            id: 1,
-            title: 'Malla Electrosoldada',
-            description: [
-                'Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995',
-                'Medidas estándar de 600x240cm en stock',
-                'Medidas especiales a pedido',
-                '3.5mm en 15x15cm en rollos de 50m',
-                '3.5mm en 20x20cm en rollos de 50m',
-                '4.2mm en 15x15cm  en paños de 600x245cm',
-                '4.2mm en 15x15cm en rollos de 25m',
-                '4.2mm en 15x15cm en rollos de 50m',
-                '5.5mm en 15x15cm en paños de 600x245cm',
-                'Todos los diámetros, combinados de hasta 12+12 mm',
-                'Presentación en paños y rollos',
-                'Diseño de mallas especiales adaptadas a los requerimientos del proyecto',
-                'Largos especiales que evitan empalmes y minimizan desperdicios',
-                'Bigotes y entramados especiales con largos de hasta 12m',
-                'Atillado de paquetes identificados con etiquetas',
-                'Cortado de mallas a medida con guillotina',
-                'Entrega del material de acuerdo al cronograma',
-                'Controles de carga y descarga en obra mediante planillas',
-                'Asistencia técnica permanente'
-            ],
-            extraInfo: 'Las mallas electrosoldadas son fundamentales para reforzar estructuras de hormigón. Nuestra capacidad de fabricarlas a medida permite optimizar el uso de material, reducir desperdicios y acelerar los procesos constructivos.',
-            price: 'Entregas a todo el País',
-            image: './images/mallaElectrosoldada.jpg',
-            showModal: true
-        },
-        {
-            id: 2,
-            title: 'Malla Plegada',
-            description: [
-                'Combina las ventajas del cortado y doblado + mallas',
-                'Diseños a medida con alta precisión',
-                'Proceso industrializado con plegadora automatizada',
-                'Optimiza el uso de hierro en obra',
-                'Evita empalmes y atado manual',
-                'Evita el armado de estructuras en obra',
-                'Refuerzos de borde',
-                'Entrega del material de acuerdo al cronograma',
-                'Controles de carga y descarga en obra mediante planillas',
-                'Asistencia técnica permanente'
-            ],
-            extraInfo: 'Las mallas plegadas representan un avance significativo en la prefabricación de armaduras para hormigón, reduciendo tiempos de obra y garantizando mayor precisión estructural.',
-            price: 'Entregas a todo el País',
-            image: './images/plegada.jpg',
-            showModal: true
-        },
-        {
-            id: 3,
-            title: 'Varillas de hierro liso',
-            description: [
-                'Barras de acero de alta calidad con superficie lisa',
-                'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
-                'Barras cortadas a medida',
-                'Facilidad en el transporte',
-                'Optimización de recursos en obra',
-            ],
-            price: 'Entregas a todo el País',
-            image: './images/barrasLisas.jpg',
-            showModal: false
-        },
-        {
-            id: 4,
-            title: 'Varillas de hierro conformado',
-            description: [
-                'Barras de acero de alta calidad con textura rugosa',
-                'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
-                'Barras cortadas a medida',
-                'Facilidad en el transporte',
-                'Optimización de recursos en obra',
-            ],
-            price: 'Entregas a todo el País',
-            image: './images/barras.jpg',
-            showModal: false
-        },
-        {
-            id: 5,
-            title: 'Hierro Cortado y Doblado',
-            description: [
-                'Sistema industrial de corte y doblado de varillas de acero',
-                'Permite cumplir con las especificaciones del proyecto',
-                'Procesos de calidad garantizada',
-                'Pedidos diseñados y validados en software especializado',
-                'Pedidos identificados con colores por elemento estructural',
-                'Entrega del pedido en paquetes identificados con doble etiquetado',
-                'Diagramas y guías de armado en obra a petición',
-                'Todos los diámetros y dimensiones',
-                'Aseroramiento y segumiento de obra por técnicos especializados',
-            ],
-            extraInfo: 'Ventajas para nuestros clientes:\n• Cero desperdicio de acero\n• Economía de tiempo y mano de obra\n• Dimensiones precisas según necesidades del proyecto\n• Identificación de los paquetes facilitando su uso y armado\n• Entrega del material de acuerdo al cronograma\n• Controles de carga y descarga en obra mediante planillas\n• Asistencia técnica permanente',
-            price: 'Entregas a Todo el País',
-            image: './images/cortadoYdoblado.jpg',
-            showModal: true
-        },
-        {
-            id: 6,
-            title: 'Clavos de Acero',
-            description: [
-                'Clavos de acero de 2" y 2 1/2"',
-            ],
-            price: 'Entregas a todo el País',
-            image: './images/clavos.jpg',
-            showModal: false
-        },
-        {
-            id: 7,
-            title: 'Alambres Recocidos',
-            description: [
-                'Alambres Recocidos, ISWG 14, ISWG 16, ISWG 18',
-            ],
-            price: 'Entregas a todo el país',
-            image: './images/alambrerecocido2.jpg',
-            showModal: false
-        },
-    ];
+  // Responsive hooks
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
-    // Force grid view on mobile
-    useEffect(() => {
-        if (isMobile) {
-            setViewMode('grid');
-        }
-    }, [isMobile]);
+  // Products data
+  const products = [
+    {
+      id: 1,
+      title: 'Malla Electrosoldada',
+      description: [
+        'Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995',
+        'Medidas estándar de 600x240cm en stock',
+        'Medidas especiales a pedido',
+        '3.5mm en 15x15cm en rollos de 50m',
+        '3.5mm en 20x20cm en rollos de 50m',
+        '4.2mm en 15x15cm  en paños de 600x245cm',
+        '4.2mm en 15x15cm en rollos de 25m',
+        '4.2mm en 15x15cm en rollos de 50m',
+        '5.5mm en 15x15cm en paños de 600x245cm',
+        'Todos los diámetros, combinados de hasta 12+12 mm',
+        'Presentación en paños y rollos',
+        'Diseño de mallas especiales adaptadas a los requerimientos del proyecto',
+        'Largos especiales que evitan empalmes y minimizan desperdicios',
+        'Bigotes y entramados especiales con largos de hasta 12m',
+        'Atillado de paquetes identificados con etiquetas',
+        'Cortado de mallas a medida con guillotina',
+        'Entrega del material de acuerdo al cronograma',
+        'Controles de carga y descarga en obra mediante planillas',
+        'Asistencia técnica permanente'
+      ],
+      extraInfo: 'Las mallas electrosoldadas son fundamentales para reforzar estructuras de hormigón. Nuestra capacidad de fabricarlas a medida permite optimizar el uso de material, reducir desperdicios y acelerar los procesos constructivos.',
+      price: 'Entregas a todo el País',
+      image: './images/mallaElectrosoldada.jpg',
+      showModal: true
+    },
+    {
+      id: 2,
+      title: 'Malla Plegada',
+      description: [
+        'Combina las ventajas del cortado y doblado + mallas',
+        'Diseños a medida con alta precisión',
+        'Proceso industrializado con plegadora automatizada',
+        'Optimiza el uso de hierro en obra',
+        'Evita empalmes y atado manual',
+        'Evita el armado de estructuras en obra',
+        'Refuerzos de borde',
+        'Entrega del material de acuerdo al cronograma',
+        'Controles de carga y descarga en obra mediante planillas',
+        'Asistencia técnica permanente'
+      ],
+      extraInfo: 'Las mallas plegadas representan un avance significativo en la prefabricación de armaduras para hormigón, reduciendo tiempos de obra y garantizando mayor precisión estructural.',
+      price: 'Entregas a todo el País',
+      image: './images/plegada.jpg',
+      showModal: true
+    },
+    {
+      id: 3,
+      title: 'Varillas de hierro liso',
+      description: [
+        'Barras de acero de alta calidad con superficie lisa',
+        'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
+        'Barras cortadas a medida',
+        'Facilidad en el transporte',
+        'Optimización de recursos en obra',
+      ],
+      price: 'Entregas a todo el País',
+      image: './images/barrasLisas.jpg',
+      showModal: false
+    },
+    {
+      id: 4,
+      title: 'Varillas de hierro conformado',
+      description: [
+        'Barras de acero de alta calidad con textura rugosa',
+        'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
+        'Barras cortadas a medida',
+        'Facilidad en el transporte',
+        'Optimización de recursos en obra',
+      ],
+      price: 'Entregas a todo el País',
+      image: './images/barras.jpg',
+      showModal: false
+    },
+    {
+      id: 5,
+      title: 'Hierro Cortado y Doblado',
+      description: [
+        'Sistema industrial de corte y doblado de varillas de acero',
+        'Permite cumplir con las especificaciones del proyecto',
+        'Procesos de calidad garantizada',
+        'Pedidos diseñados y validados en software especializado',
+        'Pedidos identificados con colores por elemento estructural',
+        'Entrega del pedido en paquetes identificados con doble etiquetado',
+        'Diagramas y guías de armado en obra a petición',
+        'Todos los diámetros y dimensiones',
+        'Aseroramiento y segumiento de obra por técnicos especializados',
+      ],
+      extraInfo: 'Ventajas para nuestros clientes:\n• Cero desperdicio de acero\n• Economía de tiempo y mano de obra\n• Dimensiones precisas según necesidades del proyecto\n• Identificación de los paquetes facilitando su uso y armado\n• Entrega del material de acuerdo al cronograma\n• Controles de carga y descarga en obra mediante planillas\n• Asistencia técnica permanente',
+      price: 'Entregas a Todo el País',
+      image: './images/cortadoYdoblado.jpg',
+      showModal: true
+    },
+    {
+      id: 6,
+      title: 'Clavos de Acero',
+      description: [
+        'Clavos de acero de 2" y 2 1/2"',
+      ],
+      price: 'Entregas a todo el País',
+      image: './images/clavos.jpg',
+      showModal: false
+    },
+    {
+      id: 7,
+      title: 'Alambres Recocidos',
+      description: [
+        'Alambres Recocidos, ISWG 14, ISWG 16, ISWG 18',
+      ],
+      price: 'Entregas a todo el país',
+      image: './images/alambrerecocido2.jpg',
+      showModal: false
+    },
+  ];
 
-    // Calcular el tamaño de fuente responsivo para el título
-    const getHeadingFontSize = () => {
-        if (isMobile) return "50px";
-        if (isTablet) return "70px";
-        return "100px";
-    };
+  // Force grid view on mobile
+  useEffect(() => {
+    if (isMobile) {
+      setViewMode('grid');
+    }
+  }, [isMobile]);
+
+  // Calcular el tamaño de fuente responsivo para el título
+  const getHeadingFontSize = () => {
+    if (isMobile) return "50px";
+    if (isTablet) return "70px";
+    return "100px";
+  };
 
   // GSAP animations
-useEffect(() => {
+  useEffect(() => {
     // Aplicar animación al título como en ContactComponent
     const tl = gsap.timeline({ delay: 0.5 });
     if (titleRef.current) {
       tl.fromTo(
-        titleRef.current, 
-        { y: 0, opacity: 0 }, 
+        titleRef.current,
+        { y: 0, opacity: 0 },
         { y: isMobile ? "50px" : isTablet ? "150px" : "180px", opacity: 1, duration: 1.5, ease: "power3.out" }
       );
     }
-    
+
     // Pin the filters section for scrolling effect
     const trigger = ScrollTrigger.create({
       trigger: filtersRef.current,
@@ -542,398 +542,398 @@ useEffect(() => {
       pin: true,
       pinSpacing: false,
     });
-  
+
     return () => {
       trigger.kill();
     };
   }, [isMobile, isTablet]);
 
-    // Modal handlers
-    const handleOpenModal = (product) => {
-        setSelectedProduct(product);
-        setModalOpen(true);
-        // Reset scroll position when opening modal
-        setTimeout(() => {
-            const modalContent = document.querySelector('.modal-content');
-            if (modalContent) {
-                modalContent.scrollTop = 0;
-            }
-        }, 50);
-    };
+  // Modal handlers
+  const handleOpenModal = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+    // Reset scroll position when opening modal
+    setTimeout(() => {
+      const modalContent = document.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.scrollTop = 0;
+      }
+    }, 50);
+  };
 
-    const handleCloseModal = () => {
-        setModalOpen(false);
-    };
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
-    return (
-        <CatalogueContainer>
-            <NavBar />
-            
-            {/* Title Section */}
-            <Box 
-                sx={{ 
-                    position: "relative", 
-                    overflow: "hidden",
-                    width: "100%",
-                    pt: { xs: 60, md: 80 },
-                    pb: { xs: 0, md: 0 }
-                }}
-            >
-                <Box 
-                    position="absolute" 
-                    zIndex={0}
-                    sx={{
-                        top: isMobile ? "2%" : "10%",
-                        left: 0,
-                        width: "100%",
-                        textAlign: isMobile ? "center" : "left",
-                        paddingLeft: isMobile ? 0 : "20px"
-                    }}
-                >
-                    <Typography 
-                        ref={titleRef}
-                        variant="h2" 
-                        fontSize={getHeadingFontSize()} 
-                        fontFamily="'Archivo', sans-serif" 
-                        fontWeight={400} 
-                        color="#fff"
-                        sx={{
-                          textShadow: "0 0 10px rgba(255, 255, 255, 0.2)",
-                          letterSpacing: "2px",
-                          textTransform: "uppercase"
-                        }}
-                    >
-                        Productos y Servicios
-                    </Typography>
-                </Box>
-            </Box>
+  return (
+    <CatalogueContainer>
+      <NavBar />
 
-            {/* Main Content */}
-            <Container 
-                ref={containerRef} 
-                maxWidth="xl"
-                sx={{ 
-                    position: 'relative',
-                    mt: { xs: -25, md: -25 }, // Valores negativos para acercar más al título
-                    pb: { xs: 6, md: 8 },
-                    px: { xs: 2, md: 4 }
-                }}
-            >
-                {/* View Toggle and Filters - fixed position */}
-                <Box 
-                    ref={filtersRef}
-                    sx={{ 
-                        display: 'flex', 
-                        justifyContent: 'flex-end',
-                        alignItems: 'center',
-                        mb: 3,
-                        gap: 1,
-                        py: 1,
-                        position: 'sticky',
-                        top: '10px',
-                        zIndex: 5,
-                        backgroundColor: 'rgba(0,0,0,0.8)',
-                        backdropFilter: 'blur(5px)',
-                        borderRadius: '4px',
-                        px: 1
-                    }}
-                >
-                    {!isMobile && (
-                        <>
-                            <ViewToggleButton 
-                                active={viewMode === 'grid'}
-                                onClick={() => setViewMode('grid')}
-                            >
-                                <GridViewIcon />
-                                <span>Grid View</span>
-                            </ViewToggleButton>
-                            <ViewToggleButton 
-                                active={viewMode === 'list'}
-                                onClick={() => setViewMode('list')}
-                            >
-                                <ListViewIcon />
-                                <span>List View</span>
-                            </ViewToggleButton>
-                        </>
-                    )}
-                </Box>
+      {/* Title Section */}
+      <Box
+        sx={{
+          position: "relative",
+          overflow: "hidden",
+          width: "100%",
+          pt: { xs: 60, md: 80 },
+          pb: { xs: 0, md: 0 }
+        }}
+      >
+        <Box
+          position="absolute"
+          zIndex={0}
+          sx={{
+            top: isMobile ? "2%" : "10%",
+            left: 0,
+            width: "100%",
+            textAlign: isMobile ? "center" : "left",
+            paddingLeft: isMobile ? 0 : "20px"
+          }}
+        >
+          <Typography
+            ref={titleRef}
+            variant="h2"
+            fontSize={getHeadingFontSize()}
+            fontFamily="'Archivo', sans-serif"
+            fontWeight={400}
+            color="#fff"
+            sx={{
+              textShadow: "0 0 10px rgba(255, 255, 255, 0.2)",
+              letterSpacing: "2px",
+              textTransform: "uppercase"
+            }}
+          >
+            Productos y Servicios
+          </Typography>
+        </Box>
+      </Box>
 
-                {/* Products Grid/List */}
-                <Box
-                    sx={{
-                        display: 'grid',
-                        gridTemplateColumns: {
-                            xs: '1fr',
-                            sm: viewMode === 'list' ? '1fr' : 'repeat(2, 1fr)',
-                            md: viewMode === 'list' ? '1fr' : 'repeat(3, 1fr)',
-                        },
-                        gap: viewMode === 'list' ? '20px' : '36px 24px',
-                        width: '100%',
-                    }}
-                >
-                    {products.map((product) => (
-                        viewMode === 'list' ? (
-                            // List View
-                            <ProductContainerList 
-                                key={product.id}
-                                className="product-item"
-                                elevation={0}
-                            >
-                                <ProductImageList 
-                                    src={product.image} 
-                                    alt={product.title} 
-                                />
-                                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                    <Box sx={{ 
-                                        display: 'flex', 
-                                        alignItems: 'center',
-                                        mb: 1
-                                    }}>
-                                        <BrandLogo 
-                                            src='./images/paisanologo.png' 
-                                            alt="Aceros Paisano" 
-                                        />
-                                        <ProductTitle variant="h3">
-                                            {product.title}
-                                        </ProductTitle>
-                                    </Box>
-                                    
-                                    <DescriptionList>
-                                        {product.description.slice(0, 4).map((point, index) => (
-                                            <li key={index}>{point}</li>
-                                        ))}
-                                    </DescriptionList>
-                                    
-                                    <ProductFooter>
-                                        <PriceTag>{product.price}</PriceTag>
-                                        {product.showModal && (
-                                            <ActionButton 
-                                                variant="contained"
-                                                onClick={() => handleOpenModal(product)}
-                                                disableElevation
-                                            >
-                                                Ver más
-                                            </ActionButton>
-                                        )}
-                                    </ProductFooter>
-                                </Box>
-                            </ProductContainerList>
-                        ) : (
-                            // Grid View
-                            <ProductContainer 
-                                key={product.id}
-                                className="product-item"
-                                elevation={0}
-                            >
-                                <ProductImage 
-                                    src={product.image} 
-                                    alt={product.title} 
-                                />
-                                <ProductContent>
-                                    <Box>
-                                        <Box sx={{ 
-                                            display: 'flex', 
-                                            alignItems: 'center',
-                                            mb: 1
-                                        }}>
-                                            <BrandLogo 
-                                                src='./images/paisanologo.png' 
-                                                alt="Aceros Paisano" 
-                                            />
-                                            <ProductTitle variant="h3">
-                                                {product.title}
-                                            </ProductTitle>
-                                        </Box>
-                                        
-                                        <DescriptionList>
-                                            {product.description.slice(0, 4).map((point, index) => (
-                                                <li key={index}>{point}</li>
-                                            ))}
-                                        </DescriptionList>
-                                    </Box>
-                                    
-                                    <ProductFooter>
-                                        <PriceTag>{product.price}</PriceTag>
-                                        {product.showModal && (
-                                            <ActionButton 
-                                                variant="contained"
-                                                onClick={() => handleOpenModal(product)}
-                                                disableElevation
-                                            >
-                                                Ver más
-                                            </ActionButton>
-                                        )}
-                                    </ProductFooter>
-                                </ProductContent>
-                            </ProductContainer>
-                        )
+      {/* Main Content */}
+      <Container
+        ref={containerRef}
+        maxWidth="xl"
+        sx={{
+          position: 'relative',
+          mt: { xs: -25, md: -25 }, // Valores negativos para acercar más al título
+          pb: { xs: 6, md: 8 },
+          px: { xs: 2, md: 4 }
+        }}
+      >
+        {/* View Toggle and Filters - fixed position */}
+        <Box
+          ref={filtersRef}
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            mb: 3,
+            gap: 1,
+            py: 1,
+            position: 'sticky',
+            top: '10px',
+            zIndex: 5,
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            backdropFilter: 'blur(5px)',
+            borderRadius: '4px',
+            px: 1
+          }}
+        >
+          {!isMobile && (
+            <>
+              <ViewToggleButton
+                active={viewMode === 'grid'}
+                onClick={() => setViewMode('grid')}
+              >
+                <GridViewIcon />
+                <span>Grid View</span>
+              </ViewToggleButton>
+              <ViewToggleButton
+                active={viewMode === 'list'}
+                onClick={() => setViewMode('list')}
+              >
+                <ListViewIcon />
+                <span>List View</span>
+              </ViewToggleButton>
+            </>
+          )}
+        </Box>
+
+        {/* Products Grid/List */}
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: viewMode === 'list' ? '1fr' : 'repeat(2, 1fr)',
+              md: viewMode === 'list' ? '1fr' : 'repeat(3, 1fr)',
+            },
+            gap: viewMode === 'list' ? '20px' : '36px 24px',
+            width: '100%',
+          }}
+        >
+          {products.map((product) => (
+            viewMode === 'list' ? (
+              // List View
+              <ProductContainerList
+                key={product.id}
+                className="product-item"
+                elevation={0}
+              >
+                <ProductImageList
+                  src={product.image}
+                  alt={product.title}
+                />
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    mb: 1
+                  }}>
+                    <BrandLogo
+                      src='./images/paisanologo.png'
+                      alt="Aceros Paisano"
+                    />
+                    <ProductTitle variant="h3">
+                      {product.title}
+                    </ProductTitle>
+                  </Box>
+
+                  <DescriptionList>
+                    {product.description.slice(0, 4).map((point, index) => (
+                      <li key={index}>{point}</li>
                     ))}
+                  </DescriptionList>
+
+                  <ProductFooter>
+                    <PriceTag>{product.price}</PriceTag>
+                    {product.showModal && (
+                      <ActionButton
+                        variant="contained"
+                        onClick={() => handleOpenModal(product)}
+                        disableElevation
+                      >
+                        Ver más
+                      </ActionButton>
+                    )}
+                  </ProductFooter>
                 </Box>
-            </Container>
+              </ProductContainerList>
+            ) : (
+              // Grid View
+              <ProductContainer
+                key={product.id}
+                className="product-item"
+                elevation={0}
+              >
+                <ProductImage
+                  src={product.image}
+                  alt={product.title}
+                />
+                <ProductContent>
+                  <Box>
+                    <Box sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      mb: 1
+                    }}>
+                      <BrandLogo
+                        src='./images/paisanologo.png'
+                        alt="Aceros Paisano"
+                      />
+                      <ProductTitle variant="h3">
+                        {product.title}
+                      </ProductTitle>
+                    </Box>
 
-            {/* Product Modal */}
-            <StyledModal
-                open={modalOpen}
-                onClose={handleCloseModal}
-                closeAfterTransition
-                sx={{ overflowY: 'auto' }}
-            >
-                <Fade in={modalOpen}>
-                    <ModalContent className="modal-content">
-                        {selectedProduct && (
-                            <>
-                                <ModalHeader>
-                                    <ModalTitle>
-                                        {selectedProduct.title}
-                                    </ModalTitle>
-                                    <IconButton 
-                                        onClick={handleCloseModal}
-                                        sx={{ 
-                                            color: 'white',
-                                            p: 1,
-                                            position: 'absolute',
-                                            right: '0',
-                                            '&:hover': {
-                                                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                                            }
-                                        }}
-                                    >
-                                        <CloseIcon />
-                                    </IconButton>
-                                </ModalHeader>
-                                
-                                <ModalBody>
-                                    <ModalImageContainer isMobile={isMobile}>
-                                        <ModalImage 
-                                            src={selectedProduct.image} 
-                                            alt={selectedProduct.title} 
-                                        />
-                                        <Typography 
-                                            sx={{ 
-                                                mt: 2, 
-                                                textAlign: 'center',
-                                                fontSize: '0.9rem',
-                                                fontWeight: 300,
-                                                letterSpacing: '0.03em',
-                                                color: '#ffffff',
-                                                opacity: 0.9,
-                                                textShadow: '0 0 5px rgba(255, 255, 255, 0.2)',
-                                            }}
-                                        >
-                                            {selectedProduct.price}
-                                        </Typography>
-                                    </ModalImageContainer>
-                                    
-                                    <ModalTextContent>
-                                        <ModalSectionTitle>
-                                            Características
-                                        </ModalSectionTitle>
-                                        <DescriptionList
-                                            sx={{
-                                                '& li': {
-                                                    fontSize: '1.05rem',
-                                                    lineHeight: 1.7,
-                                                    marginBottom: '12px',
-                                                    color: '#ffffff',
-                                                    fontWeight: 300,
-                                                    letterSpacing: '0.01em',
-                                                    paddingLeft: '22px',
-                                                    position: 'relative',
-                                                    '&::before': {
-                                                      content: '""',
-                                                      position: 'absolute',
-                                                      left: 0,
-                                                      top: '0.6em',
-                                                      width: '7px',
-                                                      height: '7px',
-                                                      backgroundColor: '#e40000',
-                                                      borderRadius: '50%',
-                                                    }
-                                                }
-                                            }}
-                                        >
-                                            {selectedProduct.description.map((point, index) => (
-                                                <li key={index}>{point}</li>
-                                            ))}
-                                        </DescriptionList>
-                                        
-                                        {selectedProduct.extraInfo && (
-                                            <Box sx={{ mt: 3 }}>
-                                                <ModalSectionTitle>
-                                                    Información adicional
-                                                </ModalSectionTitle>
-                                                <Typography 
-                                                    variant="body2"
-                                                    sx={{ 
-                                                        fontSize: '0.9rem',
-                                                        lineHeight: 1.7,
-                                                        color: '#d0d0d0',
-                                                        whiteSpace: 'pre-line',
-                                                        fontWeight: 300,
-                                                        letterSpacing: '0.01em',
-                                                    }}
-                                                >
-                                                    {selectedProduct.extraInfo}
-                                                </Typography>
-                                            </Box>
-                                        )}
-                                    </ModalTextContent>
-                                </ModalBody>
-                                
-                                <ModalFooter>
-                                    <Button
-                                        component={Link}
-                                        to="/contact"
-                                        variant="contained"
-                                        disableElevation
-                                        sx={{
-                                            backgroundColor: '#e40000',
-                                            color: 'white',
-                                            textTransform: 'none',
-                                            borderRadius: '2px',
-                                            fontSize: '0.85rem',
-                                            letterSpacing: '0.03em',
-                                            padding: '8px 16px',
-                                            fontWeight: 400,
-                                            '&:hover': {
-                                                backgroundColor: '#ff2222',
-                                            },
-                                            flex: isMobile ? 1 : 'auto'
-                                        }}
-                                    >
-                                        Solicitar información
-                                    </Button>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={handleCloseModal}
-                                        sx={{
-                                            borderColor: '#333',
-                                            color: 'white',
-                                            textTransform: 'none',
-                                            borderRadius: '2px',
-                                            fontSize: '0.85rem',
-                                            letterSpacing: '0.03em',
-                                            padding: '8px 16px',
-                                            fontWeight: 400,
-                                            '&:hover': {
-                                                borderColor: '#666',
-                                                backgroundColor: 'rgba(255,255,255,0.05)'
-                                            },
-                                            flex: isMobile ? 1 : 'auto'
-                                        }}
-                                    >
-                                        Cerrar
-                                    </Button>
-                                </ModalFooter>
-                            </>
-                        )}
-                    </ModalContent>
-                </Fade>
-            </StyledModal>
+                    <DescriptionList>
+                      {product.description.slice(0, 4).map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                    </DescriptionList>
+                  </Box>
 
-            <Footer />
-        </CatalogueContainer>
-    );
+                  <ProductFooter>
+                    <PriceTag>{product.price}</PriceTag>
+                    {product.showModal && (
+                      <ActionButton
+                        variant="contained"
+                        onClick={() => handleOpenModal(product)}
+                        disableElevation
+                      >
+                        Ver más
+                      </ActionButton>
+                    )}
+                  </ProductFooter>
+                </ProductContent>
+              </ProductContainer>
+            )
+          ))}
+        </Box>
+      </Container>
+
+      {/* Product Modal */}
+      <StyledModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        closeAfterTransition
+        sx={{ overflowY: 'auto' }}
+      >
+        <Fade in={modalOpen}>
+          <ModalContent className="modal-content">
+            {selectedProduct && (
+              <>
+                <ModalHeader>
+                  <ModalTitle>
+                    {selectedProduct.title}
+                  </ModalTitle>
+                  <IconButton
+                    onClick={handleCloseModal}
+                    sx={{
+                      color: 'white',
+                      p: 1,
+                      position: 'absolute',
+                      right: '0',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                      }
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </ModalHeader>
+
+                <ModalBody>
+                  <ModalImageContainer isMobile={isMobile}>
+                    <ModalImage
+                      src={selectedProduct.image}
+                      alt={selectedProduct.title}
+                    />
+                    <Typography
+                      sx={{
+                        mt: 2,
+                        textAlign: 'center',
+                        fontSize: '0.9rem',
+                        fontWeight: 300,
+                        letterSpacing: '0.03em',
+                        color: '#ffffff',
+                        opacity: 0.9,
+                        textShadow: '0 0 5px rgba(255, 255, 255, 0.2)',
+                      }}
+                    >
+                      {selectedProduct.price}
+                    </Typography>
+                  </ModalImageContainer>
+
+                  <ModalTextContent>
+                    <ModalSectionTitle>
+                      Características
+                    </ModalSectionTitle>
+                    <DescriptionList
+                      sx={{
+                        '& li': {
+                          fontSize: '1.05rem',
+                          lineHeight: 1.7,
+                          marginBottom: '12px',
+                          color: '#ffffff',
+                          fontWeight: 300,
+                          letterSpacing: '0.01em',
+                          paddingLeft: '22px',
+                          position: 'relative',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            left: 0,
+                            top: '0.6em',
+                            width: '7px',
+                            height: '7px',
+                            backgroundColor: '#e40000',
+                            borderRadius: '50%',
+                          }
+                        }
+                      }}
+                    >
+                      {selectedProduct.description.map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                    </DescriptionList>
+
+                    {selectedProduct.extraInfo && (
+                      <Box sx={{ mt: 3 }}>
+                        <ModalSectionTitle>
+                          Información adicional
+                        </ModalSectionTitle>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontSize: '0.9rem',
+                            lineHeight: 1.7,
+                            color: '#d0d0d0',
+                            whiteSpace: 'pre-line',
+                            fontWeight: 300,
+                            letterSpacing: '0.01em',
+                          }}
+                        >
+                          {selectedProduct.extraInfo}
+                        </Typography>
+                      </Box>
+                    )}
+                  </ModalTextContent>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button
+                    component={Link}
+                    to="/contact"
+                    variant="contained"
+                    disableElevation
+                    sx={{
+                      backgroundColor: '#e40000',
+                      color: 'white',
+                      textTransform: 'none',
+                      borderRadius: '2px',
+                      fontSize: '0.85rem',
+                      letterSpacing: '0.03em',
+                      padding: '8px 16px',
+                      fontWeight: 400,
+                      '&:hover': {
+                        backgroundColor: '#ff2222',
+                      },
+                      flex: isMobile ? 1 : 'auto'
+                    }}
+                  >
+                    Solicitar información
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={handleCloseModal}
+                    sx={{
+                      borderColor: '#333',
+                      color: 'white',
+                      textTransform: 'none',
+                      borderRadius: '2px',
+                      fontSize: '0.85rem',
+                      letterSpacing: '0.03em',
+                      padding: '8px 16px',
+                      fontWeight: 400,
+                      '&:hover': {
+                        borderColor: '#666',
+                        backgroundColor: 'rgba(255,255,255,0.05)'
+                      },
+                      flex: isMobile ? 1 : 'auto'
+                    }}
+                  >
+                    Cerrar
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Fade>
+      </StyledModal>
+
+      <Footer />
+    </CatalogueContainer>
+  );
 }
 
 export default Catalogue;
