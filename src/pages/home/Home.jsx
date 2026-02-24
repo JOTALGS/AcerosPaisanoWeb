@@ -100,8 +100,8 @@ export const Home = () => {
     if (isSmallScreen) {
       // En móvil: dividir en 3 líneas bien distribuidas
       return [
-        "Le damos forma al",
-        "acero: soluciones eficientes",
+        "Le damos forma al acero:",
+        "soluciones eficientes",
         "para el hormigón armado"
       ];
     }
@@ -118,7 +118,7 @@ export const Home = () => {
   const heroLineSx = useMemo(
     () => ({
       // ✅ Tamaño más grande en móvil
-      fontSize: { xs: "36px", sm: "42px", md: "60px", lg: "96px" },
+      fontSize: { xs: "clamp(28px, 31px, 96px)", sm: "42px", md: "60px", lg: "96px" },
 
       // ✅ Line-height aumentado para evitar cortes en letras como "g"
       lineHeight: { xs: 1.1, sm: 1.15, md: 1.2, lg: 1.15 },
@@ -126,7 +126,7 @@ export const Home = () => {
       textAlign: "left",
       fontFamily: "Inter, sans-serif",
       fontWeight: 400,
-      letterSpacing: "-0.02em",
+      letterSpacing: "-0.08em",
       m: 0,
       p: 0,
     }),
@@ -161,7 +161,7 @@ export const Home = () => {
     // Slice refs before the loop
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
 
-    // Sin animación - texto blanco directo
+    // Scroll-triggered text reveal animation
     for (const wrapper of lineWrapperRef.current) {
       if (!wrapper) continue;
       const overlay = wrapper.querySelector(".line-overlay");
@@ -170,10 +170,23 @@ export const Home = () => {
       // Yield BEFORE each heavy ScrollTrigger registration
       await yieldToMain();
 
-      // Establecer directamente sin animación
-      gsap.set(overlay, {
-        opacity: 1
-      });
+      overlay.style.willChange = "clip-path";
+      gsap.fromTo(
+        overlay,
+        { clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)" },
+        {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 85%",
+            end: "top 40%",
+            scrub: 1,
+            onComplete: () => {
+              overlay.style.willChange = "auto";
+            },
+          },
+        }
+      );
     }
 
     // ✅ Yield before setting up descubrir animation
