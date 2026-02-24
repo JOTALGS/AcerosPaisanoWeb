@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/home/Home";
 import { About } from "./pages/about/About";
@@ -7,9 +7,7 @@ import CatalogueNew from "./pages/catalogue/CatalogueNew";
 import { Contact } from "./pages/contact/Contact";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Lenis from "@studio-freight/lenis";
-import { HomeModal } from "./components/homeComponents/HomeModal";
-import ProductServicePage from "./pages/ProductServicePage/ProductServicePage";
-// import { initBarba, initPageAnimations, setupBarbaExclusions } from "./utils/barbaConfig";
+import NotFound from "./pages/notfound/Notfound"; // Importamos la página 404
 
 function App() {
   const location = useLocation();
@@ -39,7 +37,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Handle hash navigation for sections
     const hash = location.hash;
     if (hash) {
       setTimeout(() => {
@@ -62,21 +59,16 @@ function App() {
         <Route path="/productos-y-servicios" element={<CatalogueNew />} />
         <Route path="/contacto" element={<Contact />} />
 
-        {/* Redirects for legacy routes to keep them working with the same design */}
-        {/* <Route path="/mallas-electrosoldadas" element={<ProductServicePage serviceSlug="mallas-electrosoldadas" />} />
-        <Route path="/mallas-plegadas" element={<ProductServicePage serviceSlug="mallas-plegadas" />} />
-        <Route path="/hierro-cortado-y-doblado" element={<ProductServicePage serviceSlug="hierro-cortado-y-doblado" />} />
-        <Route path="/barras-lisas-y-conformadas" element={<ProductServicePage serviceSlug="barras-lisas-y-conformadas" />} /> */}
-
-        {/* Product Service Pages (with modal design) */}
+        {/* Páginas de productos específicos */}
         <Route path="/mallas-electrosoldadas" element={<ProductDetail serviceSlug="mallas-electrosoldadas" />} />
         <Route path="/mallas-plegadas" element={<ProductDetail serviceSlug="mallas-plegadas" />} />
         <Route path="/hierro-cortado-y-doblado" element={<ProductDetail serviceSlug="hierro-cortado-y-doblado" />} />
         <Route path="/barras-conformadas" element={<ProductDetail serviceSlug="barras-conformadas" />} />
         <Route path="/barras-lisas" element={<ProductDetail serviceSlug="barras-lisas" />} />
-
-        {/* Generic Product Detail Pages */}
         <Route path="/productos/:slug" element={<ProductDetail />} />
+
+        {/* RUTA 404: Captura cualquier ruta que no exista */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
