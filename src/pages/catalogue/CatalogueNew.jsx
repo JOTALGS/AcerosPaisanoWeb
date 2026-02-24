@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Container, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { NavBar } from "../../components/navbar/navbar.jsx";
-import { Footer } from "../../components/footer/footer.jsx";
+import { NavBar } from "../../components/navbar/Navbar.jsx";
+import { Footer } from "../../components/footer/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
