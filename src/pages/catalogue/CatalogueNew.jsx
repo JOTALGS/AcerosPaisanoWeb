@@ -50,7 +50,7 @@ const PdfIcon = () => (
 );
 
 export function CatalogueNew() {
-  const [viewMode, setViewMode] = useState("list");
+  const [viewMode, setViewMode] = useState("grid");
   const [openExtended, setOpenExtended] = useState({});
 
   const navigate = useNavigate();

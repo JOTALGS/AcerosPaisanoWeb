@@ -118,7 +118,7 @@ export const Home = () => {
   const heroLineSx = useMemo(
     () => ({
       // ✅ Tamaño más grande en móvil
-      fontSize: { xs: "clamp(28px, 31px, 96px)", sm: "42px", md: "60px", lg: "96px" },
+      fontSize: { xs: "clamp(26px, 32px, 96px)", sm: "42px", md: "60px", lg: "96px" },
 
       // ✅ Line-height aumentado para evitar cortes en letras como "g"
       lineHeight: { xs: 1.1, sm: 1.15, md: 1.2, lg: 1.15 },
@@ -429,7 +429,7 @@ export const Home = () => {
                 display: "flex",
                 justifyContent: { xs: "center", md: "flex-start" },
                 alignItems: "center",
-                width: "100%",
+                width: { xs: "95%", md: "100%" },
                 position: { xs: "absolute", md: "relative" },
                 top: { xs: "12vh", md: "auto" }
               }}>
@@ -439,7 +439,7 @@ export const Home = () => {
                   alt="Left Image"
                   fetchpriority="high"
                   sx={{
-                    width: "auto",
+                    width: "100%",
                     height: { xs: "12vh", md: "10vh", xl: "20vh" },
                     marginTop: { xs: "0", md: "60px" },
                     paddingLeft: { xs: "20px", md: "0" },
@@ -503,17 +503,17 @@ export const Home = () => {
               : HERO_BEFORE_SLIDER_SPACING_DESKTOP,
           }}
         >
-          <div
+          <Box
             className="about-intro"
-            style={{
+            sx={{
               width: "100%",
               textAlign: "left",
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
               justifyContent: "flex-start",
-              paddingLeft: "3vw",
-              paddingRight: "3vw",
+              paddingLeft: { xs: "0", md: "3.5vw" },
+              paddingRight: { xs: "0", md: "3.5vw" },
             }}
           >
             {textParts.map((part, index) => (
@@ -553,11 +553,10 @@ export const Home = () => {
                 </Typography>
               </div>
             ))}
-
-            <Link to={"/sobre-nosotros"} style={{ textDecoration: "none" }}>
+            <Link to={"/sobre-nosotros"} style={{ textDecoration: "none" }} >
               <ButtonHoverBg label="Sobre Nosotros" buttonStyles={"about-link-button"} />
             </Link>
-          </div>
+          </Box>
         </div>
 
         {/* Products Slider */}
@@ -582,10 +581,10 @@ export const Home = () => {
             display: "flex",
 
             /* ✅ MENOS separación entre imágenes */
-            gap: { xs: "12px", md: "18px" },
+            gap: { xs: "20px", md: "18px" },
 
             /* ✅ MENOS márgenes laterales (mobile y web) */
-            px: { xs: "12px", md: "16px" },
+            px: { xs: "20px", md: "16px" },
             py: { xs: "32px", md: "64px" },
 
             justifyContent: "center",

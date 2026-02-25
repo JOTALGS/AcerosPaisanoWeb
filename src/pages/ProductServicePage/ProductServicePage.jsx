@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import '../../components/homeComponents/HomeModal.css';
+import ButtonHoverBg from '../../components/CustomButton/ButtonHoverBg';
 
 const modalInfo = {
   "hierro-cortado-y-doblado": {
@@ -199,26 +200,9 @@ const ProductServicePage = ({ serviceSlug, onClose }) => {
             paddingTop: "20px",
             paddingBottom: "40px"
           }}>
-            <Box
-              sx={{
-                width: "100%",
-                padding: "14px",
-                backgroundColor: "#EE2737",
-                color: "#fff",
-                textAlign: "center",
-                borderRadius: "6px",
-                fontSize: "0.95rem",
-                fontWeight: 500,
-                cursor: "pointer",
-                transition: "background-color 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "#d61f1f",
-                }
-              }}
-              onClick={() => navigate(`/${effectiveSlug}`)}
-            >
-              Ir al Producto
-            </Box>
+            <Link to={`/${effectiveSlug}`} style={{ textDecoration: "none", width: "100%" }} >
+              <ButtonHoverBg label="Ir al Producto" buttonStyles={"cta-detail-button"} />
+            </Link>
           </Box>
         </Box>
       </Box>

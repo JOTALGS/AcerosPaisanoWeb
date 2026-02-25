@@ -103,6 +103,11 @@
 }
 
 @media (max-width: 768px) {
+    .sliderContainer {
+        /* CSS animation faster in mobiles */
+        animation: slider-scroll 5s linear infinite;
+    }
+
     .sliderItem {
         width: 80%;
         min-width: 280px;
