@@ -539,7 +539,7 @@ const ProductDetail = ({ serviceSlug }) => {
           )}
 
           {/* Specifications Section */}
-          {product.specifications && (
+          {/* {product.specifications && (
             <section className="specifications-section product-content-section">
               <div className="section-header">
                 <h2 className="section-title">Especificaciones</h2>
@@ -555,7 +555,7 @@ const ProductDetail = ({ serviceSlug }) => {
                 ))}
               </div>
             </section>
-          )}
+          )} */}
 
           {/* CTA Section */}
           <section className="cta-section">
