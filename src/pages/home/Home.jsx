@@ -65,10 +65,31 @@ export const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
-
   const [selectedService, setSelectedService] = useState(null);
 
   const navigate = useNavigate();
+
+  // ==========================================
+  // ✅ FIX PARA SAFARI: BLOQUEO DE SCROLL
+  // ==========================================
+  useEffect(() => {
+    if (selectedService) {
+      const scrollY = window.pageYOffset;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.classList.add('modal-open-safari');
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.classList.remove('modal-open-safari');
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+  }, [selectedService]);
 
   const homeText = `Le damos forma al acero: soluciones eficientes para el hormigón armado`;
 
@@ -98,7 +119,6 @@ export const Home = () => {
   const isSmallScreen = isMobile || window.innerWidth <= 768;
   const textParts = useMemo(() => {
     if (isSmallScreen) {
-      // En móvil: dividir en 3 líneas bien distribuidas
       return [
         "Le damos forma al acero:",
         "soluciones eficientes",
@@ -109,20 +129,13 @@ export const Home = () => {
   }, [homeText, isSmallScreen]);
 
 
-  const HERO_BEFORE_SLIDER_SPACING_DESKTOP = "180px"; // probá 140–240px
-  const HERO_BEFORE_SLIDER_SPACING_MOBILE = "120px";  // probá 90–160px
+  const HERO_BEFORE_SLIDER_SPACING_DESKTOP = "180px";
+  const HERO_BEFORE_SLIDER_SPACING_MOBILE = "120px";
 
-  // =========================================================
-  // ✅ AJUSTE 2: INTERLINEADO más apretado del hero
-  // =========================================================
   const heroLineSx = useMemo(
     () => ({
-      // ✅ Tamaño más grande en móvil
       fontSize: { xs: "clamp(28px, 31px, 96px)", sm: "42px", md: "60px", lg: "96px" },
-
-      // ✅ Line-height aumentado para evitar cortes en letras como "g"
       lineHeight: { xs: 1.1, sm: 1.15, md: 1.2, lg: 1.15 },
-
       textAlign: "left",
       fontFamily: "Inter, sans-serif",
       fontWeight: 400,
@@ -136,38 +149,28 @@ export const Home = () => {
   const heroOverlaySx = useMemo(
     () => ({
       ...heroLineSx,
-      // color: "#fff", // si querés forzar overlay a blanco, descomentá
     }),
     [heroLineSx]
   );
 
-  // ✅ Ajuste fino extra: espaciado adecuado ENTRE líneas
-  // (porque cada línea es un <div> separado)
-  // Interlineado mucho más apretado
-  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.6em"; // Interlineado muy apretado
-  const HERO_LINE_GAP_TIGHT_MOBILE = "-0.45em";  // Interlineado muy apretado en móvil
+  const HERO_LINE_GAP_TIGHT_DESKTOP = "-0.6em";
+  const HERO_LINE_GAP_TIGHT_MOBILE = "-0.45em";
 
-  // Initialize scroll animations only when user starts scrolling
-  // Utility to yield to the main thread between tasks
   const yieldToMain = () => new Promise(resolve => setTimeout(resolve, 0));
 
   const initializeScrollAnimations = useCallback(async () => {
     if (animationsInitialized || prefersReducedMotion) return;
 
-    // Keep your existing delay — gives browser time to paint first
     await new Promise((resolve) => setTimeout(resolve, 500));
     const { gsap } = await loadGSAP();
 
-    // Slice refs before the loop
     lineWrapperRef.current = lineWrapperRef.current.slice(0, textParts.length);
 
-    // Scroll-triggered text reveal animation
     for (const wrapper of lineWrapperRef.current) {
       if (!wrapper) continue;
       const overlay = wrapper.querySelector(".line-overlay");
       if (!overlay) continue;
 
-      // Yield BEFORE each heavy ScrollTrigger registration
       await yieldToMain();
 
       overlay.style.willChange = "clip-path";
@@ -189,7 +192,6 @@ export const Home = () => {
       );
     }
 
-    // ✅ Yield before setting up descubrir animation
     if (descubrirRef.current) {
       await yieldToMain();
       descubrirRef.current.style.willChange = "opacity, transform";
@@ -212,7 +214,6 @@ export const Home = () => {
       );
     }
 
-    // ✅ Yield before imageRef animation
     if (imageRef.current) {
       await yieldToMain();
       imageRef.current.style.willChange = "opacity";
@@ -237,7 +238,6 @@ export const Home = () => {
     setAnimationsInitialized(true);
   }, [animationsInitialized, prefersReducedMotion, textParts.length]);
 
-  // Optimize mobile and motion detection with debounce
   useEffect(() => {
     let resizeTimer;
 
@@ -269,7 +269,6 @@ export const Home = () => {
     };
   }, []);
 
-  // Lazy load video with IntersectionObserver
   useEffect(() => {
     if (isMobile || prefersReducedMotion) return;
 
@@ -291,7 +290,6 @@ export const Home = () => {
     };
   }, [isMobile, prefersReducedMotion, videoLoaded]);
 
-  // Optimize intro animation
   useEffect(() => {
     if (prefersReducedMotion) {
       if (welcomeRef.current) welcomeRef.current.style.display = "none";
@@ -338,7 +336,6 @@ export const Home = () => {
     };
   }, [prefersReducedMotion]);
 
-  // Initialize scroll animations
   useEffect(() => {
     if (animationsInitialized || prefersReducedMotion) return;
 
@@ -437,7 +434,7 @@ export const Home = () => {
                   component="img"
                   src="./images/paisanologowhite1.png"
                   alt="Left Image"
-                  fetchpriority="high"
+                  fetchPriority="high"
                   sx={{
                     width: "auto",
                     height: { xs: "12vh", md: "10vh", xl: "20vh" },
@@ -497,7 +494,6 @@ export const Home = () => {
         <div
           className="home-bottom-row"
           style={{
-            // ✅ MÁS ESPACIO antes del slider
             paddingBottom: isMobile
               ? HERO_BEFORE_SLIDER_SPACING_MOBILE
               : HERO_BEFORE_SLIDER_SPACING_DESKTOP,
@@ -523,8 +519,6 @@ export const Home = () => {
                 className="line-wrapper"
                 style={{
                   width: "100%",
-
-                  // ✅ Cierra el espacio ENTRE líneas (solo desde la 2da)
                   marginTop:
                     index === 0
                       ? "0em"
@@ -580,18 +574,12 @@ export const Home = () => {
             width: "100%",
             boxSizing: "border-box",
             display: "flex",
-
-            /* ✅ MENOS separación entre imágenes */
             gap: { xs: "12px", md: "18px" },
-
-            /* ✅ MENOS márgenes laterales (mobile y web) */
             px: { xs: "12px", md: "16px" },
             py: { xs: "32px", md: "64px" },
-
             justifyContent: "center",
             alignItems: "center",
             flexDirection: { xs: "column", md: "row" },
-
             marginTop: "40px",
             marginBottom: "40px",
           }}
@@ -599,7 +587,7 @@ export const Home = () => {
           <Box
             sx={{
               width: { xs: "100%", md: "auto" },
-              flex: { xs: "none", md: 1 },   // ✅ reparte mejor el ancho
+              flex: { xs: "none", md: 1 },
               minWidth: 0,
               position: "relative",
               overflow: "hidden",
@@ -756,7 +744,6 @@ export const Home = () => {
           </Box>
         </Box>
       </div>
-      {/* END of home-container */}
 
       {/* First Parallax Video */}
       <div className="Home" style={{ marginTop: "60px", marginBottom: "60px" }}>
@@ -794,12 +781,14 @@ export const Home = () => {
         <ParallaxVideoBox videoSrc="/videos/19.mp4" />
       </Suspense>
 
-      {/* Modal and Suspense removed - now using routes */}
+      {/* ✅ SAFARI FIX: MODAL WRAPPER */}
       {selectedService && (
-        <ProductServicePage
-          serviceSlug={selectedService}
-          onClose={() => setSelectedService(null)}
-        />
+        <div className="safari-modal-fixed-layer">
+          <ProductServicePage
+            serviceSlug={selectedService}
+            onClose={() => setSelectedService(null)}
+          />
+        </div>
       )}
 
       <Footer />
