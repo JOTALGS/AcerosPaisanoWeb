@@ -474,7 +474,7 @@ export const Home = () => {
             }}
             className="catalogue-section"
           >
-            <Typography sx={{ lineHeight: "1.3", marginBottom: "20px" }} className="catalogue-description">
+            <Typography variant="h1" sx={{ fontSize: { xs: "14px", md: "16px" }, lineHeight: "1.3", marginBottom: "20px" }} className="catalogue-description">
               Desde 2011 apoyando a la industria nacional
             </Typography>
             <Box className="catalogue-button-wrapper" sx={{ paddingRight: "20px" }}>
@@ -488,6 +488,7 @@ export const Home = () => {
             sx={{ paddingBottom: { xs: "60px", sm: "0px", md: "0px", lg: "0px" } }}
             ref={descubrirRef}
             className="scroll-indicator"
+            variant="h6"
           >
             Desliza para descubrir
           </Box>
@@ -532,7 +533,7 @@ export const Home = () => {
                 }}
               >
                 <Typography
-                  component="p"
+                  component="h3"
                   variant="inherit"
                   className="line"
                   sx={{
@@ -544,7 +545,7 @@ export const Home = () => {
                 </Typography>
 
                 <Typography
-                  component="p"
+                  component="h3"
                   variant="inherit"
                   className="line-overlay"
                   sx={heroOverlaySx}
@@ -682,9 +683,9 @@ export const Home = () => {
                   boxSizing: "border-box",
                 }}
               >
-                <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>
+                <h2 style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>
                   Hierro Cortado y Doblado
-                </p>
+                </h2>
                 <p
                   style={{
                     fontSize: "0.95rem",
@@ -698,7 +699,10 @@ export const Home = () => {
                     textAlign: "left",
                   }}
                 >
-                  Sistema industrial de corte y doblado de varillas que garantiza precisión milimétrica y cero desperdicio. Nuestro proceso automatizado reduce hasta un 60% los tiempos de obra, optimizando recursos y garantizando la calidad estructural de su proyecto.
+                  Sistema Industrializado de corte y dobladode varillas que garantiza la precisión de sus armaduras
+                  y el cero desperdicio.
+                  Nuestro proceso automatizado reduce hasta un 60% los tiempos de obra, optimizando recursos y garantizando
+                  la calidad estructural de su proyecto.
                 </p>
               </div>
             </Box>
@@ -732,9 +736,9 @@ export const Home = () => {
                   boxSizing: "border-box",
                 }}
               >
-                <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>
+                <h2 style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>
                   Mallas Electrosoldadas
-                </p>
+                </h2>
                 <p
                   style={{
                     fontSize: "0.95rem",
@@ -748,7 +752,9 @@ export const Home = () => {
                     textAlign: "left",
                   }}
                 >
-                  Mallas certificadas bajo norma UNIT 845:1995 que garantizan el refuerzo estructural óptimo. Con medidas estándar en stock permanente y fabricación de medidas especiales, aseguramos la disponibilidad inmediata para su obra con la máxima calidad certificada.
+                  Mallas electrosoldadas para hormigón fabricadas bajo norma UNIT 845:1995 que garantizan rapidez
+                  y una solución estructural óptima. Con medidas estándar en stock permanente y fabricación de medidas
+                  especiales, aseguramos la disponibilidad inmediata para su obra con la máxima calidad certificada.
                 </p>
               </div>
             </Box>
@@ -769,7 +775,7 @@ export const Home = () => {
         <Box onClick={() => setSelectedService("barras-conformadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
           <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
             <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
-              <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Barras Lisas y Conformadas</p>
+              <h2 style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Barras Lisas y Conformadas</h2>
               <p style={{ fontSize: "0.95rem", opacity: 0.7, fontFamily: "Inter, sans-serif", fontWeight: 300, maxWidth: isMobile ? "100%" : "450px", lineHeight: "1.6", color: "white", margin: 0, textAlign: "left" }}>
                 Certificadas bajo normas UNIT 34:1995 Y UNIT 845:1995. Procesos de calidad garantizada con barras cortadas a medida para eliminar desperdicios en obra.
               </p>
@@ -780,7 +786,7 @@ export const Home = () => {
         <Box onClick={() => setSelectedService("mallas-plegadas")} style={{ width: "100%", height: "100%", cursor: "pointer" }}>
           <Box className="interact" sx={{ height: { xs: "40vh", sm: "70vh", md: "100vh", lg: "100vh", xl: "100vh" }, zIndex: 0, backgroundColor: "#000", position: "relative", "&:hover": { backgroundColor: "#EE2737" } }}>
             <div className="interact-item" style={{ zIndex: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", paddingLeft: isMobile ? "30px" : "60px", paddingTop: isMobile ? "40px" : "60px", paddingBottom: isMobile ? "30px" : "60px", paddingRight: isMobile ? "30px" : "60px", height: "100%", boxSizing: "border-box" }}>
-              <p style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Mallas Plegadas</p>
+              <h2 style={{ margin: 0, fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 500, color: "white" }}>Mallas Plegadas</h2>
               <p style={{ fontSize: "0.95rem", opacity: 0.7, fontFamily: "Inter, sans-serif", fontWeight: 300, maxWidth: isMobile ? "100%" : "450px", lineHeight: "1.6", color: "white", margin: 0, textAlign: "left" }}>
                 Combina las ventajas del cortado y doblado + mallas. Tecnología de punta en plegado con plegadora automatizada para optimización total de su proyecto constructivo.
               </p>

@@ -165,7 +165,7 @@ export const About = () => {
         <div className="about-hero__content">
           {/* Título grande top-left */}
           <div className="about-hero__titleWrap">
-            <h1 ref={titleRef} className="about-hero__title">
+            <h1 ref={titleRef} className="catalogue-title">
               Sobre nosotros
             </h1>
           </div>
@@ -179,7 +179,7 @@ export const About = () => {
                   Forjamos <strong>acero de calidad certificada</strong> para impulsar
                 </span>
                 <span className="about-hero__taglineLine">
-                  la construcción, el agro y la industria en <strong>Uruguay</strong>.
+                  la construcción, la industria y el futuro en <strong>Uruguay</strong>.
                 </span>
               </p>
 
@@ -225,7 +225,7 @@ export const About = () => {
                 >
                   <Typography
                     className="subtitle"
-                    variant="h3"
+                    variant="h2"
                     fontSize={{ xs: "25px", md: "30px", xl: "40px" }}
                   >
                     {section.content.title}
@@ -284,7 +284,7 @@ export const About = () => {
                 >
                   <Typography
                     className="subtitle"
-                    variant="h3"
+                    variant="h2"
                     fontSize={{ xs: "25px", md: "30px", xl: "40px" }}
                   >
                     {section.content.title}

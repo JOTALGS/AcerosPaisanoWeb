@@ -87,7 +87,7 @@ export const NavBar = ({ whiteBackground = false }) => {
   );
 
   // tamaños
-  const webNavFontSize = useMemo(() => (isTablet ? "0.74rem" : "0.8rem"), [isTablet]);
+  const webNavFontSize = useMemo(() => (isTablet ? "0.8rem" : "1.1rem"), [isTablet]);
   const mobileDrawerFontSize = useMemo(() => "clamp(20px, 6.2vw, 26px)", []);
 
   useEffect(() => {
@@ -296,7 +296,7 @@ export const NavBar = ({ whiteBackground = false }) => {
                         sx={{
                           fontFamily: navMono, // ✅ Geist Mono
                           fontSize: webNavFontSize,
-                          fontWeight: 500,
+                          fontWeight: 400,
                           letterSpacing: "0.08em",
                           color: whiteBackground
                             ? "rgba(11, 11, 11, 0.7)"

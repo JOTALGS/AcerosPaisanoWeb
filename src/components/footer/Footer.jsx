@@ -126,21 +126,21 @@ export const Footer = () => {
     backgroundColor: COLORS.cardBg,
     ...(isLightView
       ? {
-          WebkitMaskImage:
-            "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
-          maskImage:
-            "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
-        }
+        WebkitMaskImage:
+          "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
+        maskImage:
+          "radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 64%, rgba(0,0,0,0) 78%)",
+      }
       : {
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            pointerEvents: "none",
-            background:
-              "radial-gradient(circle at 50% 50%, rgba(18,18,18,0) 55%, rgba(18,18,18,0.85) 100%)",
-          },
-        }),
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(18,18,18,0) 55%, rgba(18,18,18,0.85) 100%)",
+        },
+      }),
   };
 
   const videoSx = {
@@ -152,15 +152,15 @@ export const Footer = () => {
     willChange: "filter, opacity",
     ...(isLightView
       ? {
-          mixBlendMode: "multiply",
-          filter: "invert(1) grayscale(1) contrast(3.2) brightness(1.08)",
-          opacity: 0.999,
-        }
+        mixBlendMode: "multiply",
+        filter: "invert(1) grayscale(1) contrast(3.2) brightness(1.08)",
+        opacity: 0.999,
+      }
       : {
-          mixBlendMode: "lighten",
-          filter: "grayscale(1) contrast(1.05) brightness(0.98)",
-          opacity: 0.72,
-        }),
+        mixBlendMode: "lighten",
+        filter: "grayscale(1) contrast(1.05) brightness(0.98)",
+        opacity: 0.72,
+      }),
   };
 
   /* ✅ contactos con hover rojo y SIN negrita + Inter */
@@ -221,19 +221,20 @@ export const Footer = () => {
           <Grid container spacing={4}>
             {/* LADO IZQUIERDO */}
             <Grid item xs={12} md={6}>
-            <Typography
-              sx={{
-                ...interBaseText,
-                fontSize: { xs: "2.05rem", sm: "2.55rem", md: "4.2rem" }, // 👈 achicado en mobile
-                fontWeight: 400,
-                lineHeight: { xs: 0.96, sm: 0.95, md: 0.95 },
-                letterSpacing: { xs: "-0.035em", md: "-0.05em" }, // 👈 menos agresivo en mobile
-                mb: { xs: 5, md: 6 },
-                transition: "color 0.4s ease",
-              }}
-            >
-              Construyendo el futuro <br /> del acero en Uruguay.
-            </Typography>
+              <Typography
+                variant="h1"
+                sx={{
+                  ...interBaseText,
+                  fontSize: { xs: "2.05rem", sm: "2.55rem", md: "4.2rem" }, // 👈 achicado en mobile
+                  fontWeight: 400,
+                  lineHeight: { xs: 0.96, sm: 0.95, md: 0.95 },
+                  letterSpacing: { xs: "-0.035em", md: "-0.05em" }, // 👈 menos agresivo en mobile
+                  mb: { xs: 5, md: 6 },
+                  transition: "color 0.4s ease",
+                }}
+              >
+                Construyendo el futuro <br /> del acero en Uruguay
+              </Typography>
 
               <Box sx={videoWrapSx}>
                 <Box
@@ -270,10 +271,11 @@ export const Footer = () => {
                   <NavLink to="/productos/mallas-plegadas">
                     Mallas Plegadas
                   </NavLink>
-                  <NavLink to="/productos">Varillas de Acero</NavLink>
                   <NavLink to="/productos/hierro-cortado-y-doblado">
                     Hierro cortado y doblado
                   </NavLink>
+                  <NavLink to="/productos/barras-conformadas">Barras Conformadas</NavLink>
+                  <NavLink to="/productos/barras-lisas">Barras Lisas</NavLink>
                 </Grid>
               </Grid>
 
@@ -327,7 +329,7 @@ export const Footer = () => {
                     },
                   }}
                 >
-                  <Typography sx={{ ...sectionTitleMonoSx, textAlign: "right" }}>
+                  <Typography variant="h1" sx={{ ...sectionTitleMonoSx, textAlign: "right" }}>
                     Planta Industrial
                   </Typography>
 
@@ -340,6 +342,7 @@ export const Footer = () => {
                       transition: "color 0.2s ease",
                       "&:hover": { color: COLORS.accentRed },
                     }}
+                    variant="h1"
                   >
                     Ruta 5 Km 25.500
                     <br />
@@ -422,9 +425,9 @@ export const Footer = () => {
                     lineHeight: 1.2,
                   }}
                 >
-                  FORJADO EN URUGUAY.
+                  FORJADO EN URUGUAY
                   <br />
-                  PARA URUGUAY.
+                  PARA URUGUAY
                 </Typography>
               </Box>
             </Box>
@@ -436,6 +439,7 @@ export const Footer = () => {
                   fontSize: "11px",
                   color: COLORS.textSecondary,
                 }}
+                variant="h2"
               >
                 ©2026 ACEROS PAISANO S.A.
               </Typography>

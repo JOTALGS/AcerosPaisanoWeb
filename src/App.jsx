@@ -62,9 +62,11 @@ function App() {
         {/* Páginas de productos específicos */}
         <Route path="/mallas-electrosoldadas" element={<ProductDetail serviceSlug="mallas-electrosoldadas" />} />
         <Route path="/mallas-plegadas" element={<ProductDetail serviceSlug="mallas-plegadas" />} />
+        <Route path="/mallas-galvanizadas" element={<ProductDetail serviceSlug="mallas-galvanizadas" />} />
         <Route path="/hierro-cortado-y-doblado" element={<ProductDetail serviceSlug="hierro-cortado-y-doblado" />} />
         <Route path="/barras-conformadas" element={<ProductDetail serviceSlug="barras-conformadas" />} />
         <Route path="/barras-lisas" element={<ProductDetail serviceSlug="barras-lisas" />} />
+
         <Route path="/productos/:slug" element={<ProductDetail />} />
 
         {/* RUTA 404: Captura cualquier ruta que no exista */}
