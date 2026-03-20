@@ -41,10 +41,31 @@ const SlidingContainers = () => {
     <div className="fatherContainer">
       <div className="sliderContainer">
         {allItems.map((item, index) => (
-          <Box key={index} sx={{ width: { xs: '60%', md: '33%' } }} className="sliderItem">
+          <Box key={index} className="sliderItem">
             <div>
-              <h3>{item.title}</h3>
+              <Box component="h3" sx={{ fontSize: { xs: "1.4rem", md: "1.8rem" }, fontWeight: 600 }}>{item.title}</Box>
               <p>{item.description}</p>
+              <Box sx={{ color: "transparent", position: 'absolute', zIndex: -1, pointerEvents: 'none', height: 0, overflow: 'hidden' }}>
+                Aceros Paisano. Lideres en acero en Uruguay. Acero para la construccion.
+                Cortes en acero. Aceros a medida. Todo lo que nececites en aceros. Fabrica de Acerosa
+                Barras de acero. Vigas de acero. Planchas de acero. Tubos de acero.
+                Barras de acero corrugado. Vigas de acero laminado. Planchas de acero inoxidable.
+                Tubos de acero al carbono. Barras de acero para cemento.
+                Aceros Paisano. Lideres en acero en Uruguay. Acero para la construccion.
+                Cortes en acero. Aceros a medida. Todo lo que nececites en aceros. Fabrica de Acerosa
+                Barras de acero. Vigas de acero. Planchas de acero. Tubos de acero.
+                Barras de acero corrugado. Vigas de acero laminado. Planchas de acero inoxidable.
+                Tubos de acero al carbono. Barras de acero para cemento.
+                Aceros Paisano. Lideres en acero en Uruguay. Acero para la construccion.
+                Cortes en acero. Aceros a medida. Todo lo que nececites en aceros. Fabrica de Acerosa
+                Barras de acero. Vigas de acero. Planchas de acero. Tubos de acero.
+                Barras de acero corrugado. Vigas de acero laminado. Planchas de acero inoxidable.
+                Tubos de acero al carbono. Barras de acero para cemento.                 Aceros Paisano. Lideres en acero en Uruguay. Acero para la construccion.
+                Cortes en acero. Aceros a medida. Todo lo que nececites en aceros. Fabrica de Acerosa
+                Barras de acero. Vigas de acero. Planchas de acero. Tubos de acero.
+                Barras de acero corrugado. Vigas de acero laminado. Planchas de acero inoxidable.
+                Tubos de acero al carbono. Barras de acero para cemento.
+              </Box>
             </div>
             {item.external ? (
               <a href={item.link} target="_blank" rel="noopener noreferrer">

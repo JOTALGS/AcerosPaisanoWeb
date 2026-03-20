@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { NavBar } from "../../components/navbar/navbar.jsx";
 import { Footer } from '../../components/footer/Footer.jsx';
 import ProductGallery from '../../components/ProductComponents/ProductGallery';
@@ -8,6 +8,7 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Helmet } from 'react-helmet';
 import './ProductDetail.css';
+import ButtonHoverBg from '../../components/CustomButton/ButtonHoverBg.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,7 +33,8 @@ const productsData = {
     title: 'Mallas Electrosoldadas',
     subtitle: 'Refuerzo estructural certificado',
     description:
-      'Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995. Solución integral para el refuerzo de estructuras de hormigón con la más alta calidad.',
+      'Solución industrial que ofrece rapidez y economía. Garantiza la calidad de su obra mediante una soldadura controlada, uniformidad dimensional y proporcionar mejor control de las fisuras. Disponible en stock en medidas estándar.',
+    disclaimerCTA: '*Consulte por nuestras mallas especiales.',
     datasheetPdf: '/pdf/mallas-electrosoldadas.pdf',
     specifications: [
       'Certificadas bajo norma UNIT 845:1995',
@@ -47,12 +49,12 @@ const productsData = {
     ],
     features: [
       'Presentación en paños y rollos',
+      'Fabricación en diámetros desde 3,0mm hasta 12mm',
+      'Stock permanente en medidas estándar',
       'Diseño de mallas especiales adaptadas a requerimientos del proyecto',
-      'Largos especiales que evitan empalmes y minimizan desperdicios',
-      'Bigotes y entramados especiales con largos de hasta 12m',
-      'Atillado de paquetes identificados con etiquetas',
+      'Bigotes y entramados especiales con largos hasta 12m',
+      'Etiquetado que facilita identificación en obra y su uso',
       'Cortado de mallas a medida con guillotina',
-      'Entrega del material según cronograma',
       'Controles de carga y descarga mediante planillas',
       'Asistencia técnica permanente',
     ],
@@ -79,7 +81,7 @@ const productsData = {
   'mallas-plegadas': {
     id: '02',
     title: 'Mallas Plegadas',
-    subtitle: 'Innovación en prefabricación de armaduras',
+    subtitle: 'Innovación en armaduras prefabricadas',
     description:
       'Combina las ventajas del cortado y doblado con las mallas tradicionales. Proceso industrializado con plegadora automatizada.',
     datasheetPdf: '/pdf/mallas-plegadas.pdf',
@@ -121,12 +123,47 @@ const productsData = {
     },
   },
 
-  'hierro-cortado-y-doblado': {
+
+  'mallas-galvanizadas': {
     id: '03',
+    title: 'Mallas Galvanizadas',
+    subtitle: 'Protección superior contra la corrosión',
+    description:
+      'Mallas galvanizadas confeccionadas bajo estrictos estándares de calidad, con alambre con triple capa de galvanizado.',
+    datasheetPdf: null,
+    specifications: [
+      'Alambre con triple capa de galvanizado',
+      'Alta resistencia a la corrosión y ambientes húmedos',
+      'Ideales para aplicaciones en exteriores',
+      'Confección bajo estrictos estándares de calidad',
+      'Calibres disponibles: 1.8mm, 2.0mm, 2.5mm, 4.0mm',
+    ],
+    features: [
+      'Larga vida útil en exteriores',
+      'Resistencia a la oxidación',
+      'Versatilidad de uso',
+      'Stock permanente',
+    ],
+    technicalInfo: {
+      Galvanizado: 'Triple capa',
+      Calibres: '1.8mm - 4.0mm',
+      Aplicación: 'Exteriores / Humedad',
+      Stock: 'Permanente',
+    },
+    availability: 'Entregas a todo el país',
+    images: [
+      { src: '/images/mallasGalvanizadas.webp', alt: 'Mallas Galvanizadas' },
+    ],
+    threeDImage: null,
+  },
+
+  'hierro-cortado-y-doblado': {
+    id: '04',
     title: 'Hierro Cortado y Doblado',
     subtitle: 'Sistema industrial de corte y doblado',
     description:
-      'Sistema industrial de corte y doblado de varillas de acero que permite cumplir con las especificaciones exactas del proyecto.',
+      //'Sistema industrial de corte y doblado de varillas de acero que permite cumplir con las especificaciones exactas del proyecto.',
+      'Sistema Industrializado de corte y doblado de varillas que garantiza la precisión de sus armaduras y el cero desperdicio.',
     datasheetPdf: null,
     specifications: [
       'Procesos de calidad garantizada ISO 9001',
@@ -138,11 +175,11 @@ const productsData = {
     features: [
       'Cero desperdicio de acero',
       'Economía de tiempo y mano de obra',
-      'Dimensiones precisas según proyecto',
-      'Identificación de paquetes para fácil armado',
-      'Diagramas y guías de armado incluidos',
+      'Calidad de las estructuras.',
+      'Doblados conformes a normas técnicas.',
+      'Entrega según cronograma de obra.',
       'Asesoramiento por técnicos especializados',
-      'Entrega según cronograma',
+      'Entrega del material debidamente identificado facilitando su uso y armado.',
       'Asistencia técnica permanente',
     ],
     technicalInfo: {
@@ -164,25 +201,68 @@ const productsData = {
     threeDImage: null,
   },
 
+  'barras-conformadas': {
+    id: '05',
+    title: 'Barras Conformadas',
+    subtitle: 'Máxima adherencia para hormigón armado',
+    description:
+      'Barras de acero de alta calidad con superficie nervurada que permite gran adherencia al hormigón y garantiza un desempeño uniforme de las estructuras.',
+    datasheetPdf: null,
+    specifications: [
+      'Producido bajo los estándares de la norma UNIT 843:95',
+      'Longitud estándar de 6m y 12m',
+      'Diámetros disponibles: 6mm, 8mm, 10mm, 12mm, 14mm, 16mm, 20mm, 25mm, 32mm',
+      'Acero calidad ADN 500',
+      'Barras cortadas a medida',
+    ],
+    features: [
+      'Superficie nervurada para máxima adherencia',
+      'Resistencia característica a la fluencia 500 Mpa',
+      'Calidad garantizada con certificación',
+      'Stock permanente',
+      'Presentación en atados con barras a 12m y 6m',
+      'Barras rectas en diámetros de 6mm hasta 32mm',
+      'Soldable en todos sus diámetros',
+    ],
+    technicalInfo: {
+      Norma: 'UNIT 34:1995',
+      Calidad: 'ADN 500 S',
+      Diámetros: '6-32mm',
+      Longitud: '12m',
+      Stock: 'Permanente',
+    },
+    availability: 'Entregas a todo el país',
+    images: [
+      { src: '/images/barras.jpg', alt: 'Barras Conformadas' },
+      { src: '/images/barras1.jpg', alt: 'Alta adherencia' },
+      { src: '/images/barras2.jpg', alt: 'Certificación garantizada' },
+      { src: '/images/barras3.jpg', alt: 'Optimización en obra' },
+      { src: '/images/barras5.jpg', alt: 'Logística optimizada' },
+    ],
+    threeDImage: null,
+  },
+
   'barras-lisas': {
-    id: '04',
+    id: '06',
     title: 'Barras Lisas',
     subtitle: 'Calidad certificada para construcción',
     description:
-      'Barras de acero de alta calidad con superficie lisa, certificadas bajo normas UNIT 34:1995 y UNIT 845:1995.',
+      'Barras de acero de alta calidad con superficie lisa, certificadas bajo normas UNIT 34:1995.',
     datasheetPdf: null,
     specifications: [
-      'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
-      'Diámetros disponibles: 6, 8, 10, 12, 16, 20, 25mm',
-      'Barras cortadas a medida según necesidad',
-      'Longitudes estándar de 12 metros',
-      'Acero calidad AL-220',
+      'Producido bajo los estándares de la norma UNIT 34:95',
+      'Diámetros disponibles: 6mm, 8mm, 10mm, 12mm, 14mm, 16mm, 19mm, 25mm, 32mm',
+      'Acero calidad AL 220',
+      'Barras cortadas a medida - pasadores',
     ],
     features: [
-      'Facilidad en el transporte',
-      'Optimización de recursos en obra',
+      'Superficie lisa',
+      'Resistencia característica a la fluencia 220 Mpa',
       'Calidad garantizada con certificación',
       'Stock permanente',
+      'Barras rectas en diámetros de 6mm hasta 32mm',
+      'Presentación en atados con barras a 6m (hasta 25mm) y 12m (solo en 32mm)',
+      'Soldable en todos sus diámetros',
     ],
     technicalInfo: {
       Norma: 'UNIT 34:1995',
@@ -197,45 +277,6 @@ const productsData = {
       { src: '/images/barras1.jpg', alt: 'Barras de calidad' },
       { src: '/images/barras2.jpg', alt: 'Medidas precisas' },
       { src: '/images/barras3.jpg', alt: 'Optimización de recursos' },
-    ],
-    threeDImage: null,
-  },
-
-  'barras-conformadas': {
-    id: '05',
-    title: 'Barras Conformadas',
-    subtitle: 'Máxima adherencia para hormigón armado',
-    description:
-      'Barras de acero de alta calidad con superficie corrugada para máxima adherencia al hormigón.',
-    datasheetPdf: null,
-    specifications: [
-      'Certificadas bajo normas UNIT 34:1995 y UNIT 845:1995',
-      'Diámetros disponibles: 6, 8, 10, 12, 16, 20, 25, 32mm',
-      'Barras cortadas a medida',
-      'Longitudes estándar de 12 metros',
-      'Acero calidad ADN-420',
-    ],
-    features: [
-      'Superficie corrugada para máxima adherencia',
-      'Facilidad en el transporte',
-      'Optimización de recursos en obra',
-      'Calidad garantizada con certificación',
-      'Stock permanente',
-    ],
-    technicalInfo: {
-      Norma: 'UNIT 34:1995',
-      Calidad: 'ADN-420',
-      Diámetros: '6-32mm',
-      Longitud: '12m',
-      Stock: 'Permanente',
-    },
-    availability: 'Entregas a todo el país',
-    images: [
-      { src: '/images/barras.jpg', alt: 'Barras Conformadas' },
-      { src: '/images/barras1.jpg', alt: 'Alta adherencia' },
-      { src: '/images/barras2.jpg', alt: 'Certificación garantizada' },
-      { src: '/images/barras3.jpg', alt: 'Optimización en obra' },
-      { src: '/images/barras5.jpg', alt: 'Logística optimizada' },
     ],
     threeDImage: null,
   },
@@ -372,7 +413,16 @@ const ProductDetail = ({ serviceSlug }) => {
                   <div className="info-description">
                     <span className="info-label">DESCRIPCIÓN</span>
                     <p>{product.description}</p>
+
+                    {product.disclaimerCTA && (
+                      <div>
+                        <Typography variant="p" sx={{ fontSize: '12px', color: '#8a8a8aff', marginTop: '15px' }}>
+                          {product.disclaimerCTA}
+                        </Typography>
+                      </div>
+                    )}
                   </div>
+
 
                   <div className="info-availability">
                     <span className="availability-indicator"></span>
@@ -410,8 +460,8 @@ const ProductDetail = ({ serviceSlug }) => {
 
                   {/* Single CTA Button */}
                   <button className="cta-button primary" onClick={() => navigate('/contacto')}>
-                    <span className="cta-text">SOLICITAR INFORMACIÓN</span>
-                    <span className="cta-arrow">→</span>
+                    <ButtonHoverBg label="solicitar información" buttonStyles={"cta-detail-button"} />
+                    <ButtonHoverBg label="→" buttonStyles={"cta-detail-button"} />
                   </button>
                 </div>
               </div>
@@ -419,7 +469,7 @@ const ProductDetail = ({ serviceSlug }) => {
           </div>
 
           {/* Technical Specifications Section */}
-          <section className="tech-specs-section product-content-section">
+          {/* <section className="tech-specs-section product-content-section">
             <div className="section-header">
               <h2 className="section-title">Ficha Técnica</h2>
               <span className="section-subtitle">ESPECIFICACIONES TÉCNICAS</span>
@@ -467,7 +517,7 @@ const ProductDetail = ({ serviceSlug }) => {
                 </div>
               )}
             </div>
-          </section>
+          </section> */}
 
           {/* Features Section */}
           {product.features && (
@@ -489,7 +539,7 @@ const ProductDetail = ({ serviceSlug }) => {
           )}
 
           {/* Specifications Section */}
-          {product.specifications && (
+          {/* {product.specifications && (
             <section className="specifications-section product-content-section">
               <div className="section-header">
                 <h2 className="section-title">Especificaciones</h2>
@@ -505,7 +555,7 @@ const ProductDetail = ({ serviceSlug }) => {
                 ))}
               </div>
             </section>
-          )}
+          )} */}
 
           {/* CTA Section */}
           <section className="cta-section">
@@ -514,10 +564,12 @@ const ProductDetail = ({ serviceSlug }) => {
               <p className="cta-description">
                 Nuestro equipo técnico está disponible para asesorarlo sobre este producto
               </p>
-              <button className="cta-button primary large" onClick={() => navigate('/contacto')}>
-                <span className="cta-text">SOLICITAR INFORMACIÓN</span>
-                <span className="cta-arrow">→</span>
-              </button>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button className="cta-button primary" style={{ maxWidth: '25%' }} onClick={() => navigate('/contacto')}>
+                  <ButtonHoverBg label="solicitar información" buttonStyles={"cta-detail-button"} />
+                  <ButtonHoverBg label="→" buttonStyles={"cta-detail-button"} />
+                </button>
+              </div>
             </div>
           </section>
         </Container>

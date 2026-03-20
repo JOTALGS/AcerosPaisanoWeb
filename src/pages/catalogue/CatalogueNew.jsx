@@ -50,7 +50,7 @@ const PdfIcon = () => (
 );
 
 export function CatalogueNew() {
-  const [viewMode, setViewMode] = useState("list");
+  const [viewMode, setViewMode] = useState("grid");
   const [openExtended, setOpenExtended] = useState({});
 
   const navigate = useNavigate();
@@ -71,8 +71,9 @@ export function CatalogueNew() {
         title: "Mallas electrosoldadas",
         description: "Mallas electrosoldadas para hormigón certificadas bajo norma UNIT 845:1995.",
         extended:
-          "Solución industrial para refuerzo: soldadura controlada, uniformidad dimensional y disponibilidad en medidas estándar para obra.",
-        specs: "Espesor: 3.5mm – 5.5mm",
+          "Solución industrial que ofrece rapidez y economía. Garantiza la calidad de su obra mediante una soldadura controlada, uniformidad dimensional y proporcionar mejor control de las fisuras. Disponible en stock en medidas estándar. *Consulte por nuestras mallas especiales.",
+        disclaimerCTA: '*Consulte por nuestras mallas especiales.',
+        specs: "Espesor: 3.0mm – 12mm",
         availability: "Stock permanente",
         image: "/images/mallaElectrosoldada.webp",
         isPrimary: true,
@@ -95,6 +96,19 @@ export function CatalogueNew() {
       },
       {
         id: 3,
+        slug: "mallas-galvanizadas",
+        code: "MG-003",
+        category: "Mallas",
+        title: "Mallas galvanizadas",
+        description: "Mallas galvanizadas confeccionadas bajo estrictos estándares de calidad, con alambre con triple capa de galvanizado.",
+        extended: "Su proceso de galvanizado garantiza mayor durabilidad y resistencia a la corrosión, siendo ideales para aplicaciones en exteriores y ambientes húmedos.",
+        specs: "Calibres: 1.8mm, 2.0mm, 2.5mm, 4.0mm",
+        availability: "Stock permanente",
+        image: "/images/mallasGalvanizadas.webp",
+        isPrimary: false,
+      },
+      {
+        id: 4,
         slug: "hierro-cortado-y-doblado",
         code: "HCD-003",
         category: "Servicios",
@@ -105,9 +119,20 @@ export function CatalogueNew() {
         image: "/images/cortadoYdoblado.webp",
       },
       {
-        id: 4,
+        id: 5,
+        slug: "barras-conformadas",
+        code: "BC-005",
+        category: "Barras",
+        title: "Barras conformadas",
+        description: "Barras de acero con superficie nervurada para máxima adherencia al hormigón.",
+        specs: "Calidad: ADN 500 S",
+        availability: "Stock permanente",
+        image: "/images/barras.webp",
+      },
+      {
+        id: 6,
         slug: "barras-lisas",
-        code: "BL-004",
+        code: "BL-006",
         category: "Barras",
         title: "Barras lisas",
         description: "Barras de acero de alta calidad con superficie lisa, certificadas bajo normas UNIT.",
@@ -116,37 +141,26 @@ export function CatalogueNew() {
         image: "/images/barrasLisas.webp",
       },
       {
-        id: 5,
-        slug: "barras-conformadas",
-        code: "BC-005",
-        category: "Barras",
-        title: "Barras conformadas",
-        description: "Barras de acero con superficie corrugada para máxima adherencia al hormigón.",
-        specs: "Calidad: ADN-420",
-        availability: "Stock permanente",
-        image: "/images/barras.webp",
-      },
-      {
-        id: 6,
+        id: 7,
         slug: "clavos",
         code: "CL-006",
         category: "Clavos",
         title: "Clavos de acero",
-        description: "Clavos de acero de alta calidad para construcción y carpintería.",
+        description: "Clavos de Punta París en acero de alta calidad para construcción y carpintería.",
         extended: "Fabricados con acero de primera calidad, garantizando resistencia y durabilidad en aplicaciones de construcción.",
-        specs: 'Medidas: 2" y 2 1/2"',
+        specs: 'Medidas: 2" y 2 1/2". Presentación en cajas de 20kg con bolsas de 1kg.',
         availability: "Stock permanente",
         image: "/images/clavos.webp",
         isPrimary: false,
       },
       {
-        id: 7,
+        id: 8,
         slug: "alambre-recocido",
         code: "AR-007",
         category: "Alambres",
         title: "Alambre recocido",
         description: "Alambre recocido de alta calidad para aplicaciones múltiples en construcción.",
-        extended: "Proceso de recocido que garantiza flexibilidad y resistencia, ideal para amarres y aplicaciones diversas en obra.",
+        extended: "Alambre trefilado sometido a tratamiento térmico de recocido en horno. Se caracteriza por su ductilidad, alambre blando, apto para usos generales que incluye operaciones de atado de armaduras. Sus atributos mecánicos garantizan la utilización y manipulación en operaciones que exigen normalmente pliegues y torsiones.",
         specs: "Calibres: ISWG 14, 16, 18",
         availability: "Stock permanente",
         image: "/images/alambrerecocido2.webp",
@@ -223,9 +237,9 @@ export function CatalogueNew() {
 
       <section className="catalogue-header">
         <Container maxWidth="xl">
-          <h1 ref={titleRef} className="catalogue-title">
+          <h4 ref={titleRef} className="catalogue-title">
             Catálogo
-          </h1>
+          </h4>
           <p className="catalogue-subtitle">Soluciones industriales en acero para construcción</p>
         </Container>
       </section>
@@ -275,56 +289,61 @@ export function CatalogueNew() {
                 </div>
 
                 <div className="product-content">
-                  <div className="product-header">
-                    <span className="pill pill-code">{p.code}</span>
-                    <span className="pill pill-category">{p.category}</span>
-                  </div>
+                  <div>
 
-                  <h3 className="product-title">{p.title}</h3>
-                  <p className="product-description">{p.description}</p>
-
-                  <div className="product-rows">
-                    <div className="row">
-                      <span className="row-label">Especificaciones</span>
-                      <span className="row-value">{p.specs}</span>
+                    <div className="product-header">
+                      <span className="pill pill-code">{p.code}</span>
+                      <span className="pill pill-category">{p.category}</span>
                     </div>
 
-                    {p.isPrimary && (
-                      <>
-                        <button
-                          type="button"
-                          className={`row row-action ${isOpen ? "is-open" : ""}`}
-                          onClick={(e) => toggleExtended(e, p.id)}
-                          aria-expanded={isOpen}
-                          aria-controls={`extended-${p.id}`}
-                        >
-                          <span className="row-label">Descripción extendida</span>
-                          <span className="toggle-x" aria-hidden="true" />
-                        </button>
+                    <h2 className="product-title">{p.title}</h2>
+                    <p className="product-description">{p.description}</p>
 
-                        <div
-                          id={`extended-${p.id}`}
-                          className={`extended-panel ${isOpen ? "open" : ""}`}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <p className="extended-text">{p.extended}</p>
-                        </div>
+                    <div className="product-rows">
+                      <div className="row">
+                        <span className="row-label">Especificaciones</span>
+                        <span className="row-value">{p.specs}</span>
+                      </div>
 
-                        {p.datasheet && (
+                      {p.isPrimary && (
+                        <>
                           <button
                             type="button"
-                            className="row row-action pdf"
-                            onClick={(e) => onDatasheetClick(e, p.datasheet)}
-                            aria-label="Ficha técnica PDF"
+                            className={`row row-action ${isOpen ? "is-open" : ""}`}
+                            onClick={(e) => toggleExtended(e, p.id)}
+                            aria-expanded={isOpen}
+                            aria-controls={`extended-${p.id}`}
                           >
-                            <span className="row-label">Ficha técnica</span>
-                            <span className="row-icon" aria-hidden="true">
-                              <PdfIcon />
-                            </span>
+                            <span className="row-label">Descripción extendida</span>
+                            <span className="toggle-x" aria-hidden="true" />
                           </button>
-                        )}
-                      </>
-                    )}
+
+                          <div
+                            id={`extended-${p.id}`}
+                            className={`extended-panel ${isOpen ? "open" : ""}`}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <p className="extended-text">{p.extended}</p>
+                          </div>
+
+
+                          {p.datasheet && (
+                            <button
+                              type="button"
+                              className="row row-action pdf"
+                              onClick={(e) => onDatasheetClick(e, p.datasheet)}
+                              aria-label="Ficha técnica PDF"
+                            >
+                              <span className="row-label">Ficha técnica</span>
+                              <span className="row-icon" aria-hidden="true">
+                                <PdfIcon />
+                              </span>
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </div>
+
                   </div>
 
                   {/* Stock + Ver detalles SIEMPRE MISMA FILA (también mobile) */}

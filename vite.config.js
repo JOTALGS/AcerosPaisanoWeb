@@ -40,4 +40,10 @@ export default defineConfig({
     include: ['react', 'react-dom', 'react-router-dom', '@mui/material'],
     exclude: ['gsap'], // Lazy load GSAP
   },
+
+  server: {
+    allowedHosts: [
+      "relaxation-unwrap-med-princess.trycloudflare.com"
+    ]
+  }
 })

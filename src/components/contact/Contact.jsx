@@ -243,7 +243,7 @@ const ContactComponent = () => {
                 rowSpacing={{ xs: 1.1, md: 0.9 }}
               >
                 <Grid item xs={12} sm={6}>
-                  <Typography sx={labelStyle}>EMPRESA</Typography>
+                  <Typography variant="h6" sx={labelStyle}>EMPRESA</Typography>
                   <Typography
                     variant="body2"
                     component="a"
@@ -264,7 +264,7 @@ const ContactComponent = () => {
                     ventas@acerospaisano.com.uy
                   </Typography>
 
-                  <Typography sx={labelStyle}>TELÉFONOS</Typography>
+                  <Typography variant="h6" sx={labelStyle}>TELÉFONOS</Typography>
                   <Typography
                     variant="body2"
                     component="a"
@@ -288,9 +288,9 @@ const ContactComponent = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Typography sx={labelStyle}>DIRECCIÓN</Typography>
+                  <Typography variant="h6" sx={labelStyle}>DIRECCIÓN</Typography>
                   <Typography
-                    variant="body2"
+                    variant="h4"
                     sx={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: { xs: "0.88rem", md: "0.98rem" },
@@ -300,7 +300,7 @@ const ContactComponent = () => {
                     Ruta 5 Km 25.500
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant="h4"
                     sx={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: { xs: "0.88rem", md: "0.98rem" },
